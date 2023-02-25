@@ -1,27 +1,23 @@
 import React, { Component, useEffect } from 'react'
-
+import myFetch from '../services/myFetch'
 
 export default function testFetch() {
 
-  useEffect(()=>{
-    fetch('http://localhost:3000/api/v1/menuItems/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: 'test',
-        age: 20
-      })
-    }).then(res => res.json())
+
+
+  async function runFetch() {
+    console.log("before fetch");
     
-    console.log('test');
-    
+    await myFetch<any>('/menuitems', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: {msg: "yeah", int: 32}}).then((res) => {
+      console.log(res);
   });
+    console.log("after fetch");
+    
+  }
 
   return (
     <div>
-        <h1>Test Fetch</h1>
+        <button onClick={runFetch} >Test Fetch</button>
     </div>
   )
 }

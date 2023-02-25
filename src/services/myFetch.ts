@@ -1,6 +1,6 @@
 const API_ROOT = 'http://localhost:3000/api/v1';
 
-export default function myFetch<T>(url: string, data: any = null, method?: string ): Promise<T> {
+export default async function myFetch<T>(url: string, data?: any, method?: string ): Promise<T> {
 
     if (method == 'DELETE'){
         const option: RequestInit = {
@@ -10,7 +10,9 @@ export default function myFetch<T>(url: string, data: any = null, method?: strin
             },
             body: JSON.stringify(data),
         }
-        return fetch(API_ROOT + url, option).then( x => x.json());
+        console.log("fetch");
+        
+        return await fetch(API_ROOT + url, option).then( x => x.json());
     }
     const options: RequestInit = {
         method: method ?? (data ? 'POST' : 'GET'),
