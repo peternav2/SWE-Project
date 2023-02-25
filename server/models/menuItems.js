@@ -1,4 +1,4 @@
-const { connect } = require('./mongo');
+const { connect } = require('./mongo.js');
 const COLLECTIONNAME = 'Menu Items';
 
 async function collection() {
@@ -12,5 +12,5 @@ const add = async (menuItem) => {
     menuItem._id = result.insertedId;
     return menuItem;
 }
-
+ 
 module.exports = { add }

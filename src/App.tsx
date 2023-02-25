@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import TestPost from './components/testPost'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -8,8 +9,7 @@ function App() {
 
     //centered div in tailwind
     
-
-
+    
     <div className="grid place-items-center h-screen">
       <div>
         <h1 className="text-5xl">
@@ -31,7 +31,7 @@ function App() {
           <li>After the data design is done to start creating a web server to handle CRUD operations with the data. Fetch API for url calls - Peter </li>
         </ol>
       </div>
-      
+      <TestPost />
     </div>
 
   )
