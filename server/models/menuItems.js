@@ -1,16 +1,16 @@
 const { connect } = require('./mongo.js');
-const COLLECTIONNAME = 'Menu Items';
+const COLLECTIONNAME = 'MenuItems';
 
 async function collection() {
     const client = await connect();
-    return client.db('menuitems').collection(COLLECTIONNAME);
+    return client.db().collection(COLLECTIONNAME);
 }
 
 const add = async (menuItem) => {
     const db = await collection();
     const result = await db.insertOne(menuItem);
-    menuItem._id = result.insertedId;
-    return menuItem;
+    console.log('inserted');
+    return result.insertedId;
 }
  
 module.exports = { add }
