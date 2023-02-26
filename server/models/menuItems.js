@@ -10,7 +10,8 @@ const add = async (menuItem) => {
     console.log('adding');
     const db = await collection();
     const result = await db.insertOne({item: "box", qty: 20 } );
-    console.log('inserted');
+    menuItem._id = result.insertedId;
+    return menuItem;
 }
  
 module.exports = { add }

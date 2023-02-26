@@ -8,8 +8,10 @@ export default function testFetch() {
   async function runFetch() {
     console.log("before fetch");
     
-    await myFetch<any>('/menuitems', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: {msg: "yeah", int: 32}}).then((res) => {
-      console.log(res);
+    await myFetch('menuitems', { msg: "message", int: 5 }).then((res) => {
+      console.log("res", res);
+    }).catch((err) => {
+      console.log("err", err);
   });
     console.log("after fetch");
     
