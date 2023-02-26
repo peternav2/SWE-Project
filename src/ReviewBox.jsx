@@ -9,6 +9,7 @@ class ReviewBox extends React.Component {
     super(props);
     this.state = {
       universityName: '',
+      studentName:'',
       isStudent: true,
       //TODO: In my experience auth is kind of tricky since there are so many security edge cases
       //      if you want to do it right... will be anonymous users for early version of these components
@@ -18,13 +19,19 @@ class ReviewBox extends React.Component {
       selectedStars: ''
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleNameInputChange = this.handleNameInputChange.bind(this);
+    this.handleUniversityNameInputChange = this.handleUniversityNameInputChange.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
   }
 
-  handleInputChange(event) {
-    this.setState({ value: event.target.value });
+  handleNameInputChange(event) {
+    this.setState({ studentName: event.target.value });
+  }
+
+  handleUniversityNameInputChange(event){
+    this.setState({ universityName: event.target.value });
   }
 
   handleSubmit(event) {
@@ -65,7 +72,7 @@ class ReviewBox extends React.Component {
                             id="users-name"
                             className="block w-full flex-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             placeholder="What is your name?"
-                            onChange = {this.handleInputChange}
+                            onChange = {this.handleNameInputChange}
                           />
                         </div>
                       </div>
@@ -85,6 +92,7 @@ class ReviewBox extends React.Component {
                             id=""
                             className="block w-full flex-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             placeholder="University Name Here"
+                            onChange={this.handleUniversityNameInputChange}
                           />
                         </div>
                       </div>
