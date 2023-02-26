@@ -1,9 +1,5 @@
 import React from 'react';
 
-//TODO: Make a review box component where someone can 
-//1. input a text review and 
-//2. the data can be displayed on a button press to another part of the JSX file - reactive uploading
-
 class ReviewBox extends React.Component {
   constructor(props) {
     super(props);
@@ -16,12 +12,13 @@ class ReviewBox extends React.Component {
       //      for now
       password: 'default_password',
       username: 'default_username',
+      review:'',
       selectedStars: ''
     };
 
     this.handleNameInputChange = this.handleNameInputChange.bind(this);
     this.handleUniversityNameInputChange = this.handleUniversityNameInputChange.bind(this);
-
+    this.handleReviewInputChange = this.handleReviewInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOptionChange = this.handleOptionChange.bind(this);
   }
@@ -34,6 +31,10 @@ class ReviewBox extends React.Component {
     this.setState({ universityName: event.target.value });
   }
 
+  handleReviewInputChange(event){
+    this.setState({ review: event.target.value });
+  }
+
   handleSubmit(event) {
     console.log("You've hit handleSubmit!!!");
     event.preventDefault();
@@ -44,9 +45,8 @@ class ReviewBox extends React.Component {
     this.setState({selectedStars:starValue + " star"});
     }
 
-  //TODO: COLLECT ALL OF THE STATE VALUES FROM FORM AND THEN POST TO DATABASE WITH SUBMIT BUTTON
-  //      AT THE END OF THE FORM..... THIS WILL THEN BE PULLED FROM THE DATABSE ON ANOTHER COMPONENT
-  //      AND OR APPLCATION PAGE.
+  //TODO: Function to push state data set to our MonogoDB database - this will be a function called on the submit button
+  //      at the end of the form.
 
   render() {
     return (
@@ -110,6 +110,7 @@ class ReviewBox extends React.Component {
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           placeholder=""
                           defaultValue={''}
+                          onChange={this.handleReviewInputChange}
                         />
                       </div>
                     </div>
