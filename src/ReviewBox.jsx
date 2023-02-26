@@ -4,7 +4,7 @@ import React from 'react';
 //1. input a text review and 
 //2. the data can be displayed on a button press to another part of the JSX file - reactive uploading
 
-class StudentReviewBox extends React.Component {
+class ReviewBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,14 +15,15 @@ class StudentReviewBox extends React.Component {
       //      for now
       password: 'default_password',
       username: 'default_username',
-      selectedStars: '1 star'
+      selectedStars: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOptionChange = this.handleOptionChange.bind(this);
   }
 
-  handleChange(event) {
+  handleInputChange(event) {
     this.setState({ value: event.target.value });
   }
 
@@ -30,6 +31,11 @@ class StudentReviewBox extends React.Component {
     console.log("You've hit handleSubmit!!!");
     event.preventDefault();
   }
+
+  handleOptionChange(starValue){
+    console.log("handleOptionChange() hit");
+    this.setState({selectedStars:starValue + " star"});
+    }
 
   //TODO: COLLECT ALL OF THE STATE VALUES FROM FORM AND THEN POST TO DATABASE WITH SUBMIT BUTTON
   //      AT THE END OF THE FORM..... THIS WILL THEN BE PULLED FROM THE DATABSE ON ANOTHER COMPONENT
@@ -59,6 +65,7 @@ class StudentReviewBox extends React.Component {
                             id="users-name"
                             className="block w-full flex-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             placeholder="What is your name?"
+                            onChange = {this.handleInputChange}
                           />
                         </div>
                       </div>
@@ -110,7 +117,7 @@ class StudentReviewBox extends React.Component {
                           <label>
                             <input type="radio" value="1 star"
                               checked={this.state.selectedStars === '1 star'}
-                              onChange={this.handleOptionChange} />
+                              onClick={() => this.handleOptionChange(1)} />
                             1
                           </label>
                         </div>
@@ -118,7 +125,7 @@ class StudentReviewBox extends React.Component {
                           <label>
                             <input type="radio" value="2 star"
                               checked={this.state.selectedStars === '2 star'}
-                              onChange={this.handleOptionChange} />
+                              onClick={() => this.handleOptionChange(2)} />
                             2
                           </label>
                         </div>
@@ -126,26 +133,27 @@ class StudentReviewBox extends React.Component {
                           <label>
                             <input type="radio" value="3 star"
                               checked={this.state.selectedStars === '3 star'}
-                              onChange={this.handleOptionChange} />
+                              onClick={() => this.handleOptionChange(3)} />
                             3
                           </label>
                         </div>
                         <div className="radio">
                           <label>
-                            <input type="radio" value="3 star"
+                            <input type="radio" value="4 star"
                               checked={this.state.selectedStars === '4 star'}
-                              onChange={this.handleOptionChange} />
+                              onClick={() => this.handleOptionChange(4)} />
                             4
                           </label>
                         </div>
                         <div className="radio">
                           <label>
-                            <input type="radio" value="3 star"
+                            <input type="radio" value="5 star"
                               checked={this.state.selectedStars === '5 star'}
-                              onChange={this.handleOptionChange} />
+                              onClick={() => this.handleOptionChange(5)} />
                             5
                           </label>
                         </div>
+                        <p>your star ranking: {this.state.selectedStars}</p>
                       </div>
                     </div>
                   </div>
@@ -174,4 +182,4 @@ class StudentReviewBox extends React.Component {
   }
 }
 
-export default StudentReviewBox
+export default ReviewBox
