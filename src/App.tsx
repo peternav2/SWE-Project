@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import TestPost from './components/testPost'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,9 @@ function App() {
     
 
 
+
     <div className="grid place-items-center h-screen w-screen">
+
       <div>
         <h1 className="text-5xl">
           Welcome to our React Project
@@ -25,13 +28,13 @@ function App() {
         <h3>Tasks to do for first week</h3>
         <ol className='list-decimal w-1/2'>
           <li>Log in page - also look into authentification tokens</li>
-          <li>make a review box component where someone can input a text review and the data can be displayed on a button press to another part of the JSX file - reactive uploading. then have an element which can display all uploaded review in a list</li>
-          <li>make a menuItem input box to recieve data like a menuItem name, calories per serving, allergens, picture of item, and have this data on a button press be uploaded to another part of the webpage. then make a element to display all in a list</li>
-          <li>someone to begin thinking about data design. How will we be organizing our data. User data, Universities, how will we organize our data for each day, our menus for a day, menuItems, Reviews for that day, etc..</li>
-          <li>After the data design is done to start creating a web server to handle CRUD operations with the data. Fetch API for url calls </li>
+          <li>make a review box component where someone can input a text review and the data can be displayed on a button press to another part of the JSX file - reactive uploading</li>
+          <li>make a menuItem input box to recieve data like a menuItem name, calories per serving, allergens, picture of item, and have this data on a button press be uploaded to another part of the webpage</li>
+          <li>someone to begin thinking about data design. How will we be organizing our data. User data, Universities, how will we organize our data for each day, our menus for a day, menuItems, Reviews for that day, etc.. - Peter</li>
+          <li>After the data design is done to start creating a web server to handle CRUD operations with the data. Fetch API for url calls - Peter </li>
         </ol>
       </div>
-      
+      <TestPost />
     </div>
 
   )
