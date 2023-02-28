@@ -7,8 +7,11 @@ export default function testFetch() {
 
   async function runFetch() {
     console.log("before fetch");
-    
-    await myFetch('menuitems', { msg: "message", int: 5 }).then((res) => {
+    const upload = {
+      msg: "message",
+      int: 5
+    }
+    await myFetch('menuitems', { upload }).then((res) => {
       console.log("res", res);
     }).catch((err) => {
       console.log("err", err);
