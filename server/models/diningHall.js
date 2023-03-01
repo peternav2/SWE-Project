@@ -12,4 +12,9 @@ const add = async (diningHall) => {
     diningHall._id = result.insertedId; // give the diningHall object an _id property
     return diningHall; // what will be returned in the Promise
 }
+
+const get = async (id) => {
+    const db = await collection();
+    const result = await db.findMany(id);
+}
 module.exports = { add }
