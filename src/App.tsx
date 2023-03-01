@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import TestPost from './components/testPost'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,9 @@ function App() {
     
 
 
-    <div className="grid place-items-center h-screen">
+
+    <div className="grid place-items-center h-screen w-screen">
+
       <div>
         <h1 className="text-5xl">
           Welcome to our React Project
@@ -23,7 +26,7 @@ function App() {
           <li>MongoDB for our database <a className="font-bold" href="https://www.mongodb.com/docs/">docs</a></li>
         </ul>
         <h3>Tasks to do for first week</h3>
-        <ol className='list-decimal'>
+        <ol className='list-decimal w-1/2'>
           <li>Log in page - also look into authentification tokens</li>
           <li>make a review box component where someone can input a text review and the data can be displayed on a button press to another part of the JSX file - reactive uploading</li>
           <li>make a menuItem input box to recieve data like a menuItem name, calories per serving, allergens, picture of item, and have this data on a button press be uploaded to another part of the webpage</li>
@@ -31,7 +34,7 @@ function App() {
           <li>After the data design is done to start creating a web server to handle CRUD operations with the data. Fetch API for url calls - Peter </li>
         </ol>
       </div>
-      
+      <TestPost />
     </div>
 
   )
