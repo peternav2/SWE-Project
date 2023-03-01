@@ -1,5 +1,5 @@
 const express = require('express');
-const { add } = require('../models/menuItems.js');
+const { add } = require('../models/menuItem.js');
 const app = express.Router();
 
 app
