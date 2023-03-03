@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import { Link } from "react-router-dom";
+import RouterNav from './components/routerNav';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -7,11 +9,8 @@ function App() {
   return (
 
     //centered div in tailwind
-    
-
-
-    <div className="grid place-items-center h-screen">
-      <div>
+    <div>
+        <RouterNav/>
         <h1 className="text-5xl">
           Welcome to our React Project
         </h1>
@@ -32,8 +31,6 @@ function App() {
         </ol>
       </div>
       
-    </div>
-
   )
 }
 
