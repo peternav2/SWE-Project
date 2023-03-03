@@ -25,8 +25,6 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
     };
     console.log("here2")
     console.log(JSON.stringify(data));
-    console.log(options.body);
-    
-    
+    console.log(JSON.stringify(options.body));
     return fetch(API_ROOT + url, options).then( x=>x.json() );
 }

@@ -5,7 +5,7 @@ export interface DiningHall {
     _id?: string;
 }
 
-export async function add (diningHall: DiningHall, UniversityId: string) {
+export async function add (diningHall: DiningHall) {
     await myFetch<DiningHall>("dininghall", diningHall).then((res) => {
         return res
         // this function returns an updated diningHall object with an _id
@@ -13,5 +13,3 @@ export async function add (diningHall: DiningHall, UniversityId: string) {
         // diningHall object with the returned object so we have that _id
     })
 }
-
-export async function 

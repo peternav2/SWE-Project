@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const menuitemController = require('./controllers/menuItem.js');
 const diningHallController = require('./controllers/diningHall.js');
+const universityController = require('./controllers/university.js')
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,6 +21,7 @@ app.get('/error', (req, res) => {
 })
 .use('/api/v1/menuitem', menuitemController)
 .use('/api/v1/dininghall', diningHallController)
+.use('/api/v1/university', universityController)
 
 
 

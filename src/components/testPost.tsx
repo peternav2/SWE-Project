@@ -1,17 +1,25 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import myFetch from '../services/myFetch'
 import { add, DiningHall } from '../stores/DiningHall';
+import { addUniversity } from '../stores/University';
 import { MenuItem } from '../stores/MenuItem'
-import { University } from '../stores/University'
-export default function testFetch() {
+import { University, getAllUniversities } from '../stores/University'
+export default function TestFetch() {
+  const [ unis, setUnis ] = useState<University[]>([]);
+  useEffect(() => {
+    getAllUniversities().then((data) => {
+      setUnis(data);
+    });
+  });
   async function runFetch() {
     console.log("before fetch");
-    const diningHall: DiningHall = {
-      name: "Peregrine Dining Hall",
-    }
-    add(diningHall);
-    }
-
+    //var universities: University[] = [];
+    // await getAllUniversities().then((data) => {
+    //   setUnis(data);
+    // })
+    console.log(unis);
+    
+  }
 
   return (
     <div>
