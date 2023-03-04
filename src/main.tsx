@@ -7,13 +7,13 @@ import { BrowserRouter,
 import App from './App'
 import './index.css'
 import Docs from "../src/routes/docs";
-import Login from "../src/routes/login";
+import LoginRoute from "./routes/loginRoute";
 import UniversityMenus from "../src/routes/universityMenus";
 import EventBoard from './routes/eventBoard'
 import OffCampusDining from './routes/offCampusDinning'
 import UniversityMenuReviews from './routes/universityMenuReviews'
 import SubmitUniversityDishReview from './routes/submitUniversityDishReview'
-
+import CreateAccountRoute from './routes/createAccountRoute'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // Routing note: In order to add a router to the app you need to create <Route/>
@@ -24,7 +24,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="docs" element={<App />} />
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<LoginRoute />} />
+      <Route path="create-account" element={<CreateAccountRoute />} />
       <Route path="off-campus-dining" element={<OffCampusDining />} />
       <Route path="university-menu-reviews" element={<UniversityMenuReviews />} />
       <Route path="event-board" element={<EventBoard />} />
