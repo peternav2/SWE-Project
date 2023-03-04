@@ -2,7 +2,7 @@ import RouterNav from '../components/routerNav';
 
 export default function Login() {
   return (
-    <main>
+    <main >
       <RouterNav />
       <h2>Login</h2>
     </main>
