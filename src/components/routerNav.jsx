@@ -14,6 +14,7 @@ export default function RouterNav() {
             <Link to="/university-menu-reviews">University Menu Reviews</Link> |{" "}
             <Link to="/event-board">Event Board</Link> |{" "}
             <Link to="/off-campus-dining">Off Campus Dinning</Link> |{" "}
+            <Link to="/dish-review-form">Dish Review Form</Link> |{" "}
 
             {/* For other future components */}
             <Link to="/TODO">TODO</Link>
