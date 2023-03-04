@@ -1,10 +1,10 @@
 import RouterNav from '../components/routerNav';
 
-export default function UniversityMenus() {
+export default function EventBoard() {
   return (
     <main>
       <RouterNav />
-      <h2>Universty Menus</h2>
+      <h2>Event Board</h2>
     </main>
   );
 }
