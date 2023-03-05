@@ -9,7 +9,7 @@ function App() {
 
     //centered div in tailwind
     <div>
-      <RouterNav/>
+      {/* <RouterNav/> */}
       <div  className="grid place-items-center h-screen w-screen">
         <h1 className="text-5xl">
           Welcome to our React Project

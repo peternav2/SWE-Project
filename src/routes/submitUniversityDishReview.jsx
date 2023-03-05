@@ -4,7 +4,7 @@ import DishReviewForm from '../components/DishReviewForm';
 export default function SubmitUniversityDishReview() {
   return (
     <main>
-      <RouterNav />
+      {/* <RouterNav /> */}
       <DishReviewForm />
     </main>
   );

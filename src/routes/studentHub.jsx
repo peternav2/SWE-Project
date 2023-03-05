@@ -1,10 +1,10 @@
 import RouterNav from '../components/routerNav';
 
-export default function UniversityMenuReviews() {
+export default function StudentHub() {
   return (
     <main>
       {/* <RouterNav /> */}
-      <h2>University Menu Reviews</h2>
+      <h2>Student Hub</h2>
     </main>
   );
 }

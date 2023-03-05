@@ -4,7 +4,7 @@ import CreateAccount from '../components/CreateAccount';
 export default function CreateAccountRoute() {
   return (
     <main >
-      <RouterNav />
+      {/* <RouterNav /> */}
       <CreateAccount />
     </main>
   );

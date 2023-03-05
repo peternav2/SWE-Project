@@ -49,7 +49,7 @@ class DishReviewForm extends React.Component {
   render() {
     return (
       <>
-        <div  style={{paddingLeft:"20%", paddingRight:"20%"}}>
+        <div  style={{paddingLeft:"10%", paddingRight:"10%"}}>
             <div>
               <form action="#" method="POST">
                 <div className="shadow sm:overflow-hidden sm:rounded-md">

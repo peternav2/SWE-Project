@@ -11,6 +11,8 @@ export default function RouterNav() {
             <Link to="/docs">Internal Documentation</Link> |{" "}
             <Link to="/login">Login</Link> |{" "}
             <Link to="/create-account">Create Account</Link> |{" "}
+            <Link to="/admin-hub">Admin Hub</Link> |{" "}
+            <Link to="/student-hub">Student Hub</Link> |{" "}
             <Link to="/view-menus">View University Menus</Link> |{" "}
             <Link to="/university-menu-reviews">University Menu Reviews</Link> |{" "}
             <Link to="/event-board">Event Board</Link> |{" "}

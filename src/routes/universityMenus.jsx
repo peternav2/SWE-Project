@@ -3,7 +3,7 @@ import RouterNav from '../components/routerNav';
 export default function UniversityMenus() {
   return (
     <main>
-      <RouterNav />
+      {/* <RouterNav /> */}
       <h2>View Universty Menus</h2>
     </main>
   );
