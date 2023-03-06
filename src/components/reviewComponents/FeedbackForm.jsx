@@ -20,6 +20,8 @@ class FeedbackForm extends React.Component {
   
     render() {
       return (
+        <>
+        <p>{this.state.value}</p>
         <form onSubmit={this.handleSubmit}>
           <label>Feedback:</label>
           <br/>
@@ -27,6 +29,7 @@ class FeedbackForm extends React.Component {
           <br/>
           <input type="submit" value="Submit" />
         </form>
+        </>
       );
     }
   }
