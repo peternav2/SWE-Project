@@ -1,16 +1,7 @@
-import { useState } from 'react'
-import RouterNav from './components/routerNav';
-import TestPost from './components/testPost'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-
-    //centered div in tailwind
-    <div>
-      {/* <RouterNav/> */}
-      <div  className="grid place-items-center h-screen w-screen">
+export default function Docs() {
+    return (
+      <main style={{ padding: "1rem 0" }}>
+        <div>
         <h1 className="text-5xl">
           Welcome to our React Project
         </h1>
@@ -22,18 +13,14 @@ function App() {
           <li>MongoDB for our database <a className="font-bold" href="https://www.mongodb.com/docs/">docs</a></li>
         </ul>
         <h3>Tasks to do for first week</h3>
-        <ol className='list-decimal w-1/2'>
+        <ol className='list-decimal'>
           <li>Log in page - also look into authentification tokens</li>
-          <li>make a review box component where someone can input a text review and the data can be displayed on a button press to another part of the JSX file - reactive uploading:</li>
+          <li>make a review box component where someone can input a text review and the data can be displayed on a button press to another part of the JSX file - reactive uploading</li>
           <li>make a menuItem input box to recieve data like a menuItem name, calories per serving, allergens, picture of item, and have this data on a button press be uploaded to another part of the webpage</li>
           <li>someone to begin thinking about data design. How will we be organizing our data. User data, Universities, how will we organize our data for each day, our menus for a day, menuItems, Reviews for that day, etc.. - Peter</li>
           <li>After the data design is done to start creating a web server to handle CRUD operations with the data. Fetch API for url calls - Peter </li>
         </ol>
-      <TestPost />
       </div>
-    </div>
-
-  )
-}
-
-export default App
+      </main>
+    );
+  }
