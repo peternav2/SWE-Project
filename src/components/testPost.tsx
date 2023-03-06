@@ -1,9 +1,12 @@
 import React, { Component, useEffect } from 'react'
 import myFetch from '../services/myFetch'
-import { add, DiningHall } from '../stores/DiningHall';
+import { addDiningHallToUniversity, DiningHall } from '../stores/DiningHall';
 import { addUniversity } from '../stores/University';
 import { MenuItem } from '../stores/MenuItem'
 import { University, getAllUniversities } from '../stores/University'
+
+import { ObjectId } from 'mongodb';
+
 export default function TestFetch() {
   async function runFetch() {
     console.log("before fetch");
@@ -12,7 +15,14 @@ export default function TestFetch() {
       universities = university;
     })
     console.log(universities);
-  
+    console.log(universities[0].name);
+    
+    const testDining: DiningHall = {
+      name: "testDiningHall",
+    }
+    await addDiningHallToUniversity(testDining, universities[0].name).then((res) => {
+      console.log(res)
+    })
   }
 
   return (
