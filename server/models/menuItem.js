@@ -1,5 +1,5 @@
 const { connect } = require('./mongo.js');
-const COLLECTIONNAME = 'MenuItems';
+const COLLECTIONNAME = 'MenuItem';
 
 async function collection() { // returns collection we will be CRUDing from 
     const client = await connect();

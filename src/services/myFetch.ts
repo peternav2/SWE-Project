@@ -8,7 +8,7 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: data ? JSON.stringify(data) : undefined,
         }
         console.log("fetch");
         console.log(JSON.stringify(data));
@@ -20,14 +20,11 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
         headers: { 
             'Content-Type': 'application/json',
         },
-        // body: data ? JSON.stringify(data) : undefined,
-        body: JSON.stringify(data),
+        body: data ? JSON.stringify(data) : undefined,
         
     };
     console.log("here2")
     console.log(JSON.stringify(data));
-    console.log(options.body);
-    
-    
+    console.log(JSON.stringify(options.body));
     return fetch(API_ROOT + url, options).then( x=>x.json() );
 }

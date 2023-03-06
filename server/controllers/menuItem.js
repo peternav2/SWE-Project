@@ -1,5 +1,5 @@
 const express = require('express');
-const { add } = require('../models/menuItems.js');
+const { add } = require('../models/menuItem.js');
 const app = express.Router();
 
 app
@@ -10,4 +10,5 @@ app
     .then(x => res.status(200).send(x)); // send the new menu item back to the client
     console.log("after add in controller");
 })
+
 module.exports = app
