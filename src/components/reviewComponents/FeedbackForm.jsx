@@ -4,7 +4,7 @@ class FeedbackForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {feedback: 'Please write your dish feedback', rating: 'nothing'};
+        this.state = { feedback: 'Please write your dish feedback', rating: 'nothing' };
 
         this.handleChangeFeedback = this.handleChangeFeedback.bind(this);
         this.handleChangeRating = this.handleChangeRating.bind(this);
@@ -12,11 +12,11 @@ class FeedbackForm extends React.Component {
     }
 
     handleChangeFeedback(event) {
-        this.setState({feedback: event.target.value });
+        this.setState({ feedback: event.target.value });
     }
 
     handleChangeRating(event) {
-        this.setState({rating: event.target.value });
+        this.setState({ rating: event.target.value });
     }
 
     handleSubmit(event) {
@@ -37,7 +37,7 @@ class FeedbackForm extends React.Component {
 
                     <label>Dish rating is:</label>
                     <br />
-    
+
                     <select value={this.state.rating} onChange={this.handleChangeRating}>
                         <option value="1">Disatisfied</option>
                         <option value="2">Somewhat Disatisfaction</option>
@@ -46,9 +46,13 @@ class FeedbackForm extends React.Component {
                         <option value="5">Very Disatisfied</option>
                     </select>
 
-                    <br />
-                    
-                    <input type="submit" value="Submit" />
+                    <br /><br />
+
+                    <button class="group rounded-2xl h-12 w-32 bg-blue-500 font-bold text-lg text-white relative overflow-hidden">
+                        Submit
+                        <div class="absolute duration-300 inset-0 w-full h-full transition-all scale-0 group-hover:scale-100 group-hover:bg-white/30 rounded-2xl">
+                        </div>
+                    </button>
 
                 </form>
             </>
