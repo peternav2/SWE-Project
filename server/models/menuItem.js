@@ -1,4 +1,5 @@
 const { connect } = require('./mongo.js');
+const { ObjectId } = require('mongodb');
 const COLLECTIONNAME = 'MenuItems';
 
 async function collection() { // returns collection we will be CRUDing from 
@@ -13,4 +14,27 @@ const addMenuItem = async (menuItem) => {
     console.log(menuItem);
     return menuItem; // what will be returned in the Promise
 }
-module.exports = { addMenuItem }
+const getMenuItemsByDate = async(year, month, day, diningHallId) => {
+    const db = await collection();
+    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": diningHallId }).toArray();
+    return result; // what will be returned in the Promise
+}
+
+const getMenuItemsByDiningHall = async(diningHallId) => {
+    const db = await collection();
+    const result = await db.find({"dish.diningHallId": diningHallId}).toArray();
+    return result; // what will be returned in the Promise
+}
+
+const getMenuItemsByMealTypeByDate = async(year, month, day, mealType, diningHallId) => {
+    const db = await collection();
+    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": diningHallId}).toArray();
+    return result; // what will be returned in the Promise
+}
+
+const deleteMenuItem = async (menuItemId) => {
+    const db = await collection();
+    const result = await db.deleteOne({ _id: new ObjectId(menuItemId) });
+    return result; // what will be returned in the Promise (the result of the delete operation
+}
+module.exports = { addMenuItem, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem }

@@ -6,8 +6,9 @@ import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
 import mongodb from 'mongodb';
-import { User, addUser, getUser } from '../stores/User';
-import { addMenuItem, MenuItem } from '../stores/MenuItem';
+import { User, addUser, getUser, deleteUser } from '../stores/User';
+import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem } from '../stores/MenuItem';
+import { addReviewToMenuItem, deleteReviewFromMenuItem, Review } from '../stores/Review';
 
 
 export default function TestFetch() {
@@ -33,14 +34,14 @@ export default function TestFetch() {
       name: "Test Dining Hall",
     }
     
-    if (unis[1]._id){ // if statement to prevent 'error cannot use type undefined | ObjectId'
-      await addDiningHallToUniversity(testDining, unis[1]._id).then((res) => {
-        console.log("LOOK HEREERERER FIRST");
+    // if (unis[1]._id){ // if statement to prevent 'error cannot use type undefined | ObjectId'
+    //   await addDiningHallToUniversity(testDining, unis[1]._id).then((res) => {
+    //     console.log("LOOK HEREERERER FIRST");
         
-        console.log(res);
-        testDining._id = res._id;
-      })
-    }
+    //     console.log(res);
+    //     testDining._id = res._id;
+    //   })
+    // }
     addUser(testUser).then((res) => {
       testUser._id = res._id;
     })
@@ -49,18 +50,19 @@ export default function TestFetch() {
     console.log(testDining._id);
 
 
-      var testDish: Dish = {
-        name: "Test Dish",
-        cal: 100,
-        description: "Test Description",
-        allergens:  ["Test Allergen",
-                    "Test Allergen 2"],
-        ingredients: ["Test Ingredient",
-                      "Test Ingredient 2",
-                      "Test Ingredient 3"],
-        reviews: [],
-        diningHallId: testDining._id
-      }
+
+    var testDish: Dish = {
+      name: "Test Dish",
+      cal: 100,
+      description: "Test Description",
+      allergens:  ["Test Allergen",
+                  "Test Allergen 2"],
+      ingredients: ["Test Ingredient",
+                    "Test Ingredient 2",
+                    "Test Ingredient 3"],
+      reviews: [],
+      diningHallId: unis[1].diningHalls[0]._id,
+    }
     
     var testMenuItem: MenuItem = {
       mealType: "Breakfast",
@@ -71,21 +73,59 @@ export default function TestFetch() {
     await addMenuItem(testMenuItem).then((res) => {
       testMenuItem._id = res._id;
     })
+    console.log("LOOK HERE TEST MENU ITEM IS BELOW");
+    
     console.log(testMenuItem);
     
     await getUser(testUser.username, testUser.password).then((res) => {
       console.log("USER IS GOTTEN BELOW");
-      
       console.log(res);
     })
 
 
+    var review: Review = {
+      username: "Test User",
+      user_Id: testUser._id,
+      rating: 5,
+      comment: "Test Comment",
+    }
 
+    await deleteUser(testUser.username, testUser.password).then((res) => {
+      console.log("USER IS DELETED BELOW");
+      console.log(res);
+    })
+
+    await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
+      console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
+      console.log(res);
+    })
+
+    await getMenuItemsBasedByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
+      console.log("MENU ITEMS FROM DINING HALL ARE GOTTEN BELOW");
+      console.log(res);
+    })
+
+    await getMenuItemsByMealTypeByDate(testMenuItem.date, "Breakfast", unis[1].diningHalls[0]._id).then((res) => {
+      console.log("MENU ITEMS FROM DATE AND MEAL TYPE ARE GOTTEN BELOW");
+      console.log(res);
+    })
+
+    // await deleteMenuItem(testMenuItem._id).then((res) => {
+    //   console.log("MENU ITEM IS DELETED BELOW");
+    //   console.log(res);
+    // });
     console.log(testDining);
-    
+
+    await addReviewToMenuItem(review, testMenuItem._id).then((res) => {
+      console.log("REVIEW IS ADDED BELOW");
+      console.log(res);
+    });
+
+    // await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
+    //   console.log("REVIEW IS DELETED BELOW");
+    //   console.log(res);
+    // });
   }
-
-
 
 
   return (

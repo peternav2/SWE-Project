@@ -20,4 +20,10 @@ const getUser = async (username, password) => {
     return result;
 }
 
-module.exports = { addUser, getUser }
+const deleteUser = async (username, password) => {
+    const db = await collection();
+    const result = db.deleteOne({username: username, password: password});
+    return result;
+}
+
+module.exports = { addUser, getUser, deleteUser }

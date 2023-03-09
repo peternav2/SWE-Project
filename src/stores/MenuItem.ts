@@ -13,3 +13,18 @@ export interface MenuItem {
 export async function addMenuItem(menuItem: MenuItem): Promise<MenuItem> {
     return await myFetch<MenuItem>(`menuitem`, menuItem)
 }
+export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?: ObjectId): Promise<MenuItem[]> { 
+    return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${diningHallId}`)
+}
+
+export async function getMenuItemsBasedByDiningHall(diningHallId?: ObjectId): Promise<MenuItem[]> { 
+    return await myFetch<MenuItem[]>(`menuitem/${diningHallId}`)
+}
+
+export async function getMenuItemsByMealTypeByDate(date: CalendarDate, mealType: string, diningHallId?: ObjectId): Promise<MenuItem[]> {
+    return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${mealType}/${diningHallId}`)
+}
+
+export async function deleteMenuItem(menuItemId?: ObjectId): Promise<any> { 
+    return await myFetch<any>(`menuitem/${menuItemId}`, null, "DELETE");
+}

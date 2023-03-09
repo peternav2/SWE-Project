@@ -6,6 +6,7 @@ const diningHallController = require('./controllers/diningHall.js');
 const universityController = require('./controllers/university.js');
 const dayController = require('./controllers/day.js');
 const userController = require('./controllers/user.js');
+const reviewController = require('./controllers/review.js');
 const { ObjectId } = require('mongodb');
 
 app.use((req, res, next) => {
@@ -14,7 +15,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 })
-console.log(new ObjectId());
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('Hello World!'));
@@ -27,7 +27,7 @@ app.get('/error', (req, res) => {
 .use('/api/v1/university', universityController)
 .use('/api/v1/day', dayController)
 .use('/api/v1/user', userController)
-
+.use('/api/v1/review', reviewController)
 
 
 

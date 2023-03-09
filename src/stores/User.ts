@@ -17,3 +17,8 @@ export const addUser = async (user: User) => {
 export const getUser = async (username: string, password: string) => {
     return await myFetch<User>(`user/${username}/${password}`);
 }
+
+export const deleteUser = async (username: string, password: string) => {
+    console.log("in delete");
+    return await myFetch<any>(`user/${username}/${password}`, null, "DELETE");
+}
