@@ -1,10 +1,9 @@
-import { Review } from "./Review";
-import { University } from "./University";
+import { CalendarDate } from "./CalendarDate";
+import { Dish } from "./Dish";
 
 export interface MenuItem {
-    _id?: string;
-    name: string;
-    cal: number;
-    university: University
-    reviews: Review[];
+    mealType: string; // breakfast, lunch, dinner
+    dish: Dish;
+    date: CalendarDate; // xxxx-xx-xx format eg {year: 2020, month: 10, day: 10};
+    
 }

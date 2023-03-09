@@ -19,7 +19,6 @@ const addDiningHallToUniversity = async (universityName, diningHall) => {
     const db = await collection();
     const result = await db.updateOne(  { name: universityName },
                                         { $push: { diningHalls: diningHall }})
-    return result;
-        
+    return result;      
 }
 module.exports = { add, addDiningHallToUniversity }

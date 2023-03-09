@@ -1,7 +1,8 @@
 import { User } from './User';
-
+import { ObjectId } from 'mongodb';
 export interface Review {
-    user: User;
+    username: string;
+    user_Id: ObjectId;
     rating: number;
     comment: string;
 }
