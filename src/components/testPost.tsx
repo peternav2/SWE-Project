@@ -6,7 +6,7 @@ import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
 import mongodb from 'mongodb';
-import { User, addUser } from '../stores/User';
+import { User, addUser, getUser } from '../stores/User';
 import { addMenuItem, MenuItem } from '../stores/MenuItem';
 
 
@@ -25,6 +25,7 @@ export default function TestFetch() {
 
     var testUser: User = {
       username: "Test User",
+      password: "Test Password",
       isStudent: true,
       university: unis[1],
     }
@@ -72,7 +73,11 @@ export default function TestFetch() {
     })
     console.log(testMenuItem);
     
-
+    await getUser(testUser.username, testUser.password).then((res) => {
+      console.log("USER IS GOTTEN BELOW");
+      
+      console.log(res);
+    })
 
 
 

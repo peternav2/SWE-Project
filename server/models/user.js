@@ -14,4 +14,10 @@ const addUser = async (user) => {
     return user; // what will be returned in the Promise
 }
 
-module.exports = { addUser }
+const getUser = async (username, password) => {
+    const db = await collection();
+    const result = db.findOne({username: username, password: password});
+    return result;
+}
+
+module.exports = { addUser, getUser }
