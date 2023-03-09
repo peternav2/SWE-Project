@@ -1,22 +1,12 @@
+import { ObjectId } from "mongodb";
 import myFetch from "../services/myFetch";
+import { Day } from "./Day";
 
 export interface DiningHall {
     name: string;
-    _id?: string;
+    _id: ObjectId;
 }
 
-export async function addDH (diningHall: DiningHall, UniversityId: string) {
-    await myFetch<DiningHall>("dininghall/", diningHall).then((res) => {
-        return res
-        // this function returns an updated diningHall object with an _id
-        // given from mongo. when using this function, you should update the
-        // diningHall object with the returned object so we have that _id
-    })
-}
-
-export async function getAll (UniversityId: string) {
-    await myFetch<DiningHall[]>(`dininghall/${UniversityId}`).then((res) => {
-        return res
-        // this function returns an array of diningHall objects corresponding to the university
-    })
+export async function addDiningHallToUniversity(diningHall: DiningHall, universityId: string): Promise<DiningHall> {
+    return await myFetch<DiningHall>(`dininghall/${universityId}`, diningHall)
 }

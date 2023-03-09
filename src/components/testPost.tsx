@@ -1,17 +1,19 @@
 import React, { Component, useEffect } from 'react'
 import myFetch from '../services/myFetch'
-import { add, DiningHall } from '../stores/DiningHall';
-import { MenuItem } from '../stores/MenuItem'
-import { University } from '../stores/University'
-export default function testFetch() {
-  async function runFetch() {
-    console.log("before fetch");
-    const diningHall: DiningHall = {
-      name: "Peregrine Dining Hall",
-    }
-    add(diningHall);
-    }
+import { addDiningHallToUniversity, DiningHall } from '../stores/DiningHall';
+import { addUniversity } from '../stores/University';
+import { Dish } from '../stores/Dish'
+import { University, getAllUniversities } from '../stores/University'
+import { ObjectId } from 'mongodb';
 
+export default function TestFetch() {
+
+  
+ // const objId = new ObjectId("5f9f1b9b9b9b9b9b9b9b9b9b");
+  async function runFetch() {
+    fetch('http://localhost:3000/');
+  
+  }
 
   return (
     <div>
