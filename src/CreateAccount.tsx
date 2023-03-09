@@ -1,41 +1,5 @@
 import React from 'react'
-
-
-const UniversityLookup = () => {
-    const [state, setState] = React.useState({
-        university: '',
-    });
-
-    const handleChange = (event:any) => {
-        setState({
-          ...state,
-            [event.target.name]: event.target.value,
-        });
-    };
-
-    const handleSubmit = (event:any) => {
-        event.preventDefault();
-        console.log(state);
-    };
-
-    return (
-        <div>
-            <h1>University</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="university"></label>
-                <input
-                    type="text"
-                    name="university"
-                    value={state.university}
-                    onChange={handleChange}
-                    placeholder="Look up your university."
-                    className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <button className="mt-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="submit">Search</button>
-            </form>
-        </div>
-    );
-}
+import Search from './UniversityList'
 
 const CreateAccount = () => {
   const [form, setForm] = React.useState({
@@ -58,6 +22,17 @@ const CreateAccount = () => {
 
     alert('Username: ' + form.username + '\nPassword: ' + form.password);
   };
+
+  interface University {
+    name: string;
+  }
+
+  const universities: University[] = [
+    {name:"New York University"},
+    {name:"University of California, Berkeley"},
+    {name:"University of California, San Diego"},
+    {name:"University of California, San Francisco"},
+    {name:"University of California, San Jose"}]
 
   return (
     <div className="text-center">
@@ -108,7 +83,9 @@ const CreateAccount = () => {
             />
           </div>
 
-          <div className="block text-gray-700 text-sm font-bold mb-2"><UniversityLookup></UniversityLookup></div>
+          <div className="block text-gray-700 text-sm font-bold mb-2">
+            <Search details = {universities}/>
+          </div>
 
           <div className="mt-5 items-center justify-between">
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
