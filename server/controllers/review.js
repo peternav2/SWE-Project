@@ -10,7 +10,7 @@ app
 })
 .delete('/:menuItemId', (req, res) => {
     deleteReview(req.body, req.params.menuItemId)
-    res.status(200).send('delete review');
+    .then(x => res.status(200).send(x));
 
 })
 

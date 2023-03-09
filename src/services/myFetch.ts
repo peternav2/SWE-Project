@@ -9,15 +9,15 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
                 'Content-Type': 'application/json',
             },
             body: data ? JSON.stringify(data) : undefined,
-        }   
+        };   
         return fetch(API_ROOT + url, option).then(x => x.json());
     }
-    const options: RequestInit = {
+    const option: RequestInit = {
         method: method ?? (data ? 'POST' : 'GET'),
         headers: { 
             'Content-Type': 'application/json',
         },
         body: data ? JSON.stringify(data) : undefined,  
     };
-    return fetch(API_ROOT + url, options).then( x=>x.json() );
+    return fetch(API_ROOT + url, option).then( x=>x.json() );
 }

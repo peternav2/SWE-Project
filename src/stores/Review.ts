@@ -8,13 +8,13 @@ export interface Review {
     comment: string;
 }
 
-export const addReviewToMenuItem = async (review: Review, menuItemId?: ObjectId) => { // not implemented
+export const addReviewToMenuItem = async (review: Review, menuItemId?: ObjectId) => { 
     return await myFetch<Review>(`review/${menuItemId}`, review)
 }
 export const getReviewsBasedByMenuItem = async (menuItemId: ObjectId) => { // not implemented
-    return await myFetch<Review[]>(`review/$(menuItemId)`)
+    return await myFetch<Review[]>(`review/${menuItemId}`)
 }
 
 export const deleteReviewFromMenuItem = async (review: Review, menuItemId?: ObjectId) => {
-    return await myFetch<Review>(`review}`, review, "DELETE");
+    return await myFetch<any>(`review/${menuItemId}`, review, "DELETE");
 }

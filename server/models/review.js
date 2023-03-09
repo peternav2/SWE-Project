@@ -10,17 +10,19 @@ async function collection() { // returns collection we will be CRUDing from
 async function addReviewToMenuItem(review, menuItemId) {
     const db = await collection();
     const result = await db.updateOne(
-        { _id: new ObjectId(menuItemId) },
-        { $push: { reviews: review } }
-    );
+         {_id: new ObjectId(menuItemId)},
+         { $push: {"dish.reviews": review}}
+        );
     return result;
 }
 
 async function deleteReview(review, menuItemId) {
     const db = await collection();
     const result = await db.updateOne(
-        {}
+        {_id: new ObjectId(menuItemId)},
+        { $pull: {"dish.reviews": review}},
     )
+    return result;
 }
 
 

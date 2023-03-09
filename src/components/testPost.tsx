@@ -121,10 +121,10 @@ export default function TestFetch() {
       console.log(res);
     });
 
-    // await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
-    //   console.log("REVIEW IS DELETED BELOW");
-    //   console.log(res);
-    // });
+    await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
+      console.log("REVIEW IS DELETED BELOW");
+      console.log(res);
+    });
   }
 
 
