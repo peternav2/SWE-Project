@@ -23,8 +23,8 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
         body: data ? JSON.stringify(data) : undefined,
         
     };
-    console.log("here2")
-    console.log(JSON.stringify(data));
-    console.log(JSON.stringify(options.body));
+    // console.log("here2")
+    // console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(options.body));
     return fetch(API_ROOT + url, options).then( x=>x.json() );
 }

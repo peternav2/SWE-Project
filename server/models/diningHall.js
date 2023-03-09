@@ -1,5 +1,6 @@
 const { connect } = require('./mongo.js');
 const COLLECTIONNAME = 'University';
+const { ObjectId } = require('mongodb');
 
 async function collection() { // returns collection we will be CRUDing from 
     const client = await connect();
@@ -15,10 +16,11 @@ const add = async (diningHall) => {
 
 
 // input a university name and a dining hall object and it will add the dining hall to the list of dining halls for that university
-const addDiningHallToUniversity = async (universityName, diningHall) => { 
+const addDiningHallToUniversity = async (uniId, diningHall) => { 
     const db = await collection();
-    const result = await db.updateOne(  { name: universityName },
+    diningHall._id= new ObjectId(); // give the dining hall an _id property
+    const result = await db.updateOne(  { _id: new  ObjectId(uniId) },
                                         { $push: { diningHalls: diningHall }})
-    return result;      
+    return diningHall;      
 }
 module.exports = { add, addDiningHallToUniversity }
