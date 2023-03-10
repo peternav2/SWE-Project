@@ -17,8 +17,12 @@ export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?:
     return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${diningHallId}`)
 }
 
+export async function getMenuItemById(menuItemId?: ObjectId): Promise<MenuItem> {
+    return await myFetch<MenuItem>(`menuitem/${menuItemId}`)
+}
+
 export async function getMenuItemsBasedByDiningHall(diningHallId?: ObjectId): Promise<MenuItem[]> { 
-    return await myFetch<MenuItem[]>(`menuitem/${diningHallId}`)
+    return await myFetch<MenuItem[]>(`menuitem/get/diningHall/${diningHallId}`)
 }
 
 export async function getMenuItemsByMealTypeByDate(date: CalendarDate, mealType: string, diningHallId?: ObjectId): Promise<MenuItem[]> {

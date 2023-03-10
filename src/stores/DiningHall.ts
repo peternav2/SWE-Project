@@ -11,3 +11,7 @@ export interface DiningHall {
 export async function addDiningHallToUniversity(diningHall: DiningHall, universityId: ObjectId): Promise<DiningHall> {
     return await myFetch<DiningHall>(`dininghall/${universityId}`, diningHall)
 }
+
+export async function deleteDiningHallFromUniversity(diningHallId?: ObjectId, universityId?: ObjectId): Promise<any> {
+    return await myFetch<any>(`dininghall/${universityId}/${diningHallId}`);
+}

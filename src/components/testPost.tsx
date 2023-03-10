@@ -1,20 +1,19 @@
 import React, { Component, useEffect } from 'react'
 import myFetch from '../services/myFetch'
-import { addDiningHallToUniversity, DiningHall } from '../stores/DiningHall';
+import { addDiningHallToUniversity, deleteDiningHallFromUniversity, DiningHall } from '../stores/DiningHall';
 import { addUniversity } from '../stores/University';
 import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
 import mongodb from 'mongodb';
 import { User, addUser, getUser, deleteUser } from '../stores/User';
-import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem } from '../stores/MenuItem';
-import { addReviewToMenuItem, deleteReviewFromMenuItem, Review } from '../stores/Review';
+import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
+import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
 
 
 export default function TestFetch() {
 
   
- // const objId = new ObjectId("5f9f1b9b9b9b9b9b9b9b9b9b");
   async function runFetch() {
     var unis: University[] = [];
     await getAllUniversities().then((res) => {
@@ -34,14 +33,20 @@ export default function TestFetch() {
       name: "Test Dining Hall",
     }
     
-    // if (unis[1]._id){ // if statement to prevent 'error cannot use type undefined | ObjectId'
-    //   await addDiningHallToUniversity(testDining, unis[1]._id).then((res) => {
-    //     console.log("LOOK HEREERERER FIRST");
+    if (unis[1]._id){ // if statement to prevent 'error cannot use type undefined | ObjectId'
+      await addDiningHallToUniversity(testDining, unis[1]._id).then((res) => {
+        console.log("DINING HALL ADDED TO UNI");
         
-    //     console.log(res);
-    //     testDining._id = res._id;
-    //   })
-    // }
+        console.log(res);
+        testDining._id = res._id;
+      })
+    }
+
+    deleteDiningHallFromUniversity(testDining._id, unis[1]._id).then((res) => {
+      console.log("DINING HALL DELETED FROM UNI");
+      console.log(res);
+      
+    });
     addUser(testUser).then((res) => {
       testUser._id = res._id;
     })
@@ -72,6 +77,11 @@ export default function TestFetch() {
 
     await addMenuItem(testMenuItem).then((res) => {
       testMenuItem._id = res._id;
+    })
+
+    await getMenuItemById(testMenuItem._id).then((res) => {
+      console.log("GET MENU ITEM WITH ID HERE");
+      console.log(res);  
     })
     console.log("LOOK HERE TEST MENU ITEM IS BELOW");
     
@@ -120,6 +130,11 @@ export default function TestFetch() {
       console.log("REVIEW IS ADDED BELOW");
       console.log(res);
     });
+
+    await getReviewsByMenuItem(testMenuItem._id).then((res) => {
+      console.log("REVIEWS ARE GOTTEN BELOW");
+      console.log(res);
+    })
 
     await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
       console.log("REVIEW IS DELETED BELOW");

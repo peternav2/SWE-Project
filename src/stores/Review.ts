@@ -11,9 +11,9 @@ export interface Review {
 export const addReviewToMenuItem = async (review: Review, menuItemId?: ObjectId) => { 
     return await myFetch<Review>(`review/${menuItemId}`, review)
 }
-export const getReviewsBasedByMenuItem = async (menuItemId: ObjectId) => { // not implemented
+export const getReviewsByMenuItem = async (menuItemId?: ObjectId) => {
     return await myFetch<Review[]>(`review/${menuItemId}`)
-}
+} 
 
 export const deleteReviewFromMenuItem = async (review: Review, menuItemId?: ObjectId) => {
     return await myFetch<any>(`review/${menuItemId}`, review, "DELETE");

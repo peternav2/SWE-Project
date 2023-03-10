@@ -11,8 +11,12 @@ const addMenuItem = async (menuItem) => {
     const db = await collection();
     const result = await db.insertOne(menuItem); // insert the menuItem object into the database
     menuItem._id = result.insertedId; // give the menuItem object an _id property
-    console.log(menuItem);
     return menuItem; // what will be returned in the Promise
+}
+const getMenuItemById = async (menuItemId) => {
+    const db = await collection();
+    const result = await db.findOne({_id: new ObjectId(menuItemId)});
+    return result;
 }
 const getMenuItemsByDate = async(year, month, day, diningHallId) => {
     const db = await collection();
@@ -37,4 +41,4 @@ const deleteMenuItem = async (menuItemId) => {
     const result = await db.deleteOne({ _id: new ObjectId(menuItemId) });
     return result; // what will be returned in the Promise (the result of the delete operation
 }
-module.exports = { addMenuItem, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem }
+module.exports = { addMenuItem, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }

@@ -26,4 +26,13 @@ async function deleteReview(review, menuItemId) {
 }
 
 
-module.exports = { addReviewToMenuItem, deleteReview }
+async function getReviewsByMenuItem(menuItemId) {
+    const db = await collection();
+    const result = await db.findOne({_id: new ObjectId(menuItemId)})
+    return result.dish.reviews;
+}
+
+
+
+
+module.exports = { addReviewToMenuItem, deleteReview, getReviewsByMenuItem }
