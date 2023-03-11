@@ -17,11 +17,13 @@ const addDiningHallToUniversity = async (uniId, diningHall) => {
     return diningHall;      
 }
 
-const deleteDiningHallFromUniversity = async (uniId, diningHallId) => {
+const deleteDiningHallFromUniversity = async (uniId, diningHallId) => { // input a university name and a dining hall id and it will delete the dining hall from the list of dining halls for that university
     const db = await collection();
     const result = await db.updateOne(  { _id: new ObjectId(uniId) },
                                         { $pull: { diningHalls: { _id: new ObjectId(diningHallId)}}
     })
     return result;
 }
+
+
 module.exports = { addDiningHallToUniversity, deleteDiningHallFromUniversity }
