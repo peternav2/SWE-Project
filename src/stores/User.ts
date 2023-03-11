@@ -27,8 +27,12 @@ export const addUser = async (user: User) => {
  * @returns Promise<User> : promise that resolves to the user you are requesting
  */
 
-export const getUser = async (username: string, password: string) => {
+export const getUserByUsernamePassword = async (username: string, password: string) => {
     return await myFetch<User>(`user/${username}/${password}`);
+}
+
+export const getUserById = async (userId?: ObjectId) => {
+    return await myFetch<User>(`user/${userId}`);
 }
 
 /**
