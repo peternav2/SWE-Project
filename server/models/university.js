@@ -6,18 +6,27 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
-const getAll = async () => {
+const getAllUniversities = async () => {
     const db = await collection();
     const result = await db.find().toArray();
-    console.log(result);
-    console.log("after find in model")
     return result;
 }
 
-const add = async(university) => {
+const getUniversity = async(universityId) => {
+    const db = await collection();
+    const result = await db.fineOne({_id: new ObjectId(universityId)});
+}
+
+const addUniversity = async(university) => {
     const db = await collection();
     const result = await db.insertOne(university);
     return result;
 }
 
-module.exports = { getAll, add }
+const deleteUniversity = async(universityId) => {
+    const db = await collection();
+    const result = await db.deleteOne({_id: new ObjectId(universityId)});
+    return result;
+}
+
+module.exports = { getAllUniversities, addUniversity, deleteUniversity, getUniversity }
