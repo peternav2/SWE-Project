@@ -6,7 +6,7 @@ import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
 import mongodb from 'mongodb';
-import { User, addUser, getUser, deleteUser } from '../stores/User';
+import { User, addUser, getUserByUsernamePassword, getUserById, deleteUser } from '../stores/User';
 import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
 import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
 
@@ -88,8 +88,13 @@ export default function TestFetch() {
     
     console.log(testMenuItem);
     
-    await getUser(testUser.username, testUser.password).then((res) => {
-      console.log("USER IS GOTTEN BELOW");
+    await getUserByUsernamePassword(testUser.username, testUser.password).then((res) => {
+      console.log("USER IS GOTTEN BELOW BY PASSWORD");
+      console.log(res);
+    })
+
+    await getUserById(testUser._id).then((res) => {
+      console.log("USER IS GOTTEN BELOW BY ID");
       console.log(res);
     })
 
@@ -101,10 +106,10 @@ export default function TestFetch() {
       comment: "Test Comment",
     }
 
-    await deleteUser(testUser.username, testUser.password).then((res) => {
-      console.log("USER IS DELETED BELOW");
-      console.log(res);
-    })
+    // await deleteUser(testUser.username, testUser.password).then((res) => {
+    //   console.log("USER IS DELETED BELOW");
+    //   console.log(res);
+    // })
 
     await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
       console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
