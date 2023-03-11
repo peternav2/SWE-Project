@@ -7,14 +7,14 @@ export interface User {
     password: string
     isStudent: boolean;
     _id?: ObjectId;
-    university: University;
+    universityId?: ObjectId;
 }
 
 
 /**
  * 
  * @param user : User
- * @returns promise that resolves to the user that was just added to the database with the _id field added
+ * @returns Promise<User> : promise that resolves to the user that was just added to the database with the _id field added
  */
 export const addUser = async (user: User) => {
     return await myFetch<User>("user", user);
@@ -24,7 +24,7 @@ export const addUser = async (user: User) => {
  * 
  * @param username : string
  * @param password : string
- * @returns promise that resolves to the user you are requesting with the username and password
+ * @returns Promise<User> : promise that resolves to the user you are requesting
  */
 
 export const getUser = async (username: string, password: string) => {
@@ -35,7 +35,7 @@ export const getUser = async (username: string, password: string) => {
  * 
  * @param username : string
  * @param password : string
- * @returns promise that resolves to an object with details about the document that was edited.
+ * @returns Promise<any> : promise that resolves to an object with details about the document that was edited.
  */
 export const deleteUser = async (username: string, password: string) => {
     return await myFetch<any>(`user/${username}/${password}`, null, "DELETE");

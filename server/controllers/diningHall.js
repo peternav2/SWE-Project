@@ -1,5 +1,5 @@
 const express = require('express');
-const { add, addDiningHallToUniversity } = require('../models/diningHall.js');
+const { deleteDiningHallFromUniversity, addDiningHallToUniversity } = require('../models/diningHall.js');
 const app = express.Router();
 const { ObjectId } = require('mongodb');
 

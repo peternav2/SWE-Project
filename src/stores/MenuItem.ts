@@ -13,7 +13,7 @@ export interface MenuItem {
 /**
  * 
  * @param menuItem : MenuItem
- * @returns promise that resolves to the menu item that was just added to the database with the _id field added
+ * @returns Promise<MenuItem> : a promise that resolves to the menu item that was just added to the database with the _id field added
  */
 export async function addMenuItem(menuItem: MenuItem): Promise<MenuItem> {
     return await myFetch<MenuItem>(`menuitem`, menuItem)
@@ -23,7 +23,7 @@ export async function addMenuItem(menuItem: MenuItem): Promise<MenuItem> {
  * 
  * @param date : CalendarDate: {year: number, month: number, day: number}
  * @param diningHallId : ObjectId
- * @returns promise that resolves to an array of menu items for the date and dining hall ID
+ * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the date you are requesting
  */
 export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?: ObjectId): Promise<MenuItem[]> { 
     return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${diningHallId}`)
@@ -32,7 +32,7 @@ export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?:
 /**
  * 
  * @param menuItemId : ObjectId
- * @returns a promise that resolves to a menu item with the given _id
+ * @returns Promise<MenuItem> : a promise that resolves to the menu item you are requesting from its _id
  */
 export async function getMenuItemById(menuItemId?: ObjectId): Promise<MenuItem> {
     return await myFetch<MenuItem>(`menuitem/${menuItemId}`)
@@ -41,7 +41,7 @@ export async function getMenuItemById(menuItemId?: ObjectId): Promise<MenuItem> 
 /**
  * 
  * @param diningHallId : ObjectId
- * @returns a promise that resolves to an array of menu items for the given dining hall
+ * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the dining hall id you are requesting
  */
 export async function getMenuItemsBasedByDiningHall(diningHallId?: ObjectId): Promise<MenuItem[]> { 
     return await myFetch<MenuItem[]>(`menuitem/get/diningHall/${diningHallId}`)
@@ -50,9 +50,9 @@ export async function getMenuItemsBasedByDiningHall(diningHallId?: ObjectId): Pr
 /**
  * 
  * @param date : CalendarDate: {year: number, month: number, day: number}
- * @param mealType : string: "breakfast", "lunch", "dinner"
+ * @param mealType : string: "breakfast", "lunch", "dinner", "lateNight"
  * @param diningHallId : ObjectId
- * @returns a promise that resolves to an array of menu items for the given date, meal type, and dining hall
+ * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the meal type and date you are requesting
  */
 export async function getMenuItemsByMealTypeByDate(date: CalendarDate, mealType: string, diningHallId?: ObjectId): Promise<MenuItem[]> {
     return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${mealType}/${diningHallId}`)
@@ -60,8 +60,19 @@ export async function getMenuItemsByMealTypeByDate(date: CalendarDate, mealType:
 
 /**
  * 
+ * @param dishName : string
+ * @param diningHallId : ObjectId
+ * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the dish name you are requesting
+ */
+
+export async function getMenuItemsByDishName(dishName: string, diningHallId?: ObjectId): Promise<MenuItem[]> { // not implemented
+    return await myFetch<MenuItem[]>(`menuitem/get/dish/${dishName}/${diningHallId}`)
+}
+
+/**
+ * 
  * @param menuItemId : ObjectId 
- * @returns a promise that resolves to an object with details about the deletion.
+ * @returns Promise<any> : a promise that resolves to an object with details about the deletion.
  */
 
 export async function deleteMenuItem(menuItemId?: ObjectId): Promise<any> { 

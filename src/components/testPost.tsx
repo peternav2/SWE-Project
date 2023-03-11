@@ -24,10 +24,10 @@ export default function TestFetch() {
     })
 
     var testUser: User = {
-      username: "Test User",
+      username: "Peters Test User",
       password: "Test Password",
       isStudent: true,
-      university: unis[1],
+      universityId: unis[1]._id,
     }
     var testDining: DiningHall = {
       name: "Test Dining Hall",
@@ -42,12 +42,12 @@ export default function TestFetch() {
       })
     }
 
-    deleteDiningHallFromUniversity(testDining._id, unis[1]._id).then((res) => {
+    await deleteDiningHallFromUniversity(testDining._id, unis[1]._id).then((res) => {
       console.log("DINING HALL DELETED FROM UNI");
       console.log(res);
       
     });
-    addUser(testUser).then((res) => {
+    await addUser(testUser).then((res) => {
       testUser._id = res._id;
     })
     console.log("LOOK HEREERERER");
@@ -68,6 +68,7 @@ export default function TestFetch() {
       reviews: [],
       diningHallId: unis[1].diningHalls[0]._id,
     }
+    console.log("hello");
     
     var testMenuItem: MenuItem = {
       mealType: "Breakfast",
@@ -120,10 +121,7 @@ export default function TestFetch() {
       console.log(res);
     })
 
-    // await deleteMenuItem(testMenuItem._id).then((res) => {
-    //   console.log("MENU ITEM IS DELETED BELOW");
-    //   console.log(res);
-    // });
+
     console.log(testDining);
 
     await addReviewToMenuItem(review, testMenuItem._id).then((res) => {
@@ -138,6 +136,10 @@ export default function TestFetch() {
 
     await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
       console.log("REVIEW IS DELETED BELOW");
+      console.log(res);
+    });
+    await deleteMenuItem(testMenuItem._id).then((res) => {
+      console.log("MENU ITEM IS DELETED BELOW");
       console.log(res);
     });
   }

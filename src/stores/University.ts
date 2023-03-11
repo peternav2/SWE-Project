@@ -11,7 +11,7 @@ export interface University {
 
 /**
  * 
- * @returns promise that resolves to an array of all universities available in the database
+ * @returns Promise<University[]> : promise that resolves to an array of all universities available in the database
  */
 export async function getAllUniversities(): Promise<University[]> { 
     return await myFetch<University[]>("university")
@@ -19,8 +19,19 @@ export async function getAllUniversities(): Promise<University[]> {
 
 /**
  * 
+ * @param universityId : ObjectId
+ * @returns Promise<University> : promise that resolves to the university you are requesting
+ */
+
+export async function getUniversity(universityId?: ObjectId): Promise<University> {
+    return await myFetch<University>(`university/${universityId}`)
+}
+
+
+/**
+ * 
  * @param university : University
- * @returns a promise that resolves to the university that was just added to the database with the _id field added
+ * @returns Promise<University> :  a promise that resolves to the university that was just added to the database with the _id field added
  */
 export async function addUniversity(university: University) { 
     return myFetch<University>("university", university)
@@ -29,7 +40,7 @@ export async function addUniversity(university: University) {
 /**
  * 
  * @param universityId : ObjectId
- * @returns a promise that resolves to an object with details about the document that was deleted.
+ * @returns Promise<any> : a promise that resolves to an object with details about the document that was deleted.
  */
 export async function deleteUniversity(universityId?: ObjectId) {
     return myFetch<any>(`university/${universityId}`, )

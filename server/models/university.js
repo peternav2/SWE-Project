@@ -12,6 +12,11 @@ const getAllUniversities = async () => {
     return result;
 }
 
+const getUniversity = async(universityId) => {
+    const db = await collection();
+    const result = await db.fineOne({_id: new ObjectId(universityId)});
+}
+
 const addUniversity = async(university) => {
     const db = await collection();
     const result = await db.insertOne(university);
@@ -24,4 +29,4 @@ const deleteUniversity = async(universityId) => {
     return result;
 }
 
-module.exports = { getAllUniversities, addUniversity, deleteUniversity }
+module.exports = { getAllUniversities, addUniversity, deleteUniversity, getUniversity }
