@@ -5,3 +5,4 @@ import { Dish } from "./Dish";
 export interface Day {
     date: CalendarDate
 }
+//
