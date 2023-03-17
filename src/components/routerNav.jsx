@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { User } from '../stores/User';
 export default function RouterNav() {
     return (
         <nav
@@ -18,7 +18,6 @@ export default function RouterNav() {
             <Link to="/event-board">Event Board</Link> |{" "}
             <Link to="/off-campus-dining">Off Campus Dinning</Link> |{" "}
             <Link to="/dish-review-form">Dish Review Form</Link> |{" "}
-
             {/* For other future components */}
             <Link to="/TODO">TODO</Link>
         </nav>

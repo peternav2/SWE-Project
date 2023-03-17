@@ -1,6 +1,9 @@
 import React from 'react'
+import {User} from "../stores/User";
+import {Link} from "react-router-dom";
+import {ObjectId} from "mongodb";
 
-const Login = () => {
+function Login({user, setUser}: {user: User | null, setUser: (user: User | null) => void}) {
   const [form, setForm] = React.useState({
     username: '',
     password: '',
@@ -12,11 +15,21 @@ const Login = () => {
       [event.target.id]: event.target.value,
     });
   };
+  // username: string;
+  // password: string
+  // isStudent: boolean;
+  // _id?: ObjectId;
+  // universityId?: ObjectId;
 
   const handleSubmit = (event : any) => {
     event.preventDefault();
-
+    setUser({
+      username: form.username,
+      password: form.password,
+      isStudent: true,
+    })
     alert('Username: ' + form.username + '\nPassword: ' + form.password);
+
   };
 
   return (
@@ -60,6 +73,7 @@ const Login = () => {
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
+            <Link to='/render-user'> click here to render use </Link>
           </div>
         </form>
       </div>
