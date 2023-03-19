@@ -1,9 +1,11 @@
 import React from 'react'
 import {User} from "../stores/User";
 import {Link} from "react-router-dom";
-import {ObjectId} from "mongodb";
+import {getUserByUsernamePassword} from "../stores/User";
+
 
 function Login({user, setUser}: {user: User | null, setUser: (user: User | null) => void}) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [form, setForm] = React.useState({
     username: '',
     password: '',
@@ -15,23 +17,25 @@ function Login({user, setUser}: {user: User | null, setUser: (user: User | null)
       [event.target.id]: event.target.value,
     });
   };
-  // username: string;
-  // password: string
-  // isStudent: boolean;
-  // _id?: ObjectId;
-  // universityId?: ObjectId;
 
-  const handleSubmit = (event : any) => {
+
+  const handleSubmit = async (event : any) => {
     event.preventDefault();
-    setUser({
-      username: form.username,
-      password: form.password,
-      isStudent: true,
+    setIsLoading(true);
+    await getUserByUsernamePassword(form.username, form.password).then((res) => {
+      setUser(res);
     })
-    alert('Username: ' + form.username + '\nPassword: ' + form.password);
+    setIsLoading(false);
+    // alert('Username: ' + form.username + '\nPassword: ' + form.password);
 
   };
-
+  if (isLoading) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
   return (
     <div className="text-center">
       <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
