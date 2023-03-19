@@ -2,9 +2,9 @@ import React from 'react'
 import {User} from "../stores/User";
 import {Link} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
+import useUserState from "../hooks/useUserState";
 
-
-function Login({user, setUser}: {user: User | null, setUser: (user: User | null) => void}) {
+function Login({user, handleLogin}: {user: User | null, handleLogin: (user: User) => void}) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [form, setForm] = React.useState({
     username: '',
@@ -23,7 +23,7 @@ function Login({user, setUser}: {user: User | null, setUser: (user: User | null)
     event.preventDefault();
     setIsLoading(true);
     await getUserByUsernamePassword(form.username, form.password).then((res) => {
-      setUser(res);
+      handleLogin(res);
     })
     setIsLoading(false);
     // alert('Username: ' + form.username + '\nPassword: ' + form.password);
