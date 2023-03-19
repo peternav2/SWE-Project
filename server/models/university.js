@@ -14,7 +14,7 @@ const getAllUniversities = async () => {
 
 const getUniversity = async(universityId) => {
     const db = await collection();
-    const result = await db.fineOne({_id: new ObjectId(universityId)});
+    const result = await db.findOne({_id: new ObjectId(universityId)});
 }
 
 const addUniversity = async(university) => {
