@@ -15,8 +15,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // use <Link/> with the a "to" prop that matches the "path" prop on <Route/> to hit
   // that component.
     <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+            <RouterProvider router={router} />
     </React.StrictMode>
 )

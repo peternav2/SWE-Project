@@ -4,24 +4,32 @@ import toHexString from 'mongodb'
 import {getUniversity, University} from "../stores/University";
 import {useEffect, useState} from "react";
 export default function RenderUser() {
-  const [university, setUniversity] = useState<University | null>(null);
   const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-  const [serverUrl, setServerUrl] = useState('https://localhost:5173');
-  useEffect(  () => { // this is a hook, it runs when the component mounts
-    let ignore = false;
-    getUniversity(user?.universityId).then((res) => {
-      setUniversity(res);
-    })
-    return () => {ignore= true}
-  }, []);     // this second parameter is to specify only run onMount
-
+  const [university, setUniversity] = useState<University | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<any>(null);
+  // use the useEffect hook to hook into the lifecycle of the component RenderUser()
+  useEffect(() => {
+    async function fetchData() { // create a function to handle the promise and await the result
+      try {
+        await getUniversity(user?.universityId).then((res) => {
+          setUniversity(res);
+        })
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    }
+  fetchData()
+  }, []); // pass an empty dependency array since we only want to run this once on page load
   console.log("after getUniversity in render user")
   if (university) {
     return (
       <div>
         <h1>Username: {user?.username}</h1>
         <h1>Password: {user?.password}</h1>
-        <h1>University: {university.name}</h1>
+        <h1>University: {university?.name}</h1>
         {/*<h1>User ID: {user._id}</h1>*/}
         {/*<h1>University ID: {user.universityId}</h1>*/}
       </div>

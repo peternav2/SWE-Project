@@ -4,8 +4,12 @@ import {Link} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import useUserState from "../hooks/useUserState";
 
-function Login({user, handleLogin}: {user: User | null, handleLogin: (user: User) => void}) {
+function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const [userState, setUserState] = useUserState();
+
+
   const [form, setForm] = React.useState({
     username: '',
     password: '',
@@ -23,7 +27,7 @@ function Login({user, handleLogin}: {user: User | null, handleLogin: (user: User
     event.preventDefault();
     setIsLoading(true);
     await getUserByUsernamePassword(form.username, form.password).then((res) => {
-      handleLogin(res);
+      setUserState(res);
     })
     setIsLoading(false);
     // alert('Username: ' + form.username + '\nPassword: ' + form.password);
@@ -77,7 +81,7 @@ function Login({user, handleLogin}: {user: User | null, handleLogin: (user: User
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
-            <Link to='/render-user'> click here to render use </Link>
+            <Link to={`renderUser`}> click here to render use </Link>
           </div>
         </form>
       </div>
