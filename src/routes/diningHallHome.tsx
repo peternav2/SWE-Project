@@ -2,7 +2,6 @@ import {ObjectId} from "mongodb";
 import {DiningHall, getDiningHall} from "../stores/DiningHall";
 import {useLoaderData} from "react-router-dom";
 
-
 export async function loader({params}: any) {
     const diningHall: DiningHall = await getDiningHall(params.universityId, params.diningHallId);
     return diningHall;

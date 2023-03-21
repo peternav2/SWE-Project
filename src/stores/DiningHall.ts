@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import myFetch from "../services/myFetch";
 import { Day } from "./Day";
 import mongodb from 'mongodb';
+import {University} from "./University";
 
 export interface DiningHall {
     name: string;

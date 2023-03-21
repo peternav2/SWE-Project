@@ -6,9 +6,9 @@ const { ObjectId } = require('mongodb');
 app
 .get('/:universityId/:diningHallId', (req, res) => {
     getDiningHall(req.params.universityId, req.params.diningHallId)
-    .then(x =>
-        console.log(x),
-        res.status(200).send(x))
+    .then(x => res.status(200).send(x))
+    .catch(err => res.status(404).send(err));
+
 })
 .post('/:universityId', (req, res) => {
     addDiningHallToUniversity(req.params.universityId, req.body)

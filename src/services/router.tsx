@@ -19,16 +19,15 @@ export const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "renderUser/:universityId/:diningHallId",
+                path: "renderUser/",
                 element: <RenderUser />,
-                loader: diningHallHomeLoader,
             },
         ],
     },
     {
-        path: '/diningHall',
+        path: '/dininghall/:universityId/:diningHallId',
         element: <DiningHallHome />,
-
+        loader: diningHallHomeLoader,
     },
 //         path: '/create-account',
 //         element: <CreateAccountRoute />,

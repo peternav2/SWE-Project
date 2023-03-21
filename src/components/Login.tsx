@@ -3,6 +3,8 @@ import {Link, useOutletContext} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import useUserState from "../hooks/useUserState";
 import {useUser} from "../App";
+import {getDiningHall} from "../stores/DiningHall";
+import TestFetch from "./testPost";
 
 
 function Login() {
@@ -89,6 +91,9 @@ function Login() {
             <Link to={`renderUser`}> click here to render user  {usertest?.username}</Link>
           </div>
         </form>
+      </div>
+      <div>
+        <TestFetch />
       </div>
     </div>
   );
