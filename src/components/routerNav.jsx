@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { User } from '../stores/User';
 export default function RouterNav() {
     return (
         <nav

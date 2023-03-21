@@ -24,16 +24,16 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        // children: [
-        //     {
-        //         path: "renderUser",
-        //         element: <RenderUser />,
-        //     },
-        // ],
-    },
-    {
-        path: "renderUser",
-        element: <RenderUser />,
+        children: [
+            {
+                path: "",
+                element: <Login />,
+            },
+            {
+                path: "renderUser",
+                element: <RenderUser />,
+            },
+        ],
     },
 //     {
 //         path: '/login',
