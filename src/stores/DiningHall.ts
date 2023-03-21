@@ -25,15 +25,16 @@ export async function addDiningHallToUniversity(diningHall: DiningHall, universi
  * @returns Promise<any> :  a promise that resolves to an object with details about the document that was deleted.
  */
 
-export async function deleteDiningHallFromUniversity(diningHallId?: ObjectId, universityId?: ObjectId): Promise<any> {
+export async function deleteDiningHallFromUniversity(universityId?: ObjectId, diningHallId?: ObjectId): Promise<any> {
     return await myFetch<any>(`dininghall/${universityId}/${diningHallId}`, null, "DELETE");
 }
 
 /**
- * 
+ *
+ * @param universityId : ObjectId
  * @param diningHallId : ObjectId
  * @returns Promise<DiningHall> : promise that resolves to the dining hall you are requesting from its _id
  */
-export async function getDiningHall(diningHallId?: ObjectId): Promise<DiningHall> {
-    return await myFetch<DiningHall>(`dininghall/${diningHallId}`);
+export async function getDiningHall(universityId?: ObjectId ,diningHallId?: ObjectId): Promise<DiningHall> {
+    return await myFetch<DiningHall>(`dininghall/${universityId}/${diningHallId}`);
 }

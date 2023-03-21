@@ -7,9 +7,15 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
+const getDiningHall = async (universityId, diningHallId) => { // input a dining hall id and it will return the dining hall object
+    const db = await collection();
+    const result = await db.findOne( { _id: new ObjectId(universityId) })
+    return result.diningHalls.find(x => x._id == new ObjectId(diningHallId));
+}
+
 
 // input a university name and a dining hall object and it will add the dining hall to the list of dining halls for that university
-const addDiningHallToUniversity = async (uniId, diningHall) => { 
+const addDiningHallToUniversity = async (uniId, diningHall) => {
     const db = await collection();
     diningHall._id= new ObjectId(); // give the dining hall an _id property
     const result = await db.updateOne(  { _id: new  ObjectId(uniId) },
@@ -26,4 +32,4 @@ const deleteDiningHallFromUniversity = async (uniId, diningHallId) => { // input
 }
 
 
-module.exports = { addDiningHallToUniversity, deleteDiningHallFromUniversity }
+module.exports = { addDiningHallToUniversity, deleteDiningHallFromUniversity, getDiningHall }

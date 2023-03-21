@@ -1,9 +1,15 @@
 const express = require('express');
-const { deleteDiningHallFromUniversity, addDiningHallToUniversity } = require('../models/diningHall.js');
+const { deleteDiningHallFromUniversity, addDiningHallToUniversity, getDiningHall } = require('../models/diningHall.js');
 const app = express.Router();
 const { ObjectId } = require('mongodb');
 
 app
+.get('/:universityId/:diningHallId', (req, res) => {
+    getDiningHall(req.params.universityId, req.params.diningHallId)
+    .then(x =>
+        console.log(x),
+        res.status(200).send(x))
+})
 .post('/:universityId', (req, res) => {
     addDiningHallToUniversity(req.params.universityId, req.body)
     .then(x => res.status(200).send(x))

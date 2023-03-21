@@ -1,23 +1,12 @@
 import React from 'react'
-import { BrowserRouter,
-    Routes,
-    Route,
-    createBrowserRouter,
-    RouterProvider,
-} from 'react-router-dom'
+import {createBrowserRouter} from 'react-router-dom'
 import App from '../App'
-import {User} from '../stores/User'
+
 import '../index.css'
-import RenderUser from '../Pages/RenderUser'
-import LoginRoute from "../routes/loginRoute";
-import UniversityMenus from "../routes/universityMenus";
-import EventBoard from '../routes/eventBoard'
-import OffCampusDining from '../routes/offCampusDinning'
-import UniversityMenuReviews from '../routes/universityMenuReviews'
-import SubmitUniversityDishReview from '../routes/submitUniversityDishReview'
-import CreateAccountRoute from '../routes/createAccountRoute'
-import StudentHub from '../routes/studentHub'
-import AdminHub from '../routes/adminHub'
+import RenderUser from '../pages/RenderUser'
+import DiningHallHome, {
+    loader as diningHallHomeLoader,
+} from "../routes/diningHallHome";
 import Login from "../components/Login";
 
 export const router = createBrowserRouter([
@@ -30,15 +19,17 @@ export const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "renderUser",
+                path: "renderUser/:universityId/:diningHallId",
                 element: <RenderUser />,
+                loader: diningHallHomeLoader,
             },
         ],
     },
-//     {
-//         path: '/login',
-//         element: <LoginRoute />,
-//     },    {
+    {
+        path: '/diningHall',
+        element: <DiningHallHome />,
+
+    },
 //         path: '/create-account',
 //         element: <CreateAccountRoute />,
 //     },    {
