@@ -1,12 +1,13 @@
 import React from 'react'
-import {createBrowserRouter} from 'react-router-dom'
+import {createBrowserRouter, useParams} from 'react-router-dom'
 import App from '../App'
 
 import '../index.css'
-import RenderUser from '../pages/RenderUser'
+import RenderUser from '../routes/RenderUser'
 import DiningHallHome, {
     loader as diningHallHomeLoader,
 } from "../routes/diningHallHome";
+import MenuForDay, {loader as menuForDayLoader} from "../routes/menuForDay";
 import Login from "../components/Login";
 
 export const router = createBrowserRouter([
@@ -25,9 +26,14 @@ export const router = createBrowserRouter([
         ],
     },
     {
-        path: '/dininghall/:universityId/:diningHallId',
+        path: '/dininghall/:universityId/:diningHallId/:diningHallName',
         element: <DiningHallHome />,
         loader: diningHallHomeLoader,
+    },
+    {
+        path: '/day/:diningHallId/:month/:day/:year',
+        element: <MenuForDay />,
+        loader: menuForDayLoader,
     },
 //         path: '/create-account',
 //         element: <CreateAccountRoute />,

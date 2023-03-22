@@ -42,7 +42,7 @@ export default function RenderUser() {
     }
   fetchData().then(() => console.log("fetchData() finished"));
   }, []); // pass an empty dependency array since we only want to run this once on page load
-  //TODO this above effect runs multiple times on page load and I don't know why
+  //TODO this above effect runs a couple of times on page load and I don't know why
 
 
 
@@ -50,7 +50,7 @@ export default function RenderUser() {
   if (university) {
     return (
       //create a centered div
-      <div className="flex justify-center items-center h-screen">
+      <div className=" justify-center items-center h-screen">
         <div>
           <h1>local storage user</h1>
           <h1>Username: {user?.username}</h1>
@@ -65,10 +65,12 @@ export default function RenderUser() {
         </div>
         <button onClick={changeUserName}> change username</button>
         <hr/>
-        <div>{'\n'}space</div>
         <button>
           <Link to={'/'} > to log in</Link>
         </button>
+        <div>
+          <Link to={'/dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test%20Dining%20Hall'}> to a dining hall page</Link>
+        </div>
       </div>
     )
   }

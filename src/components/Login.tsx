@@ -89,6 +89,7 @@ function Login() {
               Create an account.
             </button>
             <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
+            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
           </div>
         </form>
       </div>
