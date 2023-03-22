@@ -88,7 +88,7 @@ function Login() {
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
-            <Link to={`renderUser`}> click here to render user  {usertest?.username}</Link>
+            <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
           </div>
         </form>
       </div>

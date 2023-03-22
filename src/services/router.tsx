@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "renderUser/",
+                path: "renderuser/",
                 element: <RenderUser />,
             },
         ],
