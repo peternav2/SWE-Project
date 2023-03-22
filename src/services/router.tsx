@@ -23,18 +23,19 @@ export const router = createBrowserRouter([
                 path: "renderuser/",
                 element: <RenderUser />,
             },
+            {
+                path: '/dininghall/:universityId/:diningHallId/:diningHallName',
+                element: <DiningHallHome />,
+                loader: diningHallHomeLoader,
+            },
+            {
+                path: '/day/:diningHallId/:month/:day/:year',
+                element: <MenuForDay />,
+                loader: menuForDayLoader,
+            },
         ],
     },
-    {
-        path: '/dininghall/:universityId/:diningHallId/:diningHallName',
-        element: <DiningHallHome />,
-        loader: diningHallHomeLoader,
-    },
-    {
-        path: '/day/:diningHallId/:month/:day/:year',
-        element: <MenuForDay />,
-        loader: menuForDayLoader,
-    },
+
 //         path: '/create-account',
 //         element: <CreateAccountRoute />,
 //     },    {

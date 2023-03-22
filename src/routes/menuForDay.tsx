@@ -1,5 +1,6 @@
 import {getMenuItemsBasedByDate, MenuItem} from "../stores/MenuItem";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
+import {useUser} from "../App";
 
 export async function loader({params}: any) {
     let year = +params.year;
@@ -18,11 +19,12 @@ export default function MenuForDay() {
     const day = useParams().day;
     const year = useParams().year;
     const navigate = useNavigate();
-
+    const [user, setUser] = useUser();
 
     return (
         <div>
             <h1> Menu for {month} {day} {year} </h1>
+            <h1>{user.username}</h1>
             <div>
                 {
                     menuItems.map((menuItem) => {

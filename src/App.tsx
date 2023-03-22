@@ -8,16 +8,12 @@ function App() {
   const [userContext, setUserContext] = useState<User | null>(null);
     return (
     <div>
-      <RouterNav />
       <Outlet context={[userContext, setUserContext]}/>
     </div>
   )
 }
 export function useUser() {
   return useOutletContext<ContextType>();
-}
-function useHistory() {
-
 }
 
 export default App
