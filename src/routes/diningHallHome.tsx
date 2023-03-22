@@ -1,6 +1,6 @@
  import {ObjectId} from "mongodb";
 import {DiningHall, getDiningHall} from "../stores/DiningHall";
-import {Link, useLoaderData, useParams} from "react-router-dom";
+import {Link, useLoaderData, useNavigate, useParams} from "react-router-dom";
  import {getMenuItemsBasedByDiningHall, MenuItem} from "../stores/MenuItem";
 
 export async function loader({params}: any) {
@@ -10,6 +10,7 @@ export async function loader({params}: any) {
 export default function DiningHallHome() {
     const data = useLoaderData() as MenuItem[];
     const diningHallName = useParams().diningHallName;
+    const navigate = useNavigate();
     return (
         <div>
             <h1> Welcome to {diningHallName} /</h1>
@@ -27,6 +28,15 @@ export default function DiningHallHome() {
                 })
                 }
             </div>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              navigate(-1); // this is how we will tell a user to go back a page. because we are using custom
+              // routing, we can't just send to some router link. we have to use navigate(-1) to go back a page
+            }}
+          >
+            go Back
+          </button>
         </div>
     )
 }

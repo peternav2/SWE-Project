@@ -16,5 +16,8 @@ function App() {
 export function useUser() {
   return useOutletContext<ContextType>();
 }
+function useHistory() {
+
+}
 
 export default App
