@@ -10,7 +10,6 @@ export interface User {
     universityId?: ObjectId;
 }
 
-
 /**
  * 
  * @param user : User

@@ -6,6 +6,7 @@ const diningHallController = require('./controllers/diningHall.js');
 const universityController = require('./controllers/university.js');
 const userController = require('./controllers/user.js');
 const reviewController = require('./controllers/review.js');
+const eventItemController = require('./controllers/eventItem.js');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -25,6 +26,7 @@ app.get('/error', (req, res) => {
 .use('/api/v1/university', universityController)
 .use('/api/v1/user', userController)
 .use('/api/v1/review', reviewController)
+.use('/api/v1/eventitem', eventItemController)
 
 
 

@@ -1,5 +1,5 @@
 import RouterNav from '../components/routerNav';
-import Login from '../components/Login';
+import Login from './Login';
 
 
 export default function LoginRoute() {

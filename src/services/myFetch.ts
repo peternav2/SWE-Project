@@ -11,6 +11,15 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
             body: data ? JSON.stringify(data) : undefined,
         };   
         return fetch(API_ROOT + url, option).then(x => x.json());
+    } else if (method == 'PATCH'){
+        const option: RequestInit = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: data ? JSON.stringify(data) : undefined,
+        };
+        return fetch(API_ROOT + url, option).then(x => x.json());
     }
     const option: RequestInit = {
         method: method ?? (data ? 'POST' : 'GET'),
@@ -27,7 +36,7 @@ export default function myFetch<T>(url: string, data?: any, method?: string ): P
  * 
  * @param url the url to fetch from the backend
  * @param data the data to send to the backend (if any)
- * @param method the method to use for the fetch eg GET, POST, DELETE
+ * @param method the method to use for the fetch eg GET, POST, DELETE, PATCH
  *
  * 
  * @returns a promise that resolves to the data returned from the backend

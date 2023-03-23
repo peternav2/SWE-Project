@@ -1,4 +1,5 @@
 const { connect } = require('./mongo.js');
+const {ObjectId} = require("mongodb");
 const COLLECTIONNAME = 'University';
 
 async function collection() { // returns collection we will be CRUDing from 
@@ -14,7 +15,8 @@ const getAllUniversities = async () => {
 
 const getUniversity = async(universityId) => {
     const db = await collection();
-    const result = await db.fineOne({_id: new ObjectId(universityId)});
+    const result = await db.findOne({_id: new ObjectId(universityId)});
+    return result;
 }
 
 const addUniversity = async(university) => {
