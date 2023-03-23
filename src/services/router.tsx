@@ -8,7 +8,7 @@ import DiningHallHome, {
     loader as diningHallHomeLoader,
 } from "../routes/diningHallHome";
 import MenuForDay, {loader as menuForDayLoader} from "../routes/menuForDay";
-import Login from "../components/Login";
+import Login from "../routes/Login";
 
 export const router = createBrowserRouter([
     {

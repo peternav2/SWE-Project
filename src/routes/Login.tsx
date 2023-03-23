@@ -1,16 +1,12 @@
 import React from 'react'
-import {Link, useOutletContext} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import useUserState from "../hooks/useUserState";
 import {useUser} from "../App";
-import {getDiningHall} from "../stores/DiningHall";
-import TestFetch from "./testPost";
-
 
 function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
   const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
-  const [userState, setUserState] = useUserState(); // local storage
 
 
   const [form, setForm] = React.useState({
@@ -30,7 +26,6 @@ function Login() {
     event.preventDefault();
     setIsLoading(true);
     await getUserByUsernamePassword(form.username, form.password).then((res) => {
-      setUserState(res);
       setUser(res);
     })
     setIsLoading(false);
@@ -92,9 +87,6 @@ function Login() {
             <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
           </div>
         </form>
-      </div>
-      <div>
-        <TestFetch />
       </div>
     </div>
   );

@@ -9,6 +9,10 @@ function App() {
     return (
     <div>
       <Outlet context={[userContext, setUserContext]}/>
+    {/*
+         the above Outlet is where our app is gonna render and it is through this element which our app will render
+         and have access to the user store through Context
+     */}
     </div>
   )
 }

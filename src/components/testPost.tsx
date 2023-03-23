@@ -16,7 +16,7 @@ import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDini
 import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
 import DiningHallHome from "../routes/diningHallHome";
 import {
-  addEventItem,
+  addEventItem, deleteEventItem,
   EventItem,
   getEventItemsByDate,
   getEventItemsByDiningHall,
@@ -161,37 +161,47 @@ export default function TestFetch() {
     //   console.log("MENU ITEM IS DELETED BELOW");
     //   console.log(res);
     // });
-    await getDiningHall(unis[1]._id, unis[1].diningHalls[0]._id).then((res) => {
-      console.log("DINING HALL IS GOTTEN BELOW");
-      console.log(res);
-    })
-    const eventItem: EventItem = {
-      name: "Test Event",
-      description: "Test Description",
-      date: {year: 2023, month: 1, day: 1},
-      diningHallId: unis[1].diningHalls[0]._id,
-
-    }
-    await addEventItem(eventItem).then((res) => {
-      console.log("EVENT ITEM IS ADDED BELOW");
-      eventItem._id = res._id;
-      console.log(res);
-    })
-    await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
-        console.log("EVENT ITEM IS GOTTEN BELOW");
-        console.log(res);
-    })
-    await getEventItemsByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
-      console.log("EVENT ITEM IS GOTTEN BELOW");
-      console.log(res);
-    })
-    const newEventItem: EventItem = {
-      ...eventItem,
-        name: "New Test Event",
-    }
-    // await updateEventItem(newEventItem).then((res) => {
-    //     console.log("EVENT ITEM IS UPDATED BELOW");
+    // await getDiningHall(unis[1]._id, unis[1].diningHalls[0]._id).then((res) => {
+    //   console.log("DINING HALL IS GOTTEN BELOW");
+    //   console.log(res);
+    // })
+    // const eventItem: EventItem = {
+    //   name: "Test Event",
+    //   description: "Test Description",
+    //   date: {year: 2023, month: 1, day: 1},
+    //   diningHallId: unis[1].diningHalls[0]._id,
+    // }
+    // console.log(eventItem.diningHallId);
+    // await addEventItem(eventItem).then((res) => {
+    //   console.log("EVENT ITEM IS ADDED BELOW");
+    //   console.log("look at two ids below see if same")
+    //   console.log(eventItem.diningHallId);
+    //   console.log(unis[1].diningHalls[0]._id);
+    //   eventItem._id = res._id;
+    //   console.log(res);
+    // })
+    // await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
+    //     console.log("EVENT ITEM IS GOTTEN BELOW");
     //     console.log(res);
+    // })
+    // await getEventItemsByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
+    //   console.log("EVENT ITEM IS GOTTEN BELOW");
+    //   console.log(res);
+    // })
+    //
+    // const updatedEventItem: EventItem = {
+    //   ...eventItem,
+    //   name: "Updated Test Event"
+    // }
+    //
+    // await updateEventItem(updatedEventItem).then((res) => {
+    //   console.log("EVENT ITEM IS UPDATED BELOW");
+    //   console.log(res);
+    // })
+
+    // await deleteEventItem(eventItem._id).then((res) => {
+    //   console.log("EVENT ITEM IS DELETED BELOW");
+    //   console.log(res);
     // })
   }
 
