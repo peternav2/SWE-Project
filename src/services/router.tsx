@@ -35,29 +35,4 @@ export const router = createBrowserRouter([
             },
         ],
     },
-
-//         path: '/create-account',
-//         element: <CreateAccountRoute />,
-//     },    {
-//         path: '/off-campus-dining',
-//         element: <OffCampusDining/>,
-//     },    {
-//         path: '/university-menu-reviews',
-//         element: <UniversityMenuReviews/>,
-//     },    {
-//         path: '/event-board',
-//         element: <EventBoard />,
-//     },    {
-//         path: '/view-menus',
-//         element: <UniversityMenus />,
-//     },    {
-//         path: '/dish-review-form',
-//         element: <SubmitUniversityDishReview />,
-//     },    {
-//         path: '/student-hub',
-//         element: <StudentHub />,
-//     }, {
-//         path: 'admin-hub',
-//         element: <AdminHub/>,
-//     }
 ])
