@@ -15,7 +15,13 @@ import { User, addUser, getUserByUsernamePassword, getUserById, deleteUser } fro
 import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
 import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
 import DiningHallHome from "../routes/diningHallHome";
-import {addEventItem, EventItem} from "../stores/EventItem";
+import {
+  addEventItem,
+  EventItem,
+  getEventItemsByDate,
+  getEventItemsByDiningHall,
+  updateEventItem
+} from "../stores/EventItem";
 
 
 export default function TestFetch() {
@@ -159,13 +165,34 @@ export default function TestFetch() {
       console.log("DINING HALL IS GOTTEN BELOW");
       console.log(res);
     })
-    const menuItem: EventItem = {
+    const eventItem: EventItem = {
       name: "Test Event",
       description: "Test Description",
       date: {year: 2023, month: 1, day: 1},
+      diningHallId: unis[1].diningHalls[0]._id,
 
     }
-    await addEventItem()
+    await addEventItem(eventItem).then((res) => {
+      console.log("EVENT ITEM IS ADDED BELOW");
+      eventItem._id = res._id;
+      console.log(res);
+    })
+    await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
+        console.log("EVENT ITEM IS GOTTEN BELOW");
+        console.log(res);
+    })
+    await getEventItemsByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
+      console.log("EVENT ITEM IS GOTTEN BELOW");
+      console.log(res);
+    })
+    const newEventItem: EventItem = {
+      ...eventItem,
+        name: "New Test Event",
+    }
+    // await updateEventItem(newEventItem).then((res) => {
+    //     console.log("EVENT ITEM IS UPDATED BELOW");
+    //     console.log(res);
+    // })
   }
 
 

@@ -33,9 +33,9 @@ const deleteEventItem = async (eventItemId) => {
     return result;
 }
 
-const updateEventItem = async (eventItemId, eventItem) => {
+const updateEventItem = async (eventItem) => {
     const db = await collection();
-    const result = await db.updateOne({_id: new ObjectId(eventItemId)}, {$set: eventItem});
+    const result = await db.updateOne({_id: new ObjectId(eventItem._id)}, {$set: eventItem});
     return result;
 }
 

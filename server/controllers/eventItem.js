@@ -24,8 +24,8 @@ app
     .then(x => res.status(200).send(x))
     .catch(err => res.status(404).send(err));
 })
-.patch('/:eventItemId', (req, res) => {
-    updateEventItem(req.params.eventItemId, req.body)
+.patch('/', (req, res) => {
+    updateEventItem(req.body)
     .then(x => res.status(200).send(x))
     .catch(err => res.status(404).send(err));
 })
