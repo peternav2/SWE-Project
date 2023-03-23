@@ -21,8 +21,8 @@ export async function getEventItemsByDate(day: CalendarDate,diningHallId?: Objec
 }
 
 
-export async function addEventItem( eventItem: EventItem,diningHallId?:ObjectId): Promise<EventItem> {
-    return myFetch<EventItem>("eventitem/${diningHallId}", eventItem)
+export async function addEventItem( eventItem: EventItem): Promise<EventItem> {
+    return myFetch<EventItem>(`eventitem`, eventItem)
 }
 
 export async function deleteEventItem(eventItemId?: ObjectId) {
@@ -30,8 +30,12 @@ export async function deleteEventItem(eventItemId?: ObjectId) {
 }
 
 export async function updateEventItem(eventItem: EventItem) {
-    return myFetch<EventItem>(`eventitem/`, eventItem, "PATCH")
-}
+    return myFetch<EventItem>(`eventitem`, eventItem, "PATCH")
+ } // TODO: implement this, turns out it is more difficult than I thought.
+// the problem is that mongo replaces the _id field with a different _id field, so the object is not the same as the one in the database.
+//maybe use collection.replaceOne() instead of collection.updateOne()?
+
+
 
 
 
