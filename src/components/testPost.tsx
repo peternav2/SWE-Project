@@ -15,6 +15,7 @@ import { User, addUser, getUserByUsernamePassword, getUserById, deleteUser } fro
 import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
 import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
 import DiningHallHome from "../routes/diningHallHome";
+import {addEventItem, EventItem} from "../stores/EventItem";
 
 
 export default function TestFetch() {
@@ -158,6 +159,13 @@ export default function TestFetch() {
       console.log("DINING HALL IS GOTTEN BELOW");
       console.log(res);
     })
+    const menuItem: EventItem = {
+      name: "Test Event",
+      description: "Test Description",
+      date: {year: 2023, month: 1, day: 1},
+
+    }
+    await addEventItem()
   }
 
 
