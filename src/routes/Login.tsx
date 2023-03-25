@@ -1,6 +1,14 @@
 import React from 'react'
+import {Link} from "react-router-dom";
+import {getUserByUsernamePassword} from "../stores/User";
+import useUserState from "../hooks/useUserState";
+import {useUser} from "../App";
 
-const Login = () => {
+function Login() {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
+
+
   const [form, setForm] = React.useState({
     username: '',
     password: ''
@@ -67,7 +75,8 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (event : any) => {
+
+  const handleSubmit = async (event : any) => {
     event.preventDefault();
     if(passwordValidity.error_code != 0 || usernameValidity.error_code != 0){
       alert("Did not sign in.")
@@ -75,8 +84,24 @@ const Login = () => {
     else{
       alert("Signed in.")
     }
-  };
+    setIsLoading(true);
+    await getUserByUsernamePassword(form.username, form.password).then((res) => {
+      setUser(res);
+    })
+    setIsLoading(false);
+    // alert('Username: ' + form.username + '\nPassword: ' + form.password);
 
+  };
+  if (isLoading) {
+
+
+    return (
+      // make a centered loading div
+      <div className="flex justify-center items-center h-screen">
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
   return (
     <div className="text-center">
       <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
@@ -120,6 +145,8 @@ const Login = () => {
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
+            <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
+            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
           </div>
         </form>
       </div>
