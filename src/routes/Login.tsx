@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
-import useUserState from "../hooks/useUserState";
 import {useUser} from "../App";
 
 function Login() {

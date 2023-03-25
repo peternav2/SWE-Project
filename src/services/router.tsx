@@ -12,6 +12,7 @@ import Login from "../routes/Login";
 import StudentUniversityHome from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
 
+
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "renderuser/",
+                path: "/renderuser/",
                 element: <RenderUser />,
             },
             {
@@ -36,16 +37,15 @@ export const router = createBrowserRouter([
                 loader: diningHallHomeLoader,
             },
             {
-                path: 'student/day/menu/:diningHallId/:month/:day/:year',
+                path: '/student/day/menu/:diningHallId/:month/:day/:year',
                 element: <StudentMenuForDay />,
                 loader: menuForDayLoader,
             },
             {
-                path: 'student/day/event/:diningHallId/:month/:day/:year',
+                path: '/student/day/event/:diningHallId/:month/:day/:year',
                 element: <StudentEventForDay />,
                 //insert loader here for event datad
-            },
-
-        ],
-    },
-])
+            }
+        ]
+    }
+])//

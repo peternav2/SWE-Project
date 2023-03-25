@@ -69,7 +69,7 @@ export default function RenderUser() {
           <Link to={'/'} > to log in</Link>
         </button>
         <div>
-          <Link to={'/dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test%20Dining%20Hall'}> to a dining hall page</Link>
+          <Link to={'/student/dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test%20Dining%20Hall'}> to a dining hall page</Link>
         </div>
       </div>
     )

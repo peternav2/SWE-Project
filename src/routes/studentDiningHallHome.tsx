@@ -16,7 +16,7 @@ export default function StudentDiningHallHome() {
                 {/*someone replace this with instead of mapping menuItems, create a dayButton component,
                 which will, on click send the user to the menu of that day*/}
                 {/*eg*/}
-                <Link to={`/day/${useParams().diningHallId}/1/1/2023`}> click here to daypage </Link>
+                <Link to={`/student/day/menu/${useParams().diningHallId}/1/1/2023`}> click here to daypage </Link>
                 {data.map((menuItem) => {
                     return (
                         <div>
