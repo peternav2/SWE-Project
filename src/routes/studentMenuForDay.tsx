@@ -13,7 +13,7 @@ export async function loader({params}: any) {
     return menuItems;
 }
 
-export default function MenuForDay() {
+export default function StudentMenuForDay() {
     const menuItems = useLoaderData() as MenuItem[];
     const month = useParams().month;
     const day = useParams().day;
