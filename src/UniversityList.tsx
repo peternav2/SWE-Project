@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
 
-function UniversityTab({university}:any, {onClick}:any){
+const UniversityTab = (props : any) => {
     return (
     <div>
       <div>
           <button 
             type="button"
             className="bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-            onClick={onClick}
-            value = {university.name}>
-            {university.name}
+            onClick={props.function}
+            value = {props.university.name}
+            id = 'field'>
+            {props.university.name}
           </button>
       </div>
     </div>
     )
 }
 
-function SearchList({universities}:any, onClick:any){
-  const passedFunction = () => {
-    alert("hello")
-  }
-
-    const filtered = universities.map((university:any) => <UniversityTab key = {university.name} onClick={passedFunction} university = {university}/>)
+function SearchList(props:any){
+    const filtered = props.universities.map((university:any) => <UniversityTab key = {university.name} university = {university} function = {props.func}/>)
     return (
         <div>
             {filtered}
@@ -37,7 +34,7 @@ const Scroll = (props:any) => {
     );
 }
 
-function Search({details}:any, {props}:any) {
+function Search(props:any) {
 
     const [searchField, setSearchField] = useState({
       field: "",
@@ -48,21 +45,15 @@ function Search({details}:any, {props}:any) {
         ...searchField,
         [event.target.id]: event.target.value,
       });
+      props.change(event.target.value)
     };
 
-    const handleClick = (event:any) => {
-      setSearchField({
-        ...searchField,
-        [searchField.field]: event.target.value,
-      });
-    }
-
-    const filteredData = details.filter((university:any) => university.name.includes(searchField.field));
+    const filteredData = props.details.filter((university:any) => university.name.includes(searchField.field));
   
-    function searchList() {
+    function searchList(func:any) {
       return (
         <Scroll>
-          <SearchList universities={filteredData} onClick={handleClick}/>
+          <SearchList universities={filteredData} func = {func}/>
         </Scroll>
       );
     }
@@ -82,7 +73,7 @@ function Search({details}:any, {props}:any) {
           />
       </label>
       </div>
-      {searchList()}
+      {searchList(handleChange)}
       </div>
     )
     }
