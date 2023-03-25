@@ -4,11 +4,13 @@ import App from '../App'
 
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
-import DiningHallHome, {
+import StudentDiningHallHome, {
     loader as diningHallHomeLoader,
-} from "../routes/diningHallHome";
-import MenuForDay, {loader as menuForDayLoader} from "../routes/menuForDay";
+} from "../routes/studentDiningHallHome";
+import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
 import Login from "../routes/Login";
+import StudentUniversityHome from "../routes/studentUniversityHome";
+import StudentEventForDay from "../routes/studentEventForDay";
 
 export const router = createBrowserRouter([
     {
@@ -24,40 +26,26 @@ export const router = createBrowserRouter([
                 element: <RenderUser />,
             },
             {
-                path: '/dininghall/:universityId/:diningHallId/:diningHallName',
-                element: <DiningHallHome />,
+                path: '/student/university/:universityId/',
+                element: <StudentUniversityHome />,
+                //insert loader here for uni data
+            },
+            {
+                path: '/student/dininghall/:universityId/:diningHallId/:diningHallName',
+                element: <StudentDiningHallHome />,
                 loader: diningHallHomeLoader,
             },
             {
-                path: '/day/:diningHallId/:month/:day/:year',
-                element: <MenuForDay />,
+                path: 'student/day/menu/:diningHallId/:month/:day/:year',
+                element: <StudentMenuForDay />,
                 loader: menuForDayLoader,
             },
+            {
+                path: 'student/day/event/:diningHallId/:month/:day/:year',
+                element: <StudentEventForDay />,
+                //insert loader here for event datad
+            },
+
         ],
     },
-
-//         path: '/create-account',
-//         element: <CreateAccountRoute />,
-//     },    {
-//         path: '/off-campus-dining',
-//         element: <OffCampusDining/>,
-//     },    {
-//         path: '/university-menu-reviews',
-//         element: <UniversityMenuReviews/>,
-//     },    {
-//         path: '/event-board',
-//         element: <EventBoard />,
-//     },    {
-//         path: '/view-menus',
-//         element: <UniversityMenus />,
-//     },    {
-//         path: '/dish-review-form',
-//         element: <SubmitUniversityDishReview />,
-//     },    {
-//         path: '/student-hub',
-//         element: <StudentHub />,
-//     }, {
-//         path: 'admin-hub',
-//         element: <AdminHub/>,
-//     }
 ])

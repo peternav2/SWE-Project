@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import RouterNav from './components/routerNav';
 import {User} from "./stores/User";
 import {Outlet, Route, Routes, useOutletContext} from "react-router-dom";
 

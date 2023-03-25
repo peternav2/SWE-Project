@@ -14,7 +14,7 @@ import mongodb from 'mongodb';
 import { User, addUser, getUserByUsernamePassword, getUserById, deleteUser } from '../stores/User';
 import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
 import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
-import DiningHallHome from "../routes/diningHallHome";
+import DiningHallHome from "../routes/studentDiningHallHome";
 import {
   addEventItem, deleteEventItem,
   EventItem,

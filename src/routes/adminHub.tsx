@@ -1,4 +1,3 @@
-import RouterNav from '../components/routerNav';
 
 export default function AdminHub() {
   return (
