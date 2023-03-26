@@ -9,7 +9,9 @@ import StudentDiningHallHome, {
 } from "../routes/studentDiningHallHome";
 import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
 import Login from "../routes/Login";
-import StudentUniversityHome from "../routes/studentUniversityHome";
+import StudentUniversityHome, {
+    loader as StudentUniversityHomeLoader
+} from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
 
 
@@ -29,10 +31,10 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
-                //insert loader here for uni data
+                loader: StudentUniversityHomeLoader,
             },
             {
-                path: '/student/dininghall/:universityId/:diningHallId/:diningHallName',
+                path: '/student/dininghall/:diningHallId/:diningHallName',
                 element: <StudentDiningHallHome />,
                 loader: diningHallHomeLoader,
             },

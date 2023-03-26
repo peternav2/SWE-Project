@@ -5,7 +5,7 @@ import {useUser} from "../App";
 
 function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
+  const[user, setUser] = useUser(); // context hook from App.tsx react router outlet
 
 
   const [form, setForm] = React.useState({
@@ -81,7 +81,7 @@ function Login() {
       alert("Did not sign in.")
     }
     else{
-      alert("Signed in.")
+      // alert("Signed in.")
     }
     setIsLoading(true);
     await getUserByUsernamePassword(form.username, form.password).then((res) => {
@@ -92,8 +92,6 @@ function Login() {
 
   };
   if (isLoading) {
-
-
     return (
       // make a centered loading div
       <div className="flex justify-center items-center h-screen">
@@ -144,8 +142,13 @@ function Login() {
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
-            <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
-            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <Link to={`renderuser`}> click here to render user  {user?.username}</Link>
+            </button>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <Link to={`student/university/${user?.universityId}`}> Student Uni Home Page</Link>
+            </button>
+
           </div>
         </form>
       </div>
