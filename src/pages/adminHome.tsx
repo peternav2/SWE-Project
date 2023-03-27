@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { getUserByUsernamePassword, type User } from '../stores/User';
+import {useUser} from '../App';
 
 export default function adminHome() {
 
-    let currentUser: User = getUserByUsernamePassword("RodoJML", "1234");
+    const [user] = useUser();
 
     return (
-      <div>{ currentUser.isStudent }</div>
+      <div>{ user.username }</div>
     )
   
 }
