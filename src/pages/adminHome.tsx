@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { getUserByUsernamePassword, type User } from '../stores/User';
-import {useUser} from '../App';
+import { useUser } from '../App';
+import { getAllUniversities } from '../stores/University';
 
-export default function adminHome() {
+export default function AdminHome() {
 
-    const [user] = useUser();
+  const [user] = useUser();
+  const universities = getAllUniversities();
 
-    return (
-      <div>{ user.username }</div>
-    )
-  
+  return (
+    <>
+      <div>{user.password}</div>
+    </>
+
+  )
+
 }
