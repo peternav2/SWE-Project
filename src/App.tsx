@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {User} from "./stores/User";
 import {Outlet, Route, Routes, useOutletContext} from "react-router-dom";
 
-type ContextType = [user: User, setUser: (user: User) => void];
+
 function App() {
   const [user, setUserContext] = useState<User | null>(null);
   useEffect(() => {
@@ -23,6 +23,9 @@ function App() {
     </div>
   )
 }
+
+type ContextType = [user: User, setUser: (user: User) => void];
+
 export function useUser() {
   return useOutletContext<ContextType>();
 }
