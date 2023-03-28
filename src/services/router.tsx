@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
                 element: <StudentDiningHallHome />,
-                loader: diningHallHomeLoader,
+                // loader: diningHallHomeLoader,
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
@@ -47,7 +47,12 @@ export const router = createBrowserRouter([
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
                 element: <StudentEventForDay />,
                 //insert loader here for event datad
-            }
+            },
+            // {
+            //     path: '/admin/university/:universityId',
+            //     element: <AdminUniversityHome />,
+            //     loader: AdminUniversityHomeLoader,
+            // }
         ]
     }
 ])//
