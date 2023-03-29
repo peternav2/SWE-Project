@@ -17,7 +17,7 @@ export default function StudentUniversityHome() {
   }, [])
   return (
       <>
-        <div className={"flex flex-col justify-center items-center "}>
+        <div className={"justify-center items-center "}>
           <h1> Welcome to {uni.name} Dining Hall Home Page</h1>
           {uni.diningHalls.map((diningHall) => {
               let id = diningHall?._id?.toString();

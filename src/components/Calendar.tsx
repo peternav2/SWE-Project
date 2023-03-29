@@ -4,22 +4,21 @@ import {ObjectId} from "mongodb";
 import {useEffect, useState} from "react";
 import {User} from "../stores/User";
 
-export default function Calendar({month, year, diningHallId}: { month: number, year: number, diningHallId?: string }) {
+export default function Calendar({month, year, diningHallId, days}:
+{ month: number,
+  year: number,
+  diningHallId?: string,
+  days: number[]
+}) {
 
-  const [user, setUser] = useUser();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user') as string));
-  }, [])
+    const [user] = useUser();
   //const userType = user.isStudent ? 'student' : 'admin'
-  const daysInMonth = (year: number, month: number): number => { return new Date(year, month, 0).getDate()}
-  let [numOfDays, setNumOfDays] = useState(daysInMonth(year, month));
 
-  let arr = Array.from(Array(numOfDays), (_, index) => index + 1);
-  console.log(month)
+
   return (
     <div>
       {
-        arr.map((day: number) => {
+        days.map((day: number) => {
           return (
             <DayButton
               userType={"student"}

@@ -6,26 +6,26 @@ import Calendar from "../components/Calendar";
 import {useUser} from "../App";
 
 
-export async function loader({params}: any) {
-
-}
 export default function StudentDiningHallHome() {
-  const [user, setUser] = useUser();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user') as string));
-  }, [])
+  //this is probably some of the most disgusting code ive ever written but it works so im not gonna touch it
+  // it works by create new date object to get the current date and then on each change of the month or year
+  // it will create a new array of days based on the new month and year with the Date object
     const [month, setMonth] = useState(new Date().getMonth().toString());
     const [year, setYear] = useState(new Date().getFullYear().toString());
+    const [days, setDays] = useState(Array.from(Array(new Date(+year, +month, 0).getDate()), (_, index) => index + 1));
+
     const handleMonthChange = (event: SelectChangeEvent) => {
       setMonth(event.target.value);
-      console.log(month)
+      setDays(Array.from(Array(new Date(+year, +event.target.value, 0).getDate()), (_, index) => index + 1));
     }
     const handleYearChange = (event: SelectChangeEvent) => {
       setYear(event.target.value);
-      console.log(year)
+      setDays(Array.from(Array(new Date(+year, +event.target.value, 0).getDate()), (_, index) => index + 1));
     }
     const diningHallName = useParams().diningHallName;
     const diningHallId = useParams().diningHallId;
+
+
     return (
         <div className={"content-center"}>
             <h1> Welcome to {diningHallName} </h1>
@@ -71,7 +71,7 @@ export default function StudentDiningHallHome() {
           </div>
 
           <h1>  ---------------------       {year}</h1>
-          <Calendar month={+month} year={+year} diningHallId={diningHallId}/>
+          <Calendar month={+month} year={+year} diningHallId={diningHallId} days={days}/>
         </div>
     )
 }
