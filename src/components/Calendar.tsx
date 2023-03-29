@@ -1,7 +1,7 @@
 import DayButton from './dayButton'
 import {useUser} from '../App'
 import {ObjectId} from "mongodb";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {User} from "../stores/User";
 
 export default function Calendar({month, year, diningHallId}: { month: number, year: number, diningHallId?: string }) {
@@ -22,7 +22,7 @@ export default function Calendar({month, year, diningHallId}: { month: number, y
         arr.map((day: number) => {
           return (
             <DayButton
-              userType={userType}
+              userType={"student"}
               day={day}
               month={month}
               year={year}
