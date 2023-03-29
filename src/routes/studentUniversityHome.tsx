@@ -19,12 +19,12 @@ export default function StudentUniversityHome() {
       <>
         <div className={"flex flex-col justify-center items-center "}>
           <h1> Welcome to {uni.name} Dining Hall Home Page</h1>
-          <div>
-            {uni.diningHalls.map((diningHall) => {
-              return (
-                <div className={"flex flex-col justify-center items-center"} key={diningHall.name}>
-                  <h1> {diningHall.name} </h1>
-                  <StudentDiningHallButton diningHallName={diningHall.name} diningHall_id={diningHall?._id}/>
+          {uni.diningHalls.map((diningHall) => {
+              let id = diningHall?._id?.toString();
+            return (
+                <div className={"flex flex-col justify-center items-center"} key={id}>
+                    <h1> {diningHall.name} </h1>
+                    <StudentDiningHallButton diningHallName={diningHall.name} diningHall_id={diningHall?._id}/>
                 </div>
               )})}
           </div>
