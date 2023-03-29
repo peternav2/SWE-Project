@@ -1,7 +1,7 @@
 import DayButton from './dayButton'
 import {useUser} from '../App'
 import {ObjectId} from "mongodb";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function Calendar({month, year, diningHallId}: { month: number, year: number, diningHallId?: string }) {
 
@@ -11,7 +11,8 @@ export default function Calendar({month, year, diningHallId}: { month: number, y
   }, [])
   const userType = user.isStudent ? 'student' : 'admin'
   const daysInMonth = (year: number, month: number): number => { return new Date(year, month, 0).getDate()}
-  let numOfDays = daysInMonth(month, year)
+  let [numOfDays, setNumOfDays] = useState(daysInMonth(year, month));
+
   let arr = Array.from(Array(numOfDays), (_, index) => index + 1);
   console.log(month)
   return (
