@@ -144,7 +144,7 @@ function Login() {
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
-            <Link to={`adminHome`}> Go to Admin Home</Link>
+            <Link to={`adminHome`}> Go to Admin Home </Link>
             <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
             <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
           </div>
