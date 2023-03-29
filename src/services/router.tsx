@@ -4,6 +4,7 @@ import App from '../App'
 
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
+import CreateAccount from '../components/CreateAccount'
 import StudentDiningHallHome, {
     loader as diningHallHomeLoader,
 } from "../routes/studentDiningHallHome";
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
                 element: <StudentEventForDay />,
                 //insert loader here for event datad
+            },
+            {
+                path: "createaccount",
+                element: <CreateAccount />
             }
         ]
     }

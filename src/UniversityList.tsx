@@ -38,6 +38,7 @@ function Search(props:any) {
 
     const [searchField, setSearchField] = useState({
       field: "",
+      clicked_field:""
     });
   
     const handleChange = (event:any) => {
@@ -45,10 +46,15 @@ function Search(props:any) {
         ...searchField,
         [event.target.id]: event.target.value,
       });
-      props.change(event.target.value)
+      
     };
 
-    const filteredData = props.details.filter((university:any) => university.name.includes(searchField.field));
+    const handleClick = (event:any) => {
+      setSearchField({...searchField, ['clicked_field']: event.target.value})
+      props.change(event.target.value)
+    }
+
+    const filteredData = props.details.filter((university:any) => university.name.toLowerCase().includes(searchField.field.toLowerCase()));
   
     function searchList(func:any) {
       return (
@@ -62,7 +68,9 @@ function Search(props:any) {
       <div>
       <div>
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-          University
+          <label className= "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+          University : {searchField.clicked_field}
+          </label>
           <input 
             type = "search" 
             placeholder = "Search" 
@@ -73,7 +81,7 @@ function Search(props:any) {
           />
       </label>
       </div>
-      {searchList(handleChange)}
+      {searchList(handleClick)}
       </div>
     )
     }

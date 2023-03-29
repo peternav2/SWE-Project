@@ -1,5 +1,5 @@
 import React from 'react'
-import Search from './UniversityList'
+import Search from '../UniversityList'
 
 interface University {
   name: string;
@@ -55,7 +55,7 @@ const CreateAccount = () => {
 
   let confirm_errors = ["", "Password does not match."]
 
-  let university_error = ["", "Invalid university."]
+  let university_error = ["", "Please enter your university."]
 
   function checkUser(username:string){
     let code = 0
@@ -68,7 +68,7 @@ const CreateAccount = () => {
     else if(filterString(username) == false){
       code = 3
     }
-    else if(false){
+    else if(false){ //User already exists.
       code = 4
     }
     setValidity({...validity, ['user_error_code']:code})
@@ -119,7 +119,7 @@ const CreateAccount = () => {
 
   function formatSubmit(){
     if(validity.password_error_code != 0 || validity.user_error_code != 0){
-      return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
+      return("bg-red-500 text-white font-bold py-2 px-4 border border-transparent rounded")
     }
     else{
       return("bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")
@@ -142,8 +142,9 @@ const CreateAccount = () => {
     }
   }
 
-  const handleUniveristySwitch = (university: string) => {
+  const handleUniversitySwitch = (university: string) => {
     setForm({...form, ['universityName']:university})
+    checkUniversity(university);
   }
 
   const handleSubmit = (event : any) => {
@@ -158,6 +159,35 @@ const CreateAccount = () => {
     }
     event.preventDefault();
   };
+
+  const handleToggle = (event: any) => {
+    let bool = true
+    if(event.target.value != "Student"){
+      bool = false
+    }
+    setForm({...form, ['isStudent']: bool})
+  }
+
+  function UserButton(props:any){
+    let classStyle = ""
+    if(props.isClicked){
+       classStyle = "bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    }
+    else{
+      classStyle = "bg-blue-200 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    }
+  
+    return(
+        <button
+        type="button"
+        className={classStyle}
+        value={props.title}
+        onClick={handleToggle}
+        id="userButton">
+          {props.title}
+        </button>
+    )
+  }
 
   function checkSubmit(){
     if(validity.user_error_code == 0 &&
@@ -225,7 +255,13 @@ const CreateAccount = () => {
           </div>
 
           <div className="block text-gray-700 text-sm font-bold mb-2">
-            <Search details = {uniList.universities} change = {handleUniveristySwitch}/>
+            <Search details = {uniList.universities} change = {handleUniversitySwitch}/>
+            <p className ="text-red-500 text-xs italic">{university_error[validity.university_error_code]}</p>
+          </div>
+
+          <div className="mt-4 items-center justify-between space-x-3">
+              <UserButton title = "Student" isClicked = {form.isStudent}></UserButton>
+              <UserButton title = "Administrator" isClicked = {!form.isStudent}></UserButton>
           </div>
 
           <div className="mt-5 items-center justify-between">
