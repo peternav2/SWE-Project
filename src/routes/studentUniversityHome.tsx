@@ -27,8 +27,6 @@ export default function StudentUniversityHome() {
                     <StudentDiningHallButton diningHallName={diningHall.name} diningHall_id={diningHall?._id}/>
                 </div>
               )})}
-          </div>
-
         </div>
       </>
 
