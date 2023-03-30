@@ -16,18 +16,20 @@ export default function Calendar({month, year, diningHallId, days}:
 
 
   return (
-    <div>
+    <div className={"grid grid-cols-7 gap-4"}>
       {
         days.map((day: number) => {
           return (
-            <DayButton
-              userType={"student"}
-              day={day}
-              month={month}
-              year={year}
-              diningHallId={diningHallId}
-              key={day.toString()}
-            />
+              <div>
+                <DayButton
+                    userType={"student"}
+                    day={day}
+                    month={month}
+                    year={year}
+                    diningHallId={diningHallId}
+                    key={day.toString()}
+                />
+              </div>
           )
         })
       }
