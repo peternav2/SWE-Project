@@ -16,20 +16,20 @@ export default function StudentDiningHallHome() {
 
     const handleMonthChange = (event: SelectChangeEvent) => {
       setMonth(event.target.value);
-      setDays(Array.from(Array(new Date(+year, +event.target.value, 0).getDate()), (_, index) => index + 1));
+      setDays(Array.from(Array(new Date(Number(year), Number(month), 0).getDate()), (_, index) => index + 1));
     }
     const handleYearChange = (event: SelectChangeEvent) => {
       setYear(event.target.value);
-      setDays(Array.from(Array(new Date(+year, +event.target.value, 0).getDate()), (_, index) => index + 1));
+      setDays(Array.from(Array(new Date(Number(year), Number(month), 0).getDate()), (_, index) => index + 1));
     }
     const diningHallName = useParams().diningHallName;
     const diningHallId = useParams().diningHallId;
 
 
     return (
-        <div className={"content-center"}>
+        <div className={"container w-max h-max mx-auto"}>
             <h1> Welcome to {diningHallName} </h1>
-          <div className={"content-center"}>
+          <div className={""}>
             <FormControl>
               <InputLabel id="demo-simple-select-label">Month</InputLabel>
               <Select
@@ -53,7 +53,6 @@ export default function StudentDiningHallHome() {
                 <MenuItem value="12">December</MenuItem>
               </Select>
             </FormControl>
-            <h1>  ---------------------       {month}</h1>
             <FormControl >
               <InputLabel id="year">Year</InputLabel>
               <Select
@@ -69,9 +68,7 @@ export default function StudentDiningHallHome() {
               </Select>
             </FormControl>
           </div>
-
-          <h1>  ---------------------       {year}</h1>
-          <Calendar month={+month} year={+year} diningHallId={diningHallId} days={days}/>
+            <Calendar month={+month} year={+year} diningHallId={diningHallId} days={days}/>
         </div>
     )
 }

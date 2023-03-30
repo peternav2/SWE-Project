@@ -7,7 +7,11 @@ export default function DayButton({userType, day, month, year, diningHallId}:
     return (
         <div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                <Link to={`${userType}/day/menu/${diningHallId}/month/day/year`}> take me to menu for {month} {day} {year} </Link>
+                <Link to={`${userType}/day/menu/${diningHallId}/month/day/year`}>
+                    {new Date(year,month).toLocaleString('default', {month: 'long'})
+                    + " " + day
+                    }
+                </Link>
             </button>
         </div>
     )
