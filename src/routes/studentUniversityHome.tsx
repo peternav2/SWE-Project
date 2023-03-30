@@ -11,10 +11,6 @@ export async function loader({params}: any) {
 
 export default function StudentUniversityHome() {
   const uni = useLoaderData() as University;
-  const [user, setUser] = useUser();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user') as string));
-  }, [])
   return (
       <>
         <div className={"justify-center items-center "}>
