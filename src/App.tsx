@@ -8,20 +8,14 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     setUserContext(JSON.parse(localStorage.getItem('user') as string));
+    if (user?.isStudent) {
+        navigate('/student/university/' + user?.universityId)
+    } else {
+        //navigate('/admin/university/' + user?.universityId)
+    }
   }, []);
-  // const user = localStorage.getItem('user');
-  // const setUser = (user: User) => {
-  //   localStorage.setItem('user', JSON.stringify(user));
-  //   setUserContext(user);
-  // }
     return (
-    <div>
       <Outlet context={[user, setUserContext]}/>
-    {/*
-         the above Outlet is where our app is gonna render and it is through this element which our app will render
-         and have access to the user store through Context
-     */}
-    </div>
   )
 }
 
