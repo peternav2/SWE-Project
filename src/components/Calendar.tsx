@@ -38,7 +38,8 @@ export default function Calendar() {
   }
   const handleYearChange = (event: SelectChangeEvent) => {
     setYear(event.target.value);
-    setDays(Array.from(Array(new Date(Number(year), Number(month), 0).getDate()), (_, index) => index + 1));
+    let daysInMonth = getDaysInMonth(+month, +event.target.value);
+    setDays(Array.from(Array(daysInMonth), (_, index) => index + 1));
     console.log(new Date(+year,+month).toLocaleString('default', {month: 'long'}));
     console.log("number of days in year " + new Date(Number(year), Number(month), 0).getDate())
 
