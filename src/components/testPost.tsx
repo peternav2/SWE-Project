@@ -6,7 +6,7 @@ import {
   DiningHall,
   getDiningHall
 } from '../stores/DiningHall';
-import { addUniversity } from '../stores/University';
+import {addUniversity, updateUniversity} from '../stores/University';
 import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
@@ -36,6 +36,8 @@ export default function TestFetch() {
       // console.log("--------------------");
       // console.log(unis);
     })
+    unis[2].name = "updated university test"
+    await updateUniversity(unis[2]);
 
     // var testUser: User = {
     //   username: "Peters Test User",
@@ -208,6 +210,6 @@ export default function TestFetch() {
 
   return (
     <div>
-        <button onClick={runFetch} >Test Fetch</button>
+        <button onClick={runFetch} className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Test Fetch</button>
     </div>
   )}
