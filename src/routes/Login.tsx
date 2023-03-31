@@ -3,6 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import {useUser} from "../App";
 import {useNavigation} from "react-router-dom";
+import TestFetch from "../components/testPost";
 function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [user, setUser] = useUser(); // context hook from App.tsx react router outlet
@@ -11,7 +12,7 @@ function Login() {
   useEffect(() => {
     if (user) {
       if (user) {
-        navigate('/student/university/' + user?.universityId)
+        // navigate('/student/university/' + user?.universityId)
       }
     }
   }, [user]);
@@ -161,6 +162,8 @@ function Login() {
           </div>
         </form>
       </div>
+        <TestFetch />
+
     </div>
   );
 };
