@@ -4,6 +4,7 @@ import TestFetch from "./components/testPost";
 import {Outlet, useOutletContext} from "react-router-dom";
 
 type ContextType = [user: User, setUser: (user: User) => void];
+
 function App() {
 
   const [userContext, setUserContext] = useState<User | null>(null);
