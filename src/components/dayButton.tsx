@@ -8,7 +8,7 @@ export default function DayButton({userType, day, month, year, diningHallId}:
         <div>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 <Link to={`${userType}/day/menu/${diningHallId}/month/day/year`}>
-                    {new Date(year,month).toLocaleString('default', {month: 'long'})
+                    {new Date(year-1,month-1).toLocaleString('default', {month: 'long'})
                     + " " + day
                     }
                 </Link>
