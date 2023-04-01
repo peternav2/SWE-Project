@@ -29,6 +29,7 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
+                loader: StudentUniversityHomeLoader,
             },
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
