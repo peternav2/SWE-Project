@@ -30,6 +30,10 @@ export const getUserByUsernamePassword = async (username: string, password: stri
     return await myFetch<User>(`user/${username}/${password}`);
 }
 
+export const getUserByUsername =  async (username: string) => {
+    return await myFetch<User>(`user/${username}`);
+}
+
 export const getUserById = async (userId?: ObjectId) => {
     return await myFetch<User>(`user/${userId}`);
 }

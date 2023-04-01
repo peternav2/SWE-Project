@@ -1,24 +1,20 @@
 import React from 'react'
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import {useUser} from "../App";
+import {getSuccessBox} from "../components/popups"
 
-function Login() {
+function Login(){
   const [isLoading, setIsLoading] = React.useState(false);
   const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
-
 
   const [form, setForm] = React.useState({
     username: '',
     password: ''
   });
-  const [usernameValidity, setUserValidity] = React.useState({
-    error_code: 0,
-    checked: false
-  });
-  const [passwordValidity, setPasswordValidity] = React.useState({
-    error_code: 0,
-    checked: false
+  const [validity, setValidity] = React.useState({
+    user_error_code: 0,
+    password_error_code: 0
   });
 
   let user_errors = ["", 
@@ -30,30 +26,30 @@ function Login() {
 
   function checkUser(username:string){
     if(username == ""){
-      setUserValidity({...usernameValidity, ['error_code']:1})
+      setValidity({...validity, ['user_error_code']:1})
     }
     else if(false){
-      setUserValidity({...usernameValidity, ['error_code']:2})
+      setValidity({...validity, ['user_error_code']:2})
     }
     else{
-      setUserValidity({...usernameValidity, ['error_code']:0})
+      setValidity({...validity, ['user_error_code']:0})
     }
   }
 
   function checkPassword(password:string){
     if(password == ""){
-      setPasswordValidity({...passwordValidity, ['error_code']:1})
+      setValidity({...validity, ['password_error_code']:1})
     }
     else if(false){
-      setPasswordValidity({...passwordValidity, ['error_code']:2})
+      setValidity({...validity, ['password_error_code']:2})
     }
     else{
-      setPasswordValidity({...passwordValidity, ['error_code']:0})
+      setValidity({...validity, ['password_error_code']:0})
     }
   }
 
   function formatSubmit(){
-    if(passwordValidity.error_code != 0 || usernameValidity.error_code != 0){
+    if(validity.password_error_code != 0 || validity.user_error_code != 0){
       return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
     }
     else{
@@ -74,26 +70,49 @@ function Login() {
     }
   };
 
+  function checkSubmit(){
+    if(validity.password_error_code == 0 &&
+      validity.user_error_code == 0 &&
+       form.username != "" &&
+       form.password != ""){
+        return true;
+       }
+       return false;
+  }
+
+  type State = { message: string }
+
+  function isStateValid(state: any): state is State {
+    if (!state) return false;
+    if (typeof state !== "object") return false;
+    if (typeof state.message !== "string") return false;
+  return true;
+}
+
+  function GetPageLoadMessage(){  
+      const location = useLocation()
+      if(isStateValid(location.state)){
+        return(getSuccessBox(location.state.message))
+      }
+      else{
+        return(<></>)
+      }
+    }
 
   const handleSubmit = async (event : any) => {
     event.preventDefault();
-    if(passwordValidity.error_code != 0 || usernameValidity.error_code != 0){
-      alert("Did not sign in.")
+    if(checkSubmit()){
+      await getUserByUsernamePassword(form.username, form.password).then((res) => {
+        setUser(res);
+        localStorage.setItem('user', JSON.stringify(res));
+      })
     }
     else{
-      alert("Signed in.")
+      alert("Please enter your credentials!")
     }
-    setIsLoading(true);
-    await getUserByUsernamePassword(form.username, form.password).then((res) => {
-      setUser(res);
-    })
-    setIsLoading(false);
     // alert('Username: ' + form.username + '\nPassword: ' + form.password);
-
   };
   if (isLoading) {
-
-
     return (
       // make a centered loading div
       <div className="flex justify-center items-center h-screen">
@@ -106,6 +125,9 @@ function Login() {
       <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
         <h1 className="text-5xl">RateMyDiningHall</h1>
         <h3 className="text-2xl px-8 pt-4">Sign into your account.</h3>
+      </div>
+      <div>
+      <GetPageLoadMessage/>
       </div>
       <div className="flex flex-col justify-center items-center border-b border-blue-500 py-2">
         <form className="md:w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-3" onSubmit={handleSubmit}>
@@ -121,7 +143,7 @@ function Login() {
               placeholder="Username"
               className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
-            <p className ="text-red-500 text-xs italic">{user_errors[usernameValidity.error_code]}</p>
+            <p className ="text-red-500 text-xs italic">{user_errors[validity.user_error_code]}</p>
           </div>
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -135,7 +157,7 @@ function Login() {
               placeholder="**********"
               className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
-            <p className="text-red-500 text-xs italic">{password_errors[passwordValidity.error_code]}</p>
+            <p className="text-red-500 text-xs italic">{password_errors[validity.password_error_code]}</p>
           </div>
           <div className="mx-8 mt-4 flex items-center justify-between">
             <button type="submit" className={formatSubmit()}>

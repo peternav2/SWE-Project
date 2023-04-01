@@ -4,7 +4,7 @@ import App from '../App'
 
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
-import CreateAccount from '../components/CreateAccount'
+import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
 import StudentDiningHallHome, {
     loader as diningHallHomeLoader,
 } from "../routes/studentDiningHallHome";
@@ -49,7 +49,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: "createaccount",
-                element: <CreateAccount />
+                element: <CreateAccount />,
+                loader: createAccountLoader
             }
         ]
     }
