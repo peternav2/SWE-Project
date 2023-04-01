@@ -2,11 +2,11 @@
   "name": "swe-project",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "type": "module"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
