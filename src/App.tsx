@@ -7,13 +7,13 @@ type ContextType = [user: User, setUser: (user: User) => void];
 
 function App() {
 
-  const [userContext, setUserContext] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
     return (
     <div>
       
-      <Outlet context={[userContext, setUserContext]}/>
-      <TestFetch/>
+      <Outlet context={[user, setUser]}/>
+      
     {/*
          the above Outlet is where our app is gonna render and it is through this element which our app will render
          and have access to the user store through Context
@@ -21,6 +21,7 @@ function App() {
     </div>
   )
 }
+
 export function useUser() {
   return useOutletContext<ContextType>();
 }
