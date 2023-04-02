@@ -45,7 +45,7 @@ export async function loader({params}: any) {
       console.log(menuItemsbyDateAndDiningHall);
     })
     
-    return menuItemsAll;
+    return menuItemsbyDateAndDiningHall;
 }
 
 export default function StudentMenuForDay() {

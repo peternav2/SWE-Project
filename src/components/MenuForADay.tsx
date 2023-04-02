@@ -61,7 +61,8 @@ export default function MenuForADay(props:any) {
                         </div>
                     </div>
                     ))}
-            <style>
+              {/* TODO: change - placeholder styling */}
+      <style scoped>
         {`
           .grid-container {
             display: flex;
