@@ -12,6 +12,7 @@ import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMe
 import Login from "../routes/Login";
 import StudentUniversityHome from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
+import AdminHub from '../routes/adminHub'
 
 
 export const router = createBrowserRouter([
@@ -30,6 +31,11 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
+                //insert loader here for uni data
+            },
+            {
+                path: '/admin/university/:universityId/',
+                element: <AdminHub/>,
                 //insert loader here for uni data
             },
             {

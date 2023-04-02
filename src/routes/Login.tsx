@@ -1,8 +1,8 @@
 import React from 'react'
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox} from "../components/popups"
+import {getSuccessBox, getErrorList} from "../components/popups"
 
 function Login(){
   const [isLoading, setIsLoading] = React.useState(false);
@@ -17,18 +17,22 @@ function Login(){
     password_error_code: 0
   });
 
+  const navigate = useNavigate();
+
   let user_errors = ["", 
                      "Please enter your username.", 
-                     "User does not exist."]
+                     "Invalid credentials."]
   let password_errors = ["", 
-                         "Please enter your password", 
-                         "Invalid password."]
+                         "Please enter your password"]
+
+  let credentialsChecked = false
+  let credentialsValid = true
 
   function checkUser(username:string){
     if(username == ""){
       setValidity({...validity, ['user_error_code']:1})
     }
-    else if(false){
+    else if(credentialsChecked && credentialsValid == false){
       setValidity({...validity, ['user_error_code']:2})
     }
     else{
@@ -40,12 +44,19 @@ function Login(){
     if(password == ""){
       setValidity({...validity, ['password_error_code']:1})
     }
-    else if(false){
-      setValidity({...validity, ['password_error_code']:2})
-    }
     else{
       setValidity({...validity, ['password_error_code']:0})
     }
+  }
+
+  function GetErrors(){
+    let error_messages = []
+    if(validity.user_error_code != 0){error_messages.push(user_errors[validity.user_error_code])}
+    if(validity.password_error_code != 0){error_messages.push(password_errors[validity.password_error_code])}
+    if(error_messages.length > 0){
+      return(getErrorList(error_messages))
+    }
+    return(<></>)
   }
 
   function formatSubmit(){
@@ -72,7 +83,7 @@ function Login(){
 
   function checkSubmit(){
     if(validity.password_error_code == 0 &&
-      validity.user_error_code == 0 &&
+      validity.user_error_code != 1 &&
        form.username != "" &&
        form.password != ""){
         return true;
@@ -98,20 +109,53 @@ function Login(){
         return(<></>)
       }
     }
-
-  const handleSubmit = async (event : any) => {
+  
+  const handleSubmit = (event : any) => {
     event.preventDefault();
     if(checkSubmit()){
-      await getUserByUsernamePassword(form.username, form.password).then((res) => {
-        setUser(res);
-        localStorage.setItem('user', JSON.stringify(res));
-      })
+        submitWrapper()
     }
     else{
-      alert("Please enter your credentials!")
+      checkUser(form.username)
+      checkPassword(form.password)
     }
-    // alert('Username: ' + form.username + '\nPassword: ' + form.password);
   };
+
+  async function submitWrapper(){
+    credentialsChecked = false
+    setIsLoading(true);
+    await getUserByUsernamePassword(form.username, form.password).then((res) => {
+      if(validateResponse(res)){
+        setUser(res);
+        localStorage.setItem('user', JSON.stringify(res));
+        var destination = getDestination(res);
+        navigate(destination)
+      }
+    }).catch((err) => {
+      credentialsChecked = true
+      credentialsValid = false
+    })
+    setIsLoading(false)
+    checkUser(form.username)
+  }
+
+  function getDestination(response:any){
+    var uid = response.universityId
+    if(response.isStudent == true){
+      return('/student/university/'+String(uid)+'/')
+    }
+    else{
+      return('/admin/university/'+String(uid)+'/')
+    }
+  }
+
+  function validateResponse(response:any){
+    if (response != null){
+      return true
+    }
+    return false
+  }
+
   if (isLoading) {
     return (
       // make a centered loading div
@@ -163,10 +207,9 @@ function Login(){
             <button type="submit" className={formatSubmit()}>
               Sign In
             </button>
-            <Link className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account.</Link>
-            <Link to={`renderuser`}> click here to render user  {usertest?.username}</Link>
-            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
+            <Link className = "mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account.</Link>
           </div>
+          <GetErrors/>
         </form>
       </div>
     </div>

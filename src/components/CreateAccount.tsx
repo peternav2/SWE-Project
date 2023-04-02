@@ -109,7 +109,6 @@ const CreateAccount = () => {
     }
     return(<></>)
   }
-  
 
   function checkUser(username:string){
     let code = 0
