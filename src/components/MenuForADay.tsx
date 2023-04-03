@@ -8,6 +8,7 @@
 
 import { getMenuItemsBasedByDate, MenuItem } from "../stores/MenuItem";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import MenuItemCard from "../components/MenuItemCard";
 import { useUser } from "../App";
 import { useState } from "react";
 
@@ -21,9 +22,9 @@ export default function MenuForADay(props: any) {
   const [selectedMealTime, setSelectedMealTime] = useState("View All");
   const [modalVisible, setModalVisible] = useState(false);
 
-    //  diningHallIds for reference - not hooked up to calender yet
-    // '64095e3482173f9ad243956b';
-    // '6420a4e4b759dfa90b360fcb';
+  //  diningHallIds for reference - not hooked up to calender yet
+  // '64095e3482173f9ad243956b';
+  // '6420a4e4b759dfa90b360fcb';
 
 
   // a function that converts a day,month,year to a string
@@ -53,7 +54,7 @@ export default function MenuForADay(props: any) {
   //      and all of the reviews plus options to add/modi/change reviews like comments.
   return (
     <>
-      {/* //TODO: fill in university name from university */}
+      {/* ****************DROP DOWN MENU***********************************/}
       <h1 className="text-center text-2xl"> Menu for {formatDateString(props.day, props.month, props.year)} @  University
         ID:{props.diningHallId}
       </h1>
@@ -73,91 +74,21 @@ export default function MenuForADay(props: any) {
           selectedMealTime && <p> You a now viewing the {selectedMealTime} menu!</p>
         }
       </div>
+      {/* ****************MENU ITEMS***********************************/}
       <div className="grid-container">
+        {
+          props.menuItems.map((menuItem: any, index: number) => (
+            // regex to remove all white space + triple ternary a ? b : (c ? d : e)
+            (menuItem.mealType === selectedMealTime.replace(/ /g, '')) 
+            ?
+              <MenuItemCard index={index} menuItem={menuItem} /> : 
+            (selectedMealTime === "View All" ? <MenuItemCard index={index} menuItem={menuItem} /> : null)
+          ))
+        }
+      </div>
 
-        {props.menuItems.map((menuItem: any, index: number) => (
-          // regex to remove all white space + triple ternary a ? b : (c ? d : e)
-          (menuItem.mealType === selectedMealTime.replace(/ /g,''))?
-          // bring up modal to see food item reviews and submit a review
-          <div className="grid-item" onClick={handleModalToggle} key={index}>
-            <div className="nested-grid-container">
-              <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
-              <u>
-                <h2 className="text-center">DISH</h2>
-              </u>
-              <u>
-                <h3>{menuItem.dish.name}</h3>
-              </u>
-              <p>{menuItem.dish.description}</p>
-              <p>{menuItem.date.month}/{menuItem.date.day}/{menuItem.date.year}</p>
-              <img
-                src=
-                "https://tinyurl.com/3bh459kj"
-                className="h-auto max-w-full"
-                alt="..." />
-              <p>Dining Hall ID: {menuItem.dish.diningHallId}</p>
-              <pre>                                                   </pre>
-              {/* on click this should place a list of reviews for said dish item based on database... without review form for first item */}
-              {/* on click this should place a review form for said dish item based on database... with review form for first item */}
-              <button className="submit-review">See Dish Reviews</button>
-            </div>
-
-            {modalVisible && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2>DISH TITLE!</h2>
-                <p>DISH IMAGE.</p>
-                <p>DISH DESC.</p>
-                <p>CRUD MOD SECTION.</p>
-                <button onClick={handleModalToggle}>Close Modal</button>
-              </div>
-            </div>
-          )}
-          </div>
-          //should toggled on and off when a dish is clicked on
-
-    
-          // TODO: factor this out into a component - DRY.
-          :(selectedMealTime === "View All")?
-          <div className="grid-item" key={index} onClick={handleModalToggle}>
-          <div className="nested-grid-container">
-            <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
-            <u>
-              <h2 className="text-center">DISH</h2>
-            </u>
-            <u>
-              <h3>{menuItem.dish.name}</h3>
-            </u>
-            <p>{menuItem.dish.description}</p>
-            <p>{menuItem.date.month}/{menuItem.date.day}/{menuItem.date.year}</p>
-            <img
-              src=
-              "https://tinyurl.com/3bh459kj"
-              className="h-auto max-w-full"
-              alt="..." />
-            <p>Dining Hall ID: {menuItem.dish.diningHallId}</p>
-            <pre>                                                   </pre>
-            
-            <button className="submit-review">See Dish Reviews</button>
-          </div>
-          {modalVisible && (
-            <div className="modal">
-              <div className="modal-content">
-                <h2>DISH TITLE!</h2>
-                <p>DISH IMAGE.</p>
-                <p>DISH DESC.</p>
-                <p>CRUD MOD SECTION.</p>
-                <button onClick={handleModalToggle}>Close Modal</button>
-              </div>
-            </div>
-          )}
-        </div>
-        : null 
-        ))}
-
-        {/* TODO: change - placeholder styling */}
-        <style scoped>
-          {`
+      <style scoped>
+        {`
           .grid-container {
             display: flex;
             flex-wrap: wrap;
@@ -182,7 +113,7 @@ export default function MenuForADay(props: any) {
             display: flex;
             margin-top: auto;
           }
-
+          
           button {
             width: 100%;
             background-color:black;
@@ -225,13 +156,12 @@ export default function MenuForADay(props: any) {
             max-height: 80%;
             overflow: auto;
           }
-
+          
           .modal-trigger {
             cursor: pointer;
           }
-        `}
-        </style>
-      </div>
-    </>
+          `}
+      </style>
+    </> 
   )
 }
