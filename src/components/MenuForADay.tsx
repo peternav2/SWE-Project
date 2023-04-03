@@ -19,12 +19,22 @@ export default function MenuForADay(props: any) {
   const [user, setUser] = useUser();
   const MealTimes: string[] = ["Breakfast", "Lunch", "Dinner", "Late Night", "All Day", "View All"];
   const [selectedMealTime, setSelectedMealTime] = useState("View All");
+  const [modalVisible, setModalVisible] = useState(false);
+
+    //  diningHallIds for reference - not hooked up to calender yet
+    // '64095e3482173f9ad243956b';
+    // '6420a4e4b759dfa90b360fcb';
 
 
   // a function that converts a day,month,year to a string
   function formatDateString(day: number, month: number, year: number): string {
     const date: Date = new Date(year, month - 1, day); // Subtract 1 from month to account for zero-based indexing
     return date.toLocaleString();
+  }
+
+  // modal to simulate instagram UI behavior
+  const handleModalToggle = () => {
+    setModalVisible(!modalVisible);
   }
 
   function handleSelection(e: any) {
@@ -38,6 +48,9 @@ export default function MenuForADay(props: any) {
 
   console.log(props.diningHallId, props.menuItems);
 
+  //TODO: write function/CSS that simulates the instagram experince, so when you click on a menu item
+  //      on the screen it brings up a modal with the image and the description of the menu item
+  //      and all of the reviews plus options to add/modi/change reviews like comments.
   return (
     <>
       {/* //TODO: fill in university name from university */}
@@ -65,7 +78,8 @@ export default function MenuForADay(props: any) {
         {props.menuItems.map((menuItem: any, index: number) => (
           // regex to remove all white space + triple ternary a ? b : (c ? d : e)
           (menuItem.mealType === selectedMealTime.replace(/ /g,''))?
-          <div className="grid-item" key={index}>
+          // bring up modal to see food item reviews and submit a review
+          <div className="grid-item" onClick={handleModalToggle} key={index}>
             <div className="nested-grid-container">
               <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
               <u>
@@ -87,10 +101,25 @@ export default function MenuForADay(props: any) {
               {/* on click this should place a review form for said dish item based on database... with review form for first item */}
               <button className="submit-review">See Dish Reviews</button>
             </div>
+
+            {modalVisible && (
+            <div className="modal">
+              <div className="modal-content">
+                <h2>DISH TITLE!</h2>
+                <p>DISH IMAGE.</p>
+                <p>DISH DESC.</p>
+                <p>CRUD MOD SECTION.</p>
+                <button onClick={handleModalToggle}>Close Modal</button>
+              </div>
+            </div>
+          )}
           </div>
+          //should toggled on and off when a dish is clicked on
+
+    
           // TODO: factor this out into a component - DRY.
           :(selectedMealTime === "View All")?
-          <div className="grid-item" key={index}>
+          <div className="grid-item" key={index} onClick={handleModalToggle}>
           <div className="nested-grid-container">
             <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
             <u>
@@ -111,8 +140,19 @@ export default function MenuForADay(props: any) {
             
             <button className="submit-review">See Dish Reviews</button>
           </div>
+          {modalVisible && (
+            <div className="modal">
+              <div className="modal-content">
+                <h2>DISH TITLE!</h2>
+                <p>DISH IMAGE.</p>
+                <p>DISH DESC.</p>
+                <p>CRUD MOD SECTION.</p>
+                <button onClick={handleModalToggle}>Close Modal</button>
+              </div>
+            </div>
+          )}
         </div>
-        : null
+        : null 
         ))}
 
         {/* TODO: change - placeholder styling */}
@@ -132,9 +172,9 @@ export default function MenuForADay(props: any) {
             position:relative;
           }
           .grid-item {
-             width: 450px;
-            border: 2px solid black;
-            margin: 10px;
+            width: 450px;
+            border: 1px solid black;
+            margin: 5px;
             display: flex;
           }
 
@@ -163,8 +203,31 @@ export default function MenuForADay(props: any) {
             background-color: darkblue;
             justify-content: bottom;
           }
-          img{
-            margin:10px;
+
+          .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,200,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+          }
+
+          .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 400px;
+            max-height: 80%;
+            overflow: auto;
+          }
+
+          .modal-trigger {
+            cursor: pointer;
           }
         `}
         </style>
