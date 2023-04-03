@@ -6,64 +6,118 @@
 //  and will have data fed in from the params->props and from the database on where the route is coming
 //  from... ie date,month,year,dish.. there will be an option on each box to submit a review.
 
-import {getMenuItemsBasedByDate, MenuItem} from "../stores/MenuItem";
-import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../App";
+import { getMenuItemsBasedByDate, MenuItem } from "../stores/MenuItem";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../App";
+import { useState } from "react";
 
 
-export default function MenuForADay(props:any) {
-    //TODO:add functionality to get menu items from database based on params and user data
-    // and or localstorage
-    
-    const [user, setUser] = useUser();
-    const MealTimes:string[] = ["Breakfast", "Lunch", "Dinner", "Late Night", "All Day"];
-    
-    // a function that converts a day,month,year to a string
-    function formatDateString(day: number, month: number, year: number): string {
-      const date:Date = new Date(year, month - 1, day); // Subtract 1 from month to account for zero-based indexing
-      return date.toLocaleString();
+export default function MenuForADay(props: any) {
+  //TODO:add functionality to get menu items from database based on params and user data
+  // and or localstorage
+
+  const [user, setUser] = useUser();
+  const MealTimes: string[] = ["Breakfast", "Lunch", "Dinner", "Late Night", "All Day", "View All"];
+  const [selectedMealTime, setSelectedMealTime] = useState("View All");
+
+
+  // a function that converts a day,month,year to a string
+  function formatDateString(day: number, month: number, year: number): string {
+    const date: Date = new Date(year, month - 1, day); // Subtract 1 from month to account for zero-based indexing
+    return date.toLocaleString();
+  }
+
+  function handleSelection(e: any) {
+    const value = e.target.value;
+    if (MealTimes.includes(value)) {
+      setSelectedMealTime(value);
+    } else {
+      setSelectedMealTime("View All");
     }
+  }
 
-    console.log(props.diningHallId,props.menuItems);
+  console.log(props.diningHallId, props.menuItems);
 
-    return (
-        <>
-        {/* //TODO: fill in university name from university */}
-            <h1 className="text-center text-2xl"> Menu for {formatDateString(props.day,props.month,props.year)} @  University 
-            ID:{props.diningHallId}
-            </h1>
-            {/* username prop TODO */}
-            {/* <h1> Welcome! {user.username}</h1> */}
-            <div className="grid-container">
-              
-            {props.menuItems.map((menuItem:any,index:number) => (
-                    <div className="grid-item" key={index}>
-                        <div className="nested-grid-container">
-                            <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
-                            <u>
-                                <h2 className="text-center">DISH</h2>
-                            </u>
-                            <u>
-                                <h3>{menuItem.dish.name}</h3>
-                            </u>
-                                <p>{menuItem.dish.description}</p>
-                                <p>{menuItem.date.month}/{menuItem.date.day}/{menuItem.date.year}</p>
-                                <img
-                                  src=
-                                  "https://tinyurl.com/3bh459kj"
-                                  className="h-auto max-w-full"
-                                  alt="..." />
-                                <p>Dining Hall ID: {menuItem.dish.diningHallId}</p>
-                                <pre>                                                   </pre> 
-                        {/* on click this should place a list of reviews for said dish item based on database... without review form for first item */}
-                        {/* on click this should place a review form for said dish item based on database... with review form for first item */}
-                                <button className="submit-review">See Dish Reviews</button>
-                        </div>
-                    </div>
-                    ))}
-              {/* TODO: change - placeholder styling */}
-      <style scoped>
-        {`
+  return (
+    <>
+      {/* //TODO: fill in university name from university */}
+      <h1 className="text-center text-2xl"> Menu for {formatDateString(props.day, props.month, props.year)} @  University
+        ID:{props.diningHallId}
+      </h1>
+      {/* username prop TODO */}
+      {/* <h1> Welcome! {user.username}</h1> */}
+      <div className="meal-type-selector text-center">
+        <label htmlFor="meal-time-select"></label>
+        <select id="meal-time-select" onChange={handleSelection}>
+          <option value="View Day"> Select Meal Time</option>
+          {MealTimes.map((mealTime) => (
+            <option key={mealTime} value={mealTime}>
+              {mealTime}
+            </option>
+          ))}
+        </select>
+        {
+          selectedMealTime && <p> You a now viewing the {selectedMealTime} menu!</p>
+        }
+      </div>
+      <div className="grid-container">
+
+        {props.menuItems.map((menuItem: any, index: number) => (
+          // regex to remove all white space + triple ternary a ? b : (c ? d : e)
+          (menuItem.mealType === selectedMealTime.replace(/ /g,''))?
+          <div className="grid-item" key={index}>
+            <div className="nested-grid-container">
+              <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
+              <u>
+                <h2 className="text-center">DISH</h2>
+              </u>
+              <u>
+                <h3>{menuItem.dish.name}</h3>
+              </u>
+              <p>{menuItem.dish.description}</p>
+              <p>{menuItem.date.month}/{menuItem.date.day}/{menuItem.date.year}</p>
+              <img
+                src=
+                "https://tinyurl.com/3bh459kj"
+                className="h-auto max-w-full"
+                alt="..." />
+              <p>Dining Hall ID: {menuItem.dish.diningHallId}</p>
+              <pre>                                                   </pre>
+              {/* on click this should place a list of reviews for said dish item based on database... without review form for first item */}
+              {/* on click this should place a review form for said dish item based on database... with review form for first item */}
+              <button className="submit-review">See Dish Reviews</button>
+            </div>
+          </div>
+          // TODO: factor this out into a component - DRY.
+          :(selectedMealTime === "View All")?
+          <div className="grid-item" key={index}>
+          <div className="nested-grid-container">
+            <h1 className="text-2xl text-center">{menuItem.mealType}</h1>
+            <u>
+              <h2 className="text-center">DISH</h2>
+            </u>
+            <u>
+              <h3>{menuItem.dish.name}</h3>
+            </u>
+            <p>{menuItem.dish.description}</p>
+            <p>{menuItem.date.month}/{menuItem.date.day}/{menuItem.date.year}</p>
+            <img
+              src=
+              "https://tinyurl.com/3bh459kj"
+              className="h-auto max-w-full"
+              alt="..." />
+            <p>Dining Hall ID: {menuItem.dish.diningHallId}</p>
+            <pre>                                                   </pre>
+            
+            <button className="submit-review">See Dish Reviews</button>
+          </div>
+        </div>
+        : null
+        ))}
+
+        {/* TODO: change - placeholder styling */}
+        <style scoped>
+          {`
           .grid-container {
             display: flex;
             flex-wrap: wrap;
@@ -113,8 +167,8 @@ export default function MenuForADay(props:any) {
             margin:10px;
           }
         `}
-      </style>
-        </div>
-        </>
-    )
-  }
+        </style>
+      </div>
+    </>
+  )
+}
