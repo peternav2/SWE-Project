@@ -1,11 +1,10 @@
 import { ObjectId } from "mongodb";
 import myFetch from "../services/myFetch";
-import mongodb from 'mongodb';
 import {University} from "./University";
 
 export interface DiningHall {
     name: string;
-    _id?: mongodb.ObjectId;
+    _id?: ObjectId;
 }
 
 /**
