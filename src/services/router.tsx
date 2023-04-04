@@ -4,6 +4,7 @@ import App from '../App'
 
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
+import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
 import StudentDiningHallHome from "../routes/studentDiningHallHome";
 import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
 import Login from "../routes/Login";
@@ -12,7 +13,8 @@ import StudentUniversityHome, {
 } from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
-import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
+import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'import AdminHub from '../routes/adminHub'
+
 
 export const router = createBrowserRouter([
     {
@@ -30,7 +32,7 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
-                loader: StudentUniversityHomeLoader,
+                //insert loader here for uni data
             },
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
@@ -48,6 +50,11 @@ export const router = createBrowserRouter([
                 //insert loader here for event datad
             },
             {
+                path: "createaccount",
+                element: <CreateAccount />,
+                loader: createAccountLoader
+            },
+            {
                 path: "/admin/university/:universityId/",
                 element: <AdminHome />,
                 loader: universityLoader,
@@ -59,6 +66,6 @@ export const router = createBrowserRouter([
                     action: diningAction,
                 }]
             },
-        ]
+       ]
     },
 ])//

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 const UniversityTab = (props : any) => {
     return (
     <div>
-      <div>
+      <div className = 'my-1'>
           <button 
             type="button"
-            className="bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+            className="bg-contain bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
             onClick={props.function}
             value = {props.university.name}
             id = 'field'>
@@ -35,9 +35,9 @@ const Scroll = (props:any) => {
 }
 
 function Search(props:any) {
-
     const [searchField, setSearchField] = useState({
       field: "",
+      clicked_field:""
     });
   
     const handleChange = (event:any) => {
@@ -45,10 +45,23 @@ function Search(props:any) {
         ...searchField,
         [event.target.id]: event.target.value,
       });
-      props.change(event.target.value)
     };
 
-    const filteredData = props.details.filter((university:any) => university.name.includes(searchField.field));
+    function formatSearch(){
+      if(searchField.clicked_field != ''){
+        return("bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")
+      }
+      else{
+        return('')
+      }
+    }
+
+    const handleClick = (event:any) => {
+      setSearchField({...searchField, ['clicked_field']: event.target.value})
+      props.change(event.target.value)
+    }
+
+    const filteredData = props.details.universities.filter((university:any) => university.name.toLowerCase().includes(searchField.field.toLowerCase()));
   
     function searchList(func:any) {
       return (
@@ -61,8 +74,13 @@ function Search(props:any) {
     return (
       <div>
       <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+      <label className="block text-gray-700 text-sm font-bold mb-2">
+          <div className= "block text-gray-700 text-sm font-bold mb-2">
           University
+          <div className = {formatSearch()}>
+          {searchField.clicked_field}
+          </div>
+          </div>
           <input 
             type = "search" 
             placeholder = "Search" 
@@ -73,7 +91,7 @@ function Search(props:any) {
           />
       </label>
       </div>
-      {searchList(handleChange)}
+      {searchList(handleClick)}
       </div>
     )
     }
