@@ -1,26 +1,25 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {User} from "./stores/User";
-import TestFetch from "./components/testPost";
-import {Outlet, useOutletContext} from "react-router-dom";
+import {Outlet, Route, Routes, useNavigate, useOutletContext} from "react-router-dom";
 
-type ContextType = [user: User, setUser: (user: User) => void];
 
 function App() {
-
-  const [user, setUser] = useState<User | null>(null);
-
+  const [user, setUserContext] = useState<User | null>(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    setUserContext(JSON.parse(localStorage.getItem('user') as string));
+    if (user?.isStudent) {
+        navigate('/student/university/' + user?.universityId)
+    } else {
+        //navigate('/admin/university/' + user?.universityId)
+    }
+  }, []);
     return (
-    <div>
-      
-      <Outlet context={[user, setUser]}/>
-      
-    {/*
-         the above Outlet is where our app is gonna render and it is through this element which our app will render
-         and have access to the user store through Context
-     */}
-    </div>
+      <Outlet context={[user, setUserContext]}/>
   )
 }
+
+type ContextType = [user: User, setUser: (user: User) => void];
 
 export function useUser() {
   return useOutletContext<ContextType>();

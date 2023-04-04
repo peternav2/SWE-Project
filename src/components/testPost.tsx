@@ -6,14 +6,20 @@ import {
   DiningHall,
   getDiningHall
 } from '../stores/DiningHall';
-import { addUniversity } from '../stores/University';
+import {addUniversity, updateUniversity} from '../stores/University';
 import { Dish } from '../stores/Dish'
 import { University, getAllUniversities } from '../stores/University'
 import { ObjectId } from 'mongodb';
 import mongodb from 'mongodb';
 import { User, addUser, getUserByUsernamePassword, getUserById, deleteUser } from '../stores/User';
 import { addMenuItem, getMenuItemsBasedByDate, MenuItem, getMenuItemsBasedByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } from '../stores/MenuItem';
-import { addReviewToMenuItem, deleteReviewFromMenuItem, getReviewsByMenuItem, Review } from '../stores/Review';
+import {
+  addReviewToMenuItem,
+  deleteReviewFromMenuItem,
+  getReviewsByMenuItem,
+  Review,
+  updateReview
+} from '../stores/Review';
 import DiningHallHome from "../routes/studentDiningHallHome";
 import {
   addEventItem, deleteEventItem,
@@ -22,9 +28,12 @@ import {
   getEventItemsByDiningHall,
   updateEventItem
 } from "../stores/EventItem";
+import {useUser} from "../App";
 
 
 export default function TestFetch() {
+  const [user] = useUser();
+
 
   async function runFetch() {
 
@@ -39,6 +48,8 @@ export default function TestFetch() {
       // console.log(unis);
       
     })
+    unis[2].name = "updated university test"
+    await updateUniversity(unis[2]);
 
     var testUser: User = {
        username: "RodoJML",
@@ -75,30 +86,30 @@ export default function TestFetch() {
     // console.log(testDining._id);
     //
     //
-    //
-    // var testDish: Dish = {
-    //   name: "Test Dish",
-    //   cal: 100,
-    //   description: "Test Description",
-    //   allergens:  ["Test Allergen",
-    //               "Test Allergen 2"],
-    //   ingredients: ["Test Ingredient",
-    //                 "Test Ingredient 2",
-    //                 "Test Ingredient 3"],
-    //   reviews: [],
-    //   diningHallId: unis[1].diningHalls[0]._id,
-    // }
+
+    var testDish: Dish = {
+      name: "Test Dish",
+      cal: 100,
+      description: "Test Description",
+      allergens:  ["Test Allergen",
+                  "Test Allergen 2"],
+      ingredients: ["Test Ingredient",
+                    "Test Ingredient 2",
+                    "Test Ingredient 3"],
+      reviews: [],
+      diningHallId: unis[1].diningHalls[0]._id,
+    }
     // console.log("hello");
     //
-    // var testMenuItem: MenuItem = {
-    //   mealType: "Breakfast",
-    //   dish: testDish,
-    //   date: {year: 2023, month: 1, day: 1}
-    // }
-    //
-    // await addMenuItem(testMenuItem).then((res) => {
-    //   testMenuItem._id = res._id;
-    // })
+    const testMenuItem: MenuItem = {
+      mealType: "Dinner",
+      dish: testDish,
+      date: {year: 2023, month: 1, day: 1}
+    };
+
+    await addMenuItem(testMenuItem).then((res) => {
+      testMenuItem._id = res._id;
+    })
     //
     // await getMenuItemById(testMenuItem._id).then((res) => {
     //   console.log("GET MENU ITEM WITH ID HERE");
@@ -119,12 +130,12 @@ export default function TestFetch() {
     // })
     //
     //
-    // var review: Review = {
-    //   username: "Test User",
-    //   user_Id: testUser._id,
-    //   rating: 5,
-    //   comment: "Test Comment",
-    // }
+    var review: Review = {
+      username: "Test User",
+      user_Id: user._id,
+      rating: 5,
+      comment: "Test Comment",
+    }
     //
     // // await deleteUser(testUser.username, testUser.password).then((res) => {
     // //   console.log("USER IS DELETED BELOW");
@@ -149,10 +160,26 @@ export default function TestFetch() {
     //
     // console.log(testDining);
     //
-    // await addReviewToMenuItem(review, testMenuItem._id).then((res) => {
-    //   console.log("REVIEW IS ADDED BELOW");
-    //   console.log(res);
-    // });
+    await addReviewToMenuItem(review, testMenuItem._id).then((res) => {
+      console.log("REVIEW IS ADDED BELOW");
+      console.log(res);
+    });
+
+    const newReview:Review = {
+      ...review,
+      comment: "updated comment yeah"
+    }
+
+
+    await updateReview(newReview, testMenuItem._id).then((res) => {
+      console.log("REVIEW IS UPDATED BELOW");
+      console.log(res);
+    });
+
+    //await deleteReviewFromMenuItem(review, testMenuItem._id)
+
+
+
     //
     // await getReviewsByMenuItem(testMenuItem._id).then((res) => {
     //   console.log("REVIEWS ARE GOTTEN BELOW");
@@ -214,6 +241,6 @@ export default function TestFetch() {
 
   return (
     <div>
-        <button onClick={runFetch} >Test Fetch</button>
+        <button onClick={runFetch} className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Test Fetch</button>
     </div>
   )}
