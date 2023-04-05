@@ -7,7 +7,7 @@ import { useUser } from "../App";
 import { DiningHall, getDiningHall } from "../stores/DiningHall";
 
 export async function loader({ params }: any) {
-  return await getDiningHall(params.diningHallId);
+  return await getDiningHall(params.universityId, params.diningHallId);
 }
 
 export default function StudentDiningHallHome() {
@@ -25,11 +25,11 @@ export default function StudentDiningHallHome() {
       </div>
 
       {!user.isStudent &&
-        <Link to={`/admin/university/${user.universityId}/dining/${dining._id}/createmenu`}>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Link to={`/admin/university/${user.universityId}/dininghall/${dining._id}/createmenu`}>
+          <button className="my-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Create Menu
           </button>
-        </Link>};
+        </Link>}
     </div>
   )
 }
