@@ -35,25 +35,29 @@ export default function TestFetch() {
   const [user] = useUser();
 
 
-  
   async function runFetch() {
+
     let unis: University[] = [];
+
     await getAllUniversities().then((res) => {
+      
       console.log(res)
       unis = res;
-      // console.log(res);
+      //console.log(res);
       // console.log("--------------------");
       // console.log(unis);
+      
     })
     unis[2].name = "updated university test"
     await updateUniversity(unis[2]);
 
-    // var testUser: User = {
-    //   username: "Peters Test User",
-    //   password: "Test Password",
-    //   isStudent: true,
-    //   universityId: unis[1]._id,
-    // }
+    var testUser: User = {
+       username: "RodoJML",
+       password: "1234",
+       isStudent: false,
+       universityId: unis[1]._id,
+    }
+
     // var testDining: DiningHall = {
     //   name: "Test Dining Hall",
     // }
@@ -72,9 +76,11 @@ export default function TestFetch() {
     //   console.log(res);
     //
     // });
-    // await addUser(testUser).then((res) => {
-    //   testUser._id = res._id;
-    // })
+
+    await addUser(testUser).then((res) => {
+       testUser._id = res._id;
+    })
+
     // console.log("LOOK HEREERERER");
     //
     // console.log(testDining._id);

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {User} from "./stores/User";
+
 import {Outlet, Route, Routes, useNavigate, useOutletContext} from "react-router-dom";
 
 
@@ -16,6 +17,7 @@ function App() {
 }
 
 type ContextType = [user: User, setUser: (user: User) => void];
+
 
 export function useUser() {
   return useOutletContext<ContextType>();

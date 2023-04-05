@@ -11,7 +11,8 @@ import StudentUniversityHome, {
     loader as StudentUniversityHomeLoader
 } from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
-
+import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
+import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 
 export const router = createBrowserRouter([
     {
@@ -46,11 +47,20 @@ export const router = createBrowserRouter([
                 element: <StudentEventForDay />,
                 //insert loader here for event datad
             },
-            // {
-            //     path: '/admin/university/:universityId',
-            //     element: <AdminUniversityHome />,
-            //     loader: AdminUniversityHomeLoader,
-            // }
+
+            {
+                path: "/admin/university/:universityId/",
+                element: <AdminHome />,
+                loader: universityLoader,
+                children: 
+                [{
+                    path: 'addDining',
+                    element: <AddDining />,
+                    loader: diningLoader,
+                    action: diningAction,
+                }]
+            },
+
         ]
-    }
+    },
 ])//
