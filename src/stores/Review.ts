@@ -24,7 +24,7 @@ export const addReviewToMenuItem = async (review: Review, menuItemId?: ObjectId)
  */
 export const getReviewsByMenuItem = async (menuItemId?: ObjectId) => {
     return await myFetch<Review[]>(`review/${menuItemId}`)
-} 
+}
 
 /**
  * 
@@ -34,4 +34,8 @@ export const getReviewsByMenuItem = async (menuItemId?: ObjectId) => {
  */
 export const deleteReviewFromMenuItem = async (review: Review, menuItemId?: ObjectId) => {
     return await myFetch<any>(`review/${menuItemId}`, review, "DELETE");
+}
+
+export const updateReview = async (review: Review, menuItemId?: ObjectId) => {
+    return await myFetch<any>(`review/${menuItemId}`, review, "PATCH");
 }
