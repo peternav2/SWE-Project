@@ -8,11 +8,7 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     setUserContext(JSON.parse(localStorage.getItem('user') as string));
-    if (user?.isStudent) {
-        navigate('/student/university/' + user?.universityId)
-    } else {
-        //navigate('/admin/university/' + user?.universityId)
-    }
+
   }, []);
     return (
       <Outlet context={[user, setUserContext]}/>
