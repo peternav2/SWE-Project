@@ -1,6 +1,6 @@
 import { getUniversity, University } from '../../stores/University';
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom';
-
+import { useUser } from '../../App';
 
 export async function loader({ params }: any) {
   return await getUniversity(params.universityId);
