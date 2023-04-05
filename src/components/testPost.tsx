@@ -136,10 +136,10 @@ export default function TestFetch() {
     // //   console.log(res);
     // // })
     //
-    // await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
-    //   console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
-    //   console.log(res);
-    // })
+    await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
+      console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
+      console.log(res);
+    })
     //
     // await getMenuItemsBasedByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
     //   console.log("MENU ITEMS FROM DINING HALL ARE GOTTEN BELOW");
@@ -165,20 +165,20 @@ export default function TestFetch() {
     }
 
 
-    await updateReview(newReview, testMenuItem._id).then((res) => {
-      console.log("REVIEW IS UPDATED BELOW");
-      console.log(res);
-    });
+    // await updateReview(newReview, testMenuItem._id).then((res) => {
+    //   console.log("REVIEW IS UPDATED BELOW");
+    //   console.log(res);
+    // });
 
     //await deleteReviewFromMenuItem(review, testMenuItem._id)
 
 
 
     //
-    // await getReviewsByMenuItem(testMenuItem._id).then((res) => {
-    //   console.log("REVIEWS ARE GOTTEN BELOW");
-    //   console.log(res);
-    // })
+    await getReviewsByMenuItem(testMenuItem._id).then((res) => {
+      console.log("REVIEWS ARE GOTTEN BELOW");
+      console.log(res);
+    })
     //
     // await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
     //   console.log("REVIEW IS DELETED BELOW");
@@ -192,25 +192,25 @@ export default function TestFetch() {
     //   console.log("DINING HALL IS GOTTEN BELOW");
     //   console.log(res);
     // })
-    // const eventItem: EventItem = {
-    //   name: "Test Event",
-    //   description: "Test Description",
-    //   date: {year: 2023, month: 1, day: 1},
-    //   diningHallId: unis[1].diningHalls[0]._id,
-    // }
+    const eventItem: EventItem = {
+      name: "Test Event",
+      description: "Test Description",
+      date: {year: 2023, month: 1, day: 1},
+      diningHallId: unis[1].diningHalls[0]._id,
+    }
     // console.log(eventItem.diningHallId);
-    // await addEventItem(eventItem).then((res) => {
-    //   console.log("EVENT ITEM IS ADDED BELOW");
-    //   console.log("look at two ids below see if same")
-    //   console.log(eventItem.diningHallId);
-    //   console.log(unis[1].diningHalls[0]._id);
-    //   eventItem._id = res._id;
-    //   console.log(res);
-    // })
-    // await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
-    //     console.log("EVENT ITEM IS GOTTEN BELOW");
-    //     console.log(res);
-    // })
+    await addEventItem(eventItem).then((res) => {
+      console.log("EVENT ITEM IS ADDED BELOW");
+      console.log("look at two ids below see if same")
+      console.log(eventItem.diningHallId);
+      console.log(unis[1].diningHalls[0]._id);
+      eventItem._id = res._id;
+      console.log(res);
+    })
+    await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
+        console.log("EVENT ITEM IS GOTTEN BELOW");
+        console.log(res);
+    })
     // await getEventItemsByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
     //   console.log("EVENT ITEM IS GOTTEN BELOW");
     //   console.log(res);
