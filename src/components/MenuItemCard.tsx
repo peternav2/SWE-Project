@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BareMenuItem from "./BareMenuItem";
 
 export default function MenuItemCard(props: any) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -10,9 +11,9 @@ export default function MenuItemCard(props: any) {
   return (
     <div className="grid-item" onClick={handleModalToggle} key={props.index}>
       <div className="nested-grid-container">
-        <h1 className="text-2xl text-center">{props.menuItem.mealType}</h1>
+        <h1 className="text-2xl">{props.menuItem.mealType}</h1>
         <u>
-          <h2 className="text-center">DISH</h2>
+          <h2 >DISH</h2>
         </u>
         <u>
           <h3>{props.menuItem.dish.name}</h3>
@@ -34,10 +35,7 @@ export default function MenuItemCard(props: any) {
       {modalVisible && (
         <div className="modal">
           <div className="modal-content">
-            <h2>DISH TITLE!</h2>
-            <p>DISH IMAGE.</p>
-            <p>DISH DESC.</p>
-            <p>CRUD MOD SECTION.</p>
+            <BareMenuItem menuItem={props.menuItem} />
             <button onClick={handleModalToggle}>Close Modal</button>
           </div>
         </div>

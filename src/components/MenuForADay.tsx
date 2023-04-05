@@ -11,6 +11,7 @@ import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import MenuItemCard from "../components/MenuItemCard";
 import { useUser } from "../App";
 import { useState } from "react";
+import BareMenuItem from "./BareMenuItem";
 
 
 export default function MenuForADay(props: any) {
@@ -86,6 +87,7 @@ export default function MenuForADay(props: any) {
           ))
         }
       </div>
+        {/* <BareMenuItem menuItem={props.menuItems[0]}/> */}
 
       <style scoped>
         {`
@@ -145,7 +147,7 @@ export default function MenuForADay(props: any) {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 250;
           }
 
           .modal-content {
@@ -159,6 +161,10 @@ export default function MenuForADay(props: any) {
           
           .modal-trigger {
             cursor: pointer;
+          }
+
+          img{
+            width:400px;
           }
           `}
       </style>
