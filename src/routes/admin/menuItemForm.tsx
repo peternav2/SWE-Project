@@ -20,27 +20,27 @@ export default function MenuItemForm({item = {} as MenuItem}) {
                 <input type="text" name="description" defaultValue={item?.dish.description} />
             </p>
 
-            <p>
+            <div>
                 <label>Alergens: </label>
                 <ul>
                     {item?.dish.allergens.map((allergen) => (
-                        <input type="text" name="description" defaultValue={allergen} />
+                        <input type="text" name="description" defaultValue={allergen} key={allergen}/>
                     ))}
                     <button>+</button>
                     <Outlet />
                 </ul>
-            </p>
+            </div>
 
-            <p>
+            <div>
                 <label>Ingredients: </label>
                 <ul>
                     {item?.dish.ingredients.map((ingredient) => (
-                        <input type="text" name="description" defaultValue={ingredient} />
+                        <input type="text" name="description" defaultValue={ingredient} key={ingredient}/>
                     ))}
                     <button>+</button>
                     <Outlet />
                 </ul>
-            </p>
+            </div>
         </Form>
     );
 }

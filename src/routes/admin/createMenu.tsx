@@ -80,7 +80,7 @@ export default function CreateMenu() {
             </ul>
 
             {menuItems.map((menuItem) => (
-                <div>
+                <div key={menuItem._id?.toString()}>
                     <p>{menuItem.dish.name}</p>
                     <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>
