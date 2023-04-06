@@ -1,24 +1,23 @@
-import {Form, redirect, useLoaderData, useNavigate, useParams} from "react-router-dom";
+import { Form, redirect, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import type {MenuItem} from "../../stores/MenuItem";
-import {getMenuItemsBasedByDate} from "../../stores/MenuItem";
-import type {CalendarDate} from "../../stores/CalendarDate";
+import type { MenuItem } from "../../stores/MenuItem";
+import { getMenuItemsBasedByDate } from "../../stores/MenuItem";
+import type { CalendarDate } from "../../stores/CalendarDate";
+import MenuItemForm from "./menuItemForm";
 
-export async function action(){
+export async function action() {
     // here we will submit changes 
 }
 
-export async function loader({params}: any) {
-      let year = +params.year;
-      let month = +params.month;
-      let day = +params.day;
-      // the above is a hacky way to convert the string to a number because
-      // the params are of type any and I don't know how to convert them to a number
-      // in the method parameters
-    return await getMenuItemsBasedByDate({year, month, day}, params.diningHallId);
+export async function loader({ params }: any) {
+    let year = +params.year;
+    let month = +params.month;
+    let day = +params.day;
 
+    console.log(getMenuItemsBasedByDate({ year, month, day }, params.diningHallId));
+    return await getMenuItemsBasedByDate({ year, month, day }, params.diningHallId);
 }
 
 export default function CreateMenu() {
@@ -33,6 +32,7 @@ export default function CreateMenu() {
     // const [menuItems, setMenuItems] = useState([] as MenuItem[]);
     const params = useParams();
     const menuItems = useLoaderData() as MenuItem[];
+    console.log(menuItems);
 
     // useEffect(() => {
     //
@@ -56,14 +56,13 @@ export default function CreateMenu() {
         <div>
             <h1> Create a New Menu </h1>
 
-            <DatePicker className={dateButton} selected={startDate} onChange={(date) =>  {
-                setStartDate(date as Date);
-                const dateIn = date as Date;
-                console.log(date)
-              console.log(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth()+1}/${dateIn.getDate()}/${dateIn.getFullYear()}`)
-                navigate(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth()+1}/${dateIn.getDate()}/${dateIn.getFullYear()}`);
-            }} />
-
+            <DatePicker className={dateButton} selected={startDate}
+                onChange={(date) => {
+                    setStartDate(date as Date);
+                    const dateIn = date as Date;
+                    navigate(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth() + 1}/${dateIn.getDate()}/${dateIn.getFullYear()}`);
+                }}
+            />
 
             <ul className="flex">
                 <li className="flex-1 mr-2">
@@ -78,31 +77,15 @@ export default function CreateMenu() {
                 <li className="flex-1 mr-2">
                     <a className={activeButton} href="#">LateNight</a>
                 </li>
-
             </ul>
 
-            <Form className="w-full max-w-xs">
-
-
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                        Username
-                    </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
+            {menuItems.map((menuItem) => (
+                <div>
+                    <p>{menuItem.dish.name}</p>
+                    <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>
-
-
-            </Form>
-
-            <ul>
-                {menuItems.map((item) => (
-                    <li key={JSON.stringify(item._id)}>
-                        <p>{item.mealType}</p>
-                    </li>
-                ))}
-            </ul>
+            ))}
             
-
         </div>
     )
 }

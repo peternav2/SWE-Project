@@ -5,6 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Calendar from "../components/Calendar";
 import { useUser } from "../App";
 import { DiningHall, getDiningHall } from "../stores/DiningHall";
+import { CalendarDate } from "../stores/CalendarDate";
 
 export async function loader({ params }: any) {
   return await getDiningHall(params.universityId, params.diningHallId);
@@ -16,6 +17,11 @@ export default function StudentDiningHallHome() {
   // it will create a new array of days based on the new month and year with the Date object
   const dining = useLoaderData() as DiningHall;
   const [user, setUser] = useUser();
+  const today = new Date();
+  const calDate = {} as CalendarDate;
+  calDate.day = today.getDate();
+  calDate.month = today.getMonth() + 1;
+  calDate.year = today.getFullYear();
 
   return (
     <div className={"container w-max h-max mx-auto"}>
@@ -25,7 +31,7 @@ export default function StudentDiningHallHome() {
       </div>
 
       {!user.isStudent &&
-        <Link to={`/admin/university/${user.universityId}/dininghall/${dining._id}/createmenu`}>
+        <Link to={`/admin/university/${user.universityId}/dininghall/${dining._id}/createmenu/${calDate.month}/${calDate.day}/${calDate.year}`}>
           <button className="my-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Create Menu
           </button>
