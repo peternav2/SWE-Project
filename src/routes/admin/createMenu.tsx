@@ -16,7 +16,7 @@ export async function loader({ params }: any) {
     let month = +params.month;
     let day = +params.day;
 
-    console.log(getMenuItemsBasedByDate({ month, day, year }, params.diningHallId));
+    console.log(await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId));
     return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId);
 }
 
