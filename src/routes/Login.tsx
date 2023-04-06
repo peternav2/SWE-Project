@@ -19,7 +19,11 @@ function Login(){
 
   const navigate = useNavigate();
 
-
+  let user_errors = ["", 
+                     "Please enter your username.", 
+                     "Invalid credentials."]
+  let password_errors = ["", 
+                         "Please enter your password"]
 
   let credentialsChecked = false
   let credentialsValid = true
@@ -203,32 +207,11 @@ function Login(){
             <button type="submit" className={formatSubmit()}>
               Sign In
             </button>
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Create an account.
-            </button>
-<<<<<<<<< Temporary merge branch 1
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              <Link to={`renderuser`}> click here to render user  {user?.username}</Link>
-            </button>
-            <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              <Link to={`student/university/${user?.universityId}`}> Student Uni Home Page</Link>
-            </button>
-
-=========
-            <Link to={`adminHome`}> Go to Admin Home </Link>
-            <Link to={`renderuser`}> click here to render user  {user?.username}</Link>
-            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
-            
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              <Link to={`admin/university/${user?.universityId}`} > take me to admin home</Link>
-            </button>
->>>>>>>>> Temporary merge branch 2
+            <Link className = "mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account.</Link>
           </div>
           <GetErrors/>
         </form>
       </div>
-
-
     </div>
   );
 };
