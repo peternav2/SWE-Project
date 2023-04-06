@@ -19,14 +19,7 @@ function Login(){
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      if (user) {
-        // navigate('/student/university/' + user?.universityId)
-      }
-    }
-  }, [user]);
-=========
+
 
   let credentialsChecked = false
   let credentialsValid = true
