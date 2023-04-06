@@ -1,44 +1,68 @@
-import { Form, useParams } from "react-router-dom";
+import {Form, redirect, useLoaderData, useNavigate, useParams} from "react-router-dom";
 import DatePicker from "react-datepicker";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { getMenuItemsBasedByDate } from "../../stores/MenuItem";
-import type { MenuItem } from "../../stores/MenuItem";
-import type { CalendarDate } from "../../stores/CalendarDate";
+import type {MenuItem} from "../../stores/MenuItem";
+import {getMenuItemsBasedByDate} from "../../stores/MenuItem";
+import type {CalendarDate} from "../../stores/CalendarDate";
 
 export async function action(){
     // here we will submit changes 
 }
 
+export async function loader({params}: any) {
+      let year = +params.year;
+      let month = +params.month;
+      let day = +params.day;
+      // the above is a hacky way to convert the string to a number because
+      // the params are of type any and I don't know how to convert them to a number
+      // in the method parameters
+    return await getMenuItemsBasedByDate({year, month, day}, params.diningHallId);
+
+}
+
 export default function CreateMenu() {
 
+    const universityId = useParams().universityId;
+    const diningHallId = useParams().diningHallId;
+    const navigate = useNavigate();
+
     const [startDate, setStartDate] = useState(new Date());
-    const [menuItems, setMenuItems] = useState([] as MenuItem[]);
+
+    startDate.getDay().toString();
+    // const [menuItems, setMenuItems] = useState([] as MenuItem[]);
     const params = useParams();
+    const menuItems = useLoaderData() as MenuItem[];
 
-    useEffect(() => {
-
-        var calDate = {
-            year: startDate.getFullYear(),
-            month: startDate.getMonth(),
-            day: startDate.getDay(),
-        } as CalendarDate;
-
-        // get menu items based on the date
-        getMenuItemsBasedByDate(calDate, params.diningHallId as any).then((menuItems) => {
-            setMenuItems(menuItems);
-            console.log(menuItems);
-        });
-
-        console.log("Date selected is: " + calDate.year + "-" + calDate.month + "-" + calDate.day);
-    },  // based on the value that changed
-        [startDate]);
+    // useEffect(() => {
+    //
+    //     var calDate = {
+    //         year: startDate.getFullYear(),
+    //         month: startDate.getMonth(),
+    //         day: startDate.getDay(),
+    //     } as CalendarDate;
+    //
+    //     // get menu items based on the date
+    //     getMenuItemsBasedByDate(calDate, params.diningHallId as any).then((menuItems) => {
+    //         setMenuItems(menuItems);
+    //         console.log(menuItems);
+    //     });
+    //
+    //     console.log("Date selected is: " + calDate.year + "-" + calDate.month + "-" + calDate.day);
+    // },  // based on the value that changed
+    //     [startDate]);
 
     return (
         <div>
             <h1> Create a New Menu </h1>
 
-            <DatePicker className={dateButton} selected={startDate} onChange={(date) => setStartDate(date as Date)} />
+            <DatePicker className={dateButton} selected={startDate} onChange={(date) =>  {
+                setStartDate(date as Date);
+                const dateIn = date as Date;
+                console.log(date)
+              console.log(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth()+1}/${dateIn.getDate()}/${dateIn.getFullYear()}`)
+                navigate(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth()+1}/${dateIn.getDate()}/${dateIn.getFullYear()}`);
+            }} />
 
 
             <ul className="flex">
