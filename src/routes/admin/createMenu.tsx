@@ -81,6 +81,8 @@ export default function CreateMenu() {
                 </div>
             ))}
 
+            <button className={activeButton} disabled>Add New Menu Item</button>
+
         </div>
     )
 }
