@@ -43,5 +43,14 @@ export async function addUniversity(university: University) {
  * @returns Promise<any> : a promise that resolves to an object with details about the document that was deleted.
  */
 export async function deleteUniversity(universityId?: ObjectId) {
-    return myFetch<any>(`university/${universityId}`, )
+    return myFetch<any>(`university/${universityId}`, null, "DELETE")
+}
+
+/**
+ *
+ * @param university
+ * @returns Promise<any> : a promise that resolves to the data about the document that was edited.
+ */
+export async function updateUniversity(university: University) {
+    return myFetch<any>(`university/${university._id}`, university, "PATCH")
 }

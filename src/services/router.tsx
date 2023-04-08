@@ -4,14 +4,15 @@ import App from '../App'
 
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
-import StudentDiningHallHome, {
-    loader as diningHallHomeLoader,
-} from "../routes/studentDiningHallHome";
+import StudentDiningHallHome from "../routes/studentDiningHallHome";
 import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
 import Login from "../routes/Login";
-import StudentUniversityHome from "../routes/studentUniversityHome";
+import StudentUniversityHome, {
+    loader as StudentUniversityHomeLoader
+} from "../routes/studentUniversityHome";
 import StudentEventForDay from "../routes/studentEventForDay";
-
+import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
+import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 
 export const router = createBrowserRouter([
     {
@@ -29,12 +30,12 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
-                //insert loader here for uni data
+                loader: StudentUniversityHomeLoader,
             },
             {
-                path: '/student/dininghall/:universityId/:diningHallId/:diningHallName',
+                path: '/student/dininghall/:diningHallId/:diningHallName',
                 element: <StudentDiningHallHome />,
-                loader: diningHallHomeLoader,
+                // loader: diningHallHomeLoader,
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
@@ -45,7 +46,21 @@ export const router = createBrowserRouter([
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
                 element: <StudentEventForDay />,
                 //insert loader here for event datad
-            }
+            },
+
+            {
+                path: "/admin/university/:universityId/",
+                element: <AdminHome />,
+                loader: universityLoader,
+                children: 
+                [{
+                    path: 'addDining',
+                    element: <AddDining />,
+                    loader: diningLoader,
+                    action: diningAction,
+                }]
+            },
+
         ]
-    }
+    },
 ])//

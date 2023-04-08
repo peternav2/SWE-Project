@@ -16,7 +16,6 @@ app.use((req, res, next) => {
 })
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Hello World!'));
 
 app.get('/error', (req, res) => {
     res.status(404).send('Error 404')
@@ -27,6 +26,9 @@ app.get('/error', (req, res) => {
 .use('/api/v1/user', userController)
 .use('/api/v1/review', reviewController)
 .use('/api/v1/eventitem', eventItemController)
+app.get('*', (req, res) => {
+    res.sendFile('index.html', { root: '../dist' });
+});
 
 
 

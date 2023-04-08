@@ -1,5 +1,6 @@
 const express = require('express');
 const { getAllUniversities, addUniversity, deleteUniversity, getUniversity } = require('../models/university.js');
+const {updateUniversity} = require("../models/university");
 const app = express.Router();
 app
 .get('/', (req, res) => { // this will GET all universities from the database
@@ -14,6 +15,11 @@ app
 })
 .post('/', (req, res) => {
     addUniversity(req.body)
+    .then(x => res.status(200).send(x))
+    .catch(err => res.status(404).send(err));
+})
+.patch('/:universityId', (req, res) => {
+    updateUniversity(req.body)
     .then(x => res.status(200).send(x))
     .catch(err => res.status(404).send(err));
 })

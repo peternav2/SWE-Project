@@ -15,6 +15,8 @@ const getAllMenuItems = async () => { // returns all menuItem in the database
 
 const addMenuItem = async (menuItem) => {
     const db = await collection();
+    menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
+
     const result = await db.insertOne(menuItem); // insert the menuItem object into the database
     menuItem._id = result.insertedId; // give the menuItem object an _id property
     return menuItem; // what will be returned in the Promise
@@ -35,14 +37,13 @@ const getMenuItemsByDate = async(year, month, day, diningHallId) => {
 
 const getMenuItemsByDiningHall = async(diningHallId) => {
     const db = await collection();
-    const result = await db.find({"dish.diningHallId": diningHallId}).toArray();
+    const result = await db.find({"dish.diningHallId": new ObjectId(diningHallId)}).toArray();
     return result; // what will be returned in the Promise
 }
 
 const getMenuItemsByMealTypeByDate = async(year, month, day, mealType, diningHallId) => {
     const db = await collection();
-    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": diningHallId}).toArray();
-    console.log('hit',result);
+    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": new ObjectId(diningHallId)}).toArray();
     return result; // what will be returned in the Promise
 }
 
