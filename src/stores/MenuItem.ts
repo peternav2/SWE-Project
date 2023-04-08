@@ -35,8 +35,7 @@ export async function getAllMenuItems(): Promise<MenuItem[]> {
  * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the date you are requesting
  */
 export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?: string): Promise<MenuItem[]> { 
-    //Note... changing the type of diningHallId to ObjectId causes an error. I don't know why. 
-    // changing it to string works fine???
+
     return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${diningHallId}`)
 }
 
