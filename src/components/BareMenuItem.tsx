@@ -62,10 +62,13 @@ export default function BareMenuItem(props: any) {
         <button className="toggle-reviews" onClick={toggleVisibility}>SEE REVIEWS</button>
         {visible && <div>
           {/* maybe change this to an array of objects with these fields on dish so dish can have multiple reviews */}
-          <p>{props.menuItem.dish.reviews.username}</p>
-          <p>{props.menuItem.dish.reviews.comment}</p>
+          <p>---------------------------------------------</p>
+          <p>user: {props.menuItem.dish.reviews.username}</p>
+          <p>review:{props.menuItem.dish.reviews.comment}</p>
           <p>stars: {props.menuItem.dish.reviews.rating}</p>
           <p>debug: {props.menuItem.dish.reviews.user_Id}</p>
+          <p>---------------------------------------------</p>
+
         </div>}
       </div>
 
