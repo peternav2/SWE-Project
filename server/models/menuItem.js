@@ -7,6 +7,12 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
+const getAllMenuItems = async () => { // returns all menuItem in the database
+    const db = await collection();
+    const result = await db.find().toArray();
+    return result;
+}
+
 const addMenuItem = async (menuItem) => {
     const db = await collection();
     menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
@@ -22,7 +28,10 @@ const getMenuItemById = async (menuItemId) => {
 }
 const getMenuItemsByDate = async(year, month, day, diningHallId) => {
     const db = await collection();
+    diningHallId = new ObjectId(diningHallId);
+    console.log(year,month,day,diningHallId);
     const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": diningHallId }).toArray();
+    console.log('hit3',result);
     return result; // what will be returned in the Promise
 }
 
@@ -43,4 +52,4 @@ const deleteMenuItem = async (menuItemId) => {
     const result = await db.deleteOne({ _id: new ObjectId(menuItemId) });
     return result; // what will be returned in the Promise (the result of the delete operation
 }
-module.exports = { addMenuItem, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }
+module.exports = { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }
