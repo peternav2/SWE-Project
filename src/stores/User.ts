@@ -2,12 +2,18 @@ import { ObjectId } from "mongodb";
 import myFetch from "../services/myFetch";
 import { University } from "./University";
 
+export interface Session{
+    id: string;
+    token: string;
+}
+
 export interface User {
     username: string;
     password: string
     isStudent: boolean;
     _id?: ObjectId;
     universityId?: ObjectId;
+    session?: Session;
 }
 
 /**
@@ -19,6 +25,12 @@ export const addUser = async (user: User) => {
     return await myFetch<User>("user", user);
 }
 
+export const addUserTokenized = async (user: User) => {
+    return await myFetch<User>("user/tokenized", user);
+}
+
+
+
 /**
  * 
  * @param username : string
@@ -28,6 +40,10 @@ export const addUser = async (user: User) => {
 
 export const getUserByUsernamePassword = async (username: string, password: string) => {
     return await myFetch<User>(`user/${username}/${password}`);
+}
+
+export const getUserByUsernamePasswordTokenized = async (username: string, password: string) => {
+    return await myFetch<User>(`user/${username}/${password}/tokenized`);
 }
 
 export const getUserByUsername =  async (username: string) => {

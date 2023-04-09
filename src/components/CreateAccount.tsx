@@ -1,6 +1,6 @@
 import React from 'react'
 import Search from '../UniversityList'
-import {User, addUser, getUserByUsername} from "../stores/User";
+import {User, addUser, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
 import {useLoaderData, useNavigate} from "react-router-dom";
 import {getErrorList} from "./popups"
@@ -224,7 +224,7 @@ const CreateAccount = () => {
   };
 
   async function submitWrapper(){
-    await addUser(newUser(form))
+    await addUserTokenized(newUser(form))
     navigate('/', {state: {message : "Account created."}})
   }
 

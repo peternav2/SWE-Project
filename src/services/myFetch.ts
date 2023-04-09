@@ -1,34 +1,46 @@
 const API_ROOT = 'http://localhost:3000/api/v1/';
 
 export default function myFetch<T>(url: string, data?: any, method?: string ): Promise<T> {
-
     if (method == 'DELETE'){
         const option: RequestInit = {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getCredentials(),
             body: data ? JSON.stringify(data) : undefined,
         };   
-        return fetch(API_ROOT + url, option).then(x => x.json());
+        return fetch(API_ROOT + url, option).then(x => checkResponse(x));
     } else if (method == 'PATCH'){
         const option: RequestInit = {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getCredentials(),
             body: data ? JSON.stringify(data) : undefined,
         };
-        return fetch(API_ROOT + url, option).then(x => x.json());
+        return fetch(API_ROOT + url, option).then(x => checkResponse(x));
     }
     const option: RequestInit = {
         method: method ?? (data ? 'POST' : 'GET'),
-        headers: { 
-            'Content-Type': 'application/json',
-        },
+        headers: getCredentials(),
         body: data ? JSON.stringify(data) : undefined,  
     };
-    return fetch(API_ROOT + url, option).then(x=>x.json());
+    return fetch(API_ROOT + url, option).then(x=> checkResponse(x))
+} 
+
+async function checkResponse(response: Response){
+    if(response.ok){
+        return response.json()
+    }
+    else{
+        const message = await response.json()
+        throw new Error(response.status + ": " + message)
+    }
+}
+
+function getCredentials(){
+    var headers = new Headers({'Content-Type': 'application/json'});
+    var session = localStorage.getItem('session');
+    if(session != null || session !== undefined){
+        headers.append('Authorization', JSON.stringify(session));
+    }
+    return headers
 }
 
 /**

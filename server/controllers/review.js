@@ -2,20 +2,27 @@ const express = require('express');
 const app = express.Router();
 const { ObjectId } = require('mongodb');
 const { addReviewToMenuItem, deleteReview, getReviewsByMenuItem } = require('../models/review.js');
+const {getErrorTuple} = require('../functions/session.js')
 
 app
 .post('/:menuItemId', (req, res) => {
-    addReviewToMenuItem(req.body, req.params.menuItemId)
-    .then(x => res.status(200).send(x));
+    addReviewToMenuItem(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 .delete('/:menuItemId', (req, res) => {
-    deleteReview(req.body, req.params.menuItemId)
-    .then(x => res.status(200).send(x));
+    deleteReview(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 
 })
 .get('/:menuItemId', (req, res) => {
-    getReviewsByMenuItem(req.params.menuItemId)
-    .then(x => res.status(200).send(x));
+    getReviewsByMenuItem(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 
 module.exports = app

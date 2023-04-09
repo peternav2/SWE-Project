@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {getUserByUsernamePassword} from "../stores/User";
+import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList} from "../components/popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
+import { getDestination, validateCurrentAuthLogin } from '../components/auth';
 
 function Login(){
   const [isLoading, setIsLoading] = React.useState(false);
@@ -12,12 +13,18 @@ function Login(){
     username: '',
     password: ''
   });
+
   const [validity, setValidity] = React.useState({
     user_error_code: 0,
     password_error_code: 0
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    validateCurrentAuthLogin(navigate);
+  })
+  window.history.replaceState({}, document.title)
 
   let user_errors = ["", 
                      "Please enter your username.", 
@@ -91,19 +98,28 @@ function Login(){
        return false;
   }
 
-  type State = { message: string }
+  type State = { message: string, error: string}
 
-  function isStateValid(state: any): state is State {
+  function isStateValid(state: any, type: string): state is State {
     if (!state) return false;
     if (typeof state !== "object") return false;
-    if (typeof state.message !== "string") return false;
+    if (type == "message"){
+      if (typeof state.message !== "string") return false;
+    }
+    if(type == "error"){
+      if (typeof state.error !== "string") return false;
+    }
+    
   return true;
 }
 
   function GetPageLoadMessage(){  
       const location = useLocation()
-      if(isStateValid(location.state)){
+      if(isStateValid(location.state, 'message')){
         return(getSuccessBox(location.state.message))
+      }
+      else if(isStateValid(location.state, 'error')){
+        return(getErrorBox(location.state.error))
       }
       else{
         return(<></>)
@@ -111,25 +127,30 @@ function Login(){
     }
   
   const handleSubmit = (event : any) => {
-    event.preventDefault();
     if(checkSubmit()){
-        submitWrapper()
+      submitWrapper()      
     }
     else{
       checkUser(form.username)
       checkPassword(form.password)
     }
+    event.preventDefault();
   };
 
   async function submitWrapper(){
     credentialsChecked = false
     setIsLoading(true);
-    await getUserByUsernamePassword(form.username, form.password).then((res) => {
+    await getUserByUsernamePasswordTokenized(form.username, form.password).then((res) => {
       if(validateResponse(res)){
-        setUser(res);
+        if(res === undefined || res === null){
+          throw new Error("Bad credentials.")
+        }
+        
+        localStorage.setItem('session',JSON.stringify(res.session));
         localStorage.setItem('user', JSON.stringify(res));
-        var destination = getDestination(res);
-        navigate(destination)
+
+        setUser(res);
+        navigate(getDestination(res));
       }
     }).catch((err) => {
       credentialsChecked = true
@@ -139,15 +160,7 @@ function Login(){
     checkUser(form.username)
   }
 
-  function getDestination(response:any){
-    var uid = response.universityId
-    if(response.isStudent == true){
-      return('/student/university/'+String(uid)+'/')
-    }
-    else{
-      return('/admin/university/'+String(uid)+'/')
-    }
-  }
+
 
   function validateResponse(response:any){
     if (response != null){
