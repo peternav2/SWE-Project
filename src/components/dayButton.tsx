@@ -16,7 +16,7 @@ export default function DayButton({userType, day, month, year, diningHallId}:
     return (
         <div>
             <button onClick={toDay} className="bg-blue-600 hover:bg-blue-800 text-white font-bold text-2xl py-6 px-5 rounded ">
-                <Link to={`/`} >
+                <Link to={`/student/day/menu/${diningHallId}/${month}/${day}/${year}`} >
                     {new Date(year-1,month-1)
                       .toLocaleString('default', {month: 'long'})
                     }
