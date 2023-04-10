@@ -16,7 +16,7 @@ export default function Calendar() {
   };
     const [user] = useUser();
   //const userType = user.isStudent ? 'student' : 'admin'
-  const [month, setMonth] = useState(new Date().getMonth().toString());
+  const [month, setMonth] = useState((new Date().getMonth() + 1).toString());
   const [year, setYear] = useState(new Date().getFullYear().toString());
   // console.log(new Date(+year-1,+month-1).toLocaleString('default', {month: 'long'}));
   const [days, setDays] = useState(Array.from(Array(getDaysInMonth(+month,+year)), (_, index) => index + 1));
