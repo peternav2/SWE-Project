@@ -81,8 +81,8 @@ export default function MenuForADay(props: any) {
             // regex to remove all white space + triple ternary a ? b : (c ? d : e)
             (menuItem.mealType === selectedMealTime.replace(/ /g, '')) 
             ?
-              <MenuItemCard index={index} menuItem={menuItem} /> : 
-            (selectedMealTime === "View All" ? <MenuItemCard index={index} menuItem={menuItem} /> : null)
+              <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> :
+            (selectedMealTime === "View All" ? <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> : null)
           ))
         }
       </div>
