@@ -30,9 +30,5 @@ app.get('*', (req, res) => {
     res.sendFile('index.html', { root: '../dist' });
 });
 
-
-
-
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

@@ -28,10 +28,8 @@ const getMenuItemById = async (menuItemId) => {
 }
 const getMenuItemsByDate = async(year, month, day, diningHallId) => {
     const db = await collection();
-    diningHallId = new ObjectId(diningHallId);
-    console.log(year,month,day,diningHallId);
-    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": diningHallId }).toArray();
-    console.log('hit3',result);
+    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": new ObjectId(diningHallId) }).toArray();
+
     return result; // what will be returned in the Promise
 }
 

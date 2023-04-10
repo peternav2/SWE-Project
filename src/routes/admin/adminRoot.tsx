@@ -1,6 +1,6 @@
 import { getUniversity, University } from '../../stores/University';
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom';
-
+import { useUser } from '../../App';
 
 export async function loader({ params }: any) {
   return await getUniversity(params.universityId);
@@ -21,10 +21,10 @@ export default function AdminHome() {
           {university.diningHalls.map((hall?) => (
             <li key={hall._id?.toString()}>
               <NavLink
-                to={`/admin/university/${university?._id}/dining/${hall._id}`}
+                to={`/admin/university/${university?._id}/dininghall/${hall._id}`}
                 className={({ isActive, isPending }) => isActive ? "active" : isPending ? "pending" : ""}>
 
-                <Link to={`/admin/university/${university?._id}/dining/${hall._id}`}>
+                <Link to={`/admin/university/${university?._id}/dininghall/${hall._id}`}>
                   <div className={diningButtonsStyle}>
                     {hall.name}
                   </div>
