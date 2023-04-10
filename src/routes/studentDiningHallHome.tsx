@@ -30,8 +30,8 @@ export default function StudentDiningHallHome() {
         <Calendar />
       </div>
 
-      {!user.isStudent &&
-        <Link to={`/admin/university/${user.universityId}/dininghall/${dining._id}/createmenu/${calDate.month}/${calDate.day}/${calDate.year}`}>
+      {!user?.isStudent &&
+        <Link to={`/admin/university/${user?.universityId}/dininghall/${dining?._id}/createmenu/${calDate.month}/${calDate.day}/${calDate.year}`}>
           <button className="my-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
             Create Menu
           </button>
