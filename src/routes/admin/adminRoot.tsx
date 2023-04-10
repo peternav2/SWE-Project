@@ -20,9 +20,6 @@ export default function AdminHome() {
         <ul>
           {university.diningHalls.map((hall?) => (
             <li key={hall._id?.toString()}>
-              <NavLink
-                to={`/admin/university/${university?._id}/dininghall/${hall._id}`}
-                className={({ isActive, isPending }) => isActive ? "active" : isPending ? "pending" : ""}>
 
                 <Link to={`/admin/university/${university?._id}/dininghall/${hall._id}`}>
                   <div className={diningButtonsStyle}>
@@ -30,7 +27,6 @@ export default function AdminHome() {
                   </div>
                 </Link>
 
-              </NavLink>
             </li>
           ))}
         </ul>
