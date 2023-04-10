@@ -8,6 +8,7 @@ import type { CalendarDate } from "../../stores/CalendarDate";
 import MenuItemForm from "./menuItemForm";
 import { Dish } from "../../stores/Dish";
 import { Review } from "../../stores/Review";
+import Back from "../../components/back";
 
 
 export async function action({ request, params }: any) {
@@ -150,6 +151,8 @@ export default function CreateMenu() {
                     <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>
             ))}
+
+            <Back />
 
         </div>
     )
