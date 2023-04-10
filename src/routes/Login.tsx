@@ -1,41 +1,23 @@
+
 import React, {useEffect} from 'react'
+
 import {Link, useNavigate} from "react-router-dom";
 import {getUserByUsernamePassword} from "../stores/User";
 import {useUser} from "../App";
 import {useNavigation} from "react-router-dom";
 import TestFetch from "../components/testPost";
 function Login() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [user, setUser] = useUser(); // context hook from App.tsx react router outlet
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      if (user) {
-        // navigate('/student/university/' + user?.universityId)
-      }
-    }
-  }, [user]);
 
-  const [form, setForm] = React.useState({
-    username: '',
-    password: ''
-  });
-  const [usernameValidity, setUserValidity] = React.useState({
-    error_code: 0,
-    checked: false
-  });
-  const [passwordValidity, setPasswordValidity] = React.useState({
-    error_code: 0,
-    checked: false
-  });
+  const [isLoading,        setIsLoading]        = React.useState(false);
+  const [user,             setUser]             = useUser();
+  const [form,             setForm]             = React.useState({username: '', password: ''});
+  const [usernameValidity, setUserValidity]     = React.useState({error_code: 0, checked: false});
+  const [passwordValidity, setPasswordValidity] = React.useState({error_code: 0, checked: false});
 
-  let user_errors = ["", 
-                     "Please enter your username.", 
-                     "User does not exist."]
-  let password_errors = ["", 
-                         "Please enter your password", 
-                         "Invalid password."]
+
+  let user_errors     = ["", "Please enter your username.", "User does not exist."]
+  let password_errors = ["", "Please enter your password", "Invalid password."]
 
   function checkUser(username:string){
     if(username == ""){
@@ -83,7 +65,6 @@ function Login() {
     }
   };
 
-
   const handleSubmit = async (event : any) => {
     event.preventDefault();
     if(passwordValidity.error_code != 0 || usernameValidity.error_code != 0){
@@ -102,6 +83,7 @@ function Login() {
 
   };
   if (isLoading) {
+
     return (
       // make a centered loading div
       <div className="flex justify-center items-center h-screen">
@@ -152,11 +134,21 @@ function Login() {
             <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create an account.
             </button>
+
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               <Link to={`renderuser`}> click here to render user  {user?.username}</Link>
             </button>
             <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               <Link to={`student/university/${user?.universityId}`}> Student Uni Home Page</Link>
+            </button>
+
+
+            <Link to={`adminHome`}> Go to Admin Home </Link>
+            <Link to={`renderuser`}> click here to render user  {user?.username}</Link>
+            <Link to={`dininghall/64017e219190c2ab80014493/64095e3482173f9ad243956b/Test Dining Hall`}> </Link>
+            
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <Link to={`admin/university/${user?.universityId}`} > take me to admin home</Link>
             </button>
 
           </div>

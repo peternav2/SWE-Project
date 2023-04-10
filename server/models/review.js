@@ -11,6 +11,7 @@ async function collection() { // returns collection we will be CRUDing from
 async function addReviewToMenuItem(review, menuItemId) {
     const db = await collection();
     console.log(menuItemId)
+    review.user_Id = new ObjectId(review.user_Id);
     const result = await db.updateOne(
          {_id: new ObjectId(menuItemId)},
          { $push: {"dish.reviews": review}}
@@ -22,7 +23,7 @@ async function updateReview(review, menuItemId) {
     const db = await collection();
 
     const result = await db.updateOne(
-        { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": review.user_Id },
+        { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
         { $set: {"dish.reviews": review}},
     )
     return result;

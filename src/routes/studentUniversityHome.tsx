@@ -11,6 +11,8 @@ export async function loader({params}: any) {
 
 export default function StudentUniversityHome() {
   const uni = useLoaderData() as University;
+
+
   return (
       <>
         <div className={"justify-center items-center "}>

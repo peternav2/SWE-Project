@@ -88,7 +88,7 @@ export default function Calendar() {
           </Select>
         </FormControl>
       </div>
-      <div className={" h-5/6 grid grid-cols-7 gap-4"}>
+      <div className={"grid grid-cols-7 gap-4"}>
         {
           days.map((day: number) => {
             return (

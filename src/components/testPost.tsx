@@ -35,25 +35,29 @@ export default function TestFetch() {
   const [user] = useUser();
 
 
-  
   async function runFetch() {
+
     let unis: University[] = [];
+
     await getAllUniversities().then((res) => {
+      
       console.log(res)
       unis = res;
-      // console.log(res);
+      //console.log(res);
       // console.log("--------------------");
       // console.log(unis);
+      
     })
     unis[2].name = "updated university test"
     await updateUniversity(unis[2]);
 
-    // var testUser: User = {
-    //   username: "Peters Test User",
-    //   password: "Test Password",
-    //   isStudent: true,
-    //   universityId: unis[1]._id,
-    // }
+    var testUser: User = {
+       username: "RodoJML",
+       password: "1234",
+       isStudent: false,
+       universityId: unis[1]._id,
+    }
+
     // var testDining: DiningHall = {
     //   name: "Test Dining Hall",
     // }
@@ -72,9 +76,11 @@ export default function TestFetch() {
     //   console.log(res);
     //
     // });
-    // await addUser(testUser).then((res) => {
-    //   testUser._id = res._id;
-    // })
+
+    await addUser(testUser).then((res) => {
+       testUser._id = res._id;
+    })
+
     // console.log("LOOK HEREERERER");
     //
     // console.log(testDining._id);
@@ -136,10 +142,10 @@ export default function TestFetch() {
     // //   console.log(res);
     // // })
     //
-    // await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
-    //   console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
-    //   console.log(res);
-    // })
+    await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
+      console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
+      console.log(res);
+    })
     //
     // await getMenuItemsBasedByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
     //   console.log("MENU ITEMS FROM DINING HALL ARE GOTTEN BELOW");
@@ -165,20 +171,20 @@ export default function TestFetch() {
     }
 
 
-    await updateReview(newReview, testMenuItem._id).then((res) => {
-      console.log("REVIEW IS UPDATED BELOW");
-      console.log(res);
-    });
+    // await updateReview(newReview, testMenuItem._id).then((res) => {
+    //   console.log("REVIEW IS UPDATED BELOW");
+    //   console.log(res);
+    // });
 
     //await deleteReviewFromMenuItem(review, testMenuItem._id)
 
 
 
     //
-    // await getReviewsByMenuItem(testMenuItem._id).then((res) => {
-    //   console.log("REVIEWS ARE GOTTEN BELOW");
-    //   console.log(res);
-    // })
+    await getReviewsByMenuItem(testMenuItem._id).then((res) => {
+      console.log("REVIEWS ARE GOTTEN BELOW");
+      console.log(res);
+    })
     //
     // await deleteReviewFromMenuItem(review, testMenuItem._id).then((res) => {
     //   console.log("REVIEW IS DELETED BELOW");
@@ -192,25 +198,25 @@ export default function TestFetch() {
     //   console.log("DINING HALL IS GOTTEN BELOW");
     //   console.log(res);
     // })
-    // const eventItem: EventItem = {
-    //   name: "Test Event",
-    //   description: "Test Description",
-    //   date: {year: 2023, month: 1, day: 1},
-    //   diningHallId: unis[1].diningHalls[0]._id,
-    // }
+    const eventItem: EventItem = {
+      name: "Test Event",
+      description: "Test Description",
+      date: {year: 2023, month: 1, day: 1},
+      diningHallId: unis[1].diningHalls[0]._id,
+    }
     // console.log(eventItem.diningHallId);
-    // await addEventItem(eventItem).then((res) => {
-    //   console.log("EVENT ITEM IS ADDED BELOW");
-    //   console.log("look at two ids below see if same")
-    //   console.log(eventItem.diningHallId);
-    //   console.log(unis[1].diningHalls[0]._id);
-    //   eventItem._id = res._id;
-    //   console.log(res);
-    // })
-    // await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
-    //     console.log("EVENT ITEM IS GOTTEN BELOW");
-    //     console.log(res);
-    // })
+    await addEventItem(eventItem).then((res) => {
+      console.log("EVENT ITEM IS ADDED BELOW");
+      console.log("look at two ids below see if same")
+      console.log(eventItem.diningHallId);
+      console.log(unis[1].diningHalls[0]._id);
+      eventItem._id = res._id;
+      console.log(res);
+    })
+    await getEventItemsByDate(eventItem.date, unis[1].diningHalls[0]._id  ).then((res) => {
+        console.log("EVENT ITEM IS GOTTEN BELOW");
+        console.log(res);
+    })
     // await getEventItemsByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
     //   console.log("EVENT ITEM IS GOTTEN BELOW");
     //   console.log(res);
