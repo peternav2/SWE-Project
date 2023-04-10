@@ -142,10 +142,10 @@ export default function TestFetch() {
     // //   console.log(res);
     // // })
     //
-    await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
-      console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
-      console.log(res);
-    })
+    // await getMenuItemsBasedByDate(testMenuItem.date, testMenuItem.dish.diningHallId).then((res) => {
+    //   console.log("MENU ITEMS FROM DATE ARE GOTTEN BELOW");
+    //   console.log(res);
+    // })
     //
     // await getMenuItemsBasedByDiningHall(unis[1].diningHalls[0]._id).then((res) => {
     //   console.log("MENU ITEMS FROM DINING HALL ARE GOTTEN BELOW");
