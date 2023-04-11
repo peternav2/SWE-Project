@@ -6,6 +6,7 @@ import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/auth';
 
 function Login(){
+  //Constants and properties
   const [isLoading, setIsLoading] = React.useState(false);
   const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
 
@@ -21,6 +22,8 @@ function Login(){
 
   const navigate = useNavigate();
 
+  //Upon page load, check if a user is logged in, navigate if they have a valid session.
+  //Loading back into login wont let the user leave, need a way to detect back button press
   useEffect(() => {
     validateCurrentAuthLogin(navigate);
   })
@@ -35,69 +38,7 @@ function Login(){
   let credentialsChecked = false
   let credentialsValid = true
 
-  function checkUser(username:string){
-    if(username == ""){
-      setValidity({...validity, ['user_error_code']:1})
-    }
-    else if(credentialsChecked && credentialsValid == false){
-      setValidity({...validity, ['user_error_code']:2})
-    }
-    else{
-      setValidity({...validity, ['user_error_code']:0})
-    }
-  }
-
-  function checkPassword(password:string){
-    if(password == ""){
-      setValidity({...validity, ['password_error_code']:1})
-    }
-    else{
-      setValidity({...validity, ['password_error_code']:0})
-    }
-  }
-
-  function GetErrors(){
-    let error_messages = []
-    if(validity.user_error_code != 0){error_messages.push(user_errors[validity.user_error_code])}
-    if(validity.password_error_code != 0){error_messages.push(password_errors[validity.password_error_code])}
-    if(error_messages.length > 0){
-      return(getErrorList(error_messages))
-    }
-    return(<></>)
-  }
-
-  function formatSubmit(){
-    if(validity.password_error_code != 0 || validity.user_error_code != 0){
-      return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
-    }
-    else{
-      return("bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded")
-    }
-  }
-
-  const handleChange = (event : any) => {
-    setForm({
-      ...form,
-      [event.target.id]: event.target.value,
-    });
-    if(event.target.id == "username"){
-      checkUser(event.target.value);
-    }
-    if(event.target.id == "password"){
-      checkPassword(event.target.value);
-    }
-  };
-
-  function checkSubmit(){
-    if(validity.password_error_code == 0 &&
-      validity.user_error_code != 1 &&
-       form.username != "" &&
-       form.password != ""){
-        return true;
-       }
-       return false;
-  }
-
+  //Check load messages. 
   type State = { message: string, error: string}
 
   function isStateValid(state: any, type: string): state is State {
@@ -125,6 +66,73 @@ function Login(){
         return(<></>)
       }
     }
+
+  //Checks form validity
+  function checkUser(username:string){
+    if(username == ""){
+      setValidity({...validity, ['user_error_code']:1})
+    }
+    else if(credentialsChecked && credentialsValid == false){
+      setValidity({...validity, ['user_error_code']:2})
+    }
+    else{
+      setValidity({...validity, ['user_error_code']:0})
+    }
+  }
+
+  function checkPassword(password:string){
+    if(password == ""){
+      setValidity({...validity, ['password_error_code']:1})
+    }
+    else{
+      setValidity({...validity, ['password_error_code']:0})
+    }
+  }
+
+  //Load respective error messages
+  function GetErrors(){
+    let error_messages = []
+    if(validity.user_error_code != 0){error_messages.push(user_errors[validity.user_error_code])}
+    if(validity.password_error_code != 0){error_messages.push(password_errors[validity.password_error_code])}
+    if(error_messages.length > 0){
+      return(getErrorList(error_messages))
+    }
+    return(<></>)
+  }
+
+  //Submit button formatting
+  function formatSubmit(){
+    if(validity.password_error_code != 0 || validity.user_error_code != 0){
+      return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
+    }
+    else{
+      return("bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded")
+    }
+  }
+
+  //Change hook
+  const handleChange = (event : any) => {
+    setForm({
+      ...form,
+      [event.target.id]: event.target.value,
+    });
+    if(event.target.id == "username"){
+      checkUser(event.target.value);
+    }
+    if(event.target.id == "password"){
+      checkPassword(event.target.value);
+    }
+  };
+
+  function checkSubmit(){
+    if(validity.password_error_code == 0 &&
+      validity.user_error_code != 1 &&
+       form.username != "" &&
+       form.password != ""){
+        return true;
+       }
+       return false;
+  }
   
   const handleSubmit = (event : any) => {
     if(checkSubmit()){
@@ -141,10 +149,7 @@ function Login(){
     credentialsChecked = false
     setIsLoading(true);
     await getUserByUsernamePasswordTokenized(form.username, form.password).then((res) => {
-      if(validateResponse(res)){
-        if(res === undefined || res === null){
-          throw new Error("Bad credentials.")
-        }
+      if(res != null){
         
         localStorage.setItem('session',JSON.stringify(res.session));
         localStorage.setItem('user', JSON.stringify(res));
@@ -152,21 +157,15 @@ function Login(){
         setUser(res);
         navigate(getDestination(res));
       }
+      else{
+        throw new Error("Bad credentials.")
+      }
     }).catch((err) => {
       credentialsChecked = true
       credentialsValid = false
     })
     setIsLoading(false)
     checkUser(form.username)
-  }
-
-
-
-  function validateResponse(response:any){
-    if (response != null){
-      return true
-    }
-    return false
   }
 
   if (isLoading) {

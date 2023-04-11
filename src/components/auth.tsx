@@ -3,13 +3,13 @@ import { User } from '../stores/User';
 import { getUniversity } from "../stores/University";
 
 export function navigateError(err: Error, nav: NavigateFunction){
+    wipeLocalSession()
     nav('/', {state: {error : err.toString()}})
 }
 
-function wipeLocalSession(nav:NavigateFunction){
+function wipeLocalSession(){
     localStorage.removeItem('user');
     localStorage.removeItem('session');
-    nav('/')
 }
 
 export function getUserBar(nav:NavigateFunction){
@@ -18,8 +18,8 @@ export function getUserBar(nav:NavigateFunction){
 
     if(user != null && user !== undefined && session != null && session !== undefined) {
         const bar = (
-        <ul className = 'flex'>
-            <span className = "text-center block border rounded py-2 px-4 text-green-500">User logged in: <span className = "font-semibold">{user.username}</span></span>
+        <ul className = 'flex bg-blue-50 border border-blue-100'>
+            <span className = "bg-blue-100 text-center block border rounded py-2 px-4 text-blue-500">User logged in: <span className = "font-semibold">{user.username}</span></span>
             {logoutButton(nav)}
         </ul>)
         return bar
@@ -48,7 +48,8 @@ export function getDestination(user:User){
 export async function validateCurrentAuth(nav: NavigateFunction){
     const result = await validateCurrentAuthFunction()
     if(result == false){
-        wipeLocalSession(nav)
+        wipeLocalSession()
+        nav('/', {state: {error : "Expired session - Please log in again."}})
     }
 }
 
@@ -70,7 +71,7 @@ function logoutButton(nav:NavigateFunction){
           <button
             type="button"
             className="mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => {wipeLocalSession(nav)}}
+            onClick={() => {wipeLocalSession(); nav('/')}}
             id="logout">
             Log Out
           </button>
