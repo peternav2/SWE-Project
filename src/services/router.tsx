@@ -6,9 +6,9 @@ import RenderUser from '../routes/RenderUser'
 import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
 import StudentDiningHallHome, {loader as diningHomeLoader} from "../routes/studentDiningHallHome";
 import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
+import StudentEventForDay, {loader as eventForDayLoader} from "../routes/studentEventForDay";
 import Login from "../routes/Login";
 import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../routes/studentUniversityHome";
-import StudentEventForDay from "../routes/studentEventForDay";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 import CreateMenu, {loader as createMenuLoader, action as createMenuAction} from '../routes/admin/createMenu'
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
             {
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
                 element: <StudentEventForDay />,
-                //insert loader here for event datad
+                loader:eventForDayLoader,
             },
             {
                 path: "createaccount",

@@ -21,7 +21,7 @@ export default function Calendar() {
   // console.log(new Date(+year-1,+month-1).toLocaleString('default', {month: 'long'}));
   const [days, setDays] = useState(Array.from(Array(getDaysInMonth(+month,+year)), (_, index) => index + 1));
 
-
+  const [menuOrEvent,setMenuOrEvent] = useState("menu");
 
 
   const handleMonthChange = (event: SelectChangeEvent) => {
@@ -44,6 +44,11 @@ export default function Calendar() {
     console.log("number of days in year " + new Date(Number(year), Number(month), 0).getDate())
 
   }
+
+  const handleMenuOrEventChange = (event: SelectChangeEvent) => {
+    setMenuOrEvent(event.target.value);
+  }
+
   const diningHallName = useParams().diningHallName;
   const diningHallId = useParams().diningHallId;
 
@@ -87,6 +92,20 @@ export default function Calendar() {
 
           </Select>
         </FormControl>
+        {/* Modified your code Peter add a switch for event or student routes */}
+        <FormControl >
+          <InputLabel id="menuOrEvent">Menu or Event</InputLabel>
+          <Select
+            labelId="simple-select-label-menu-or-event"
+            id="getMenuOrEvent"
+            value={menuOrEvent}
+            label="menuOrEvent"
+            onChange={handleMenuOrEventChange}
+          >
+            <MenuItem value="menu">Menu</MenuItem>
+            <MenuItem value="event">Event</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <div className={"grid grid-cols-7 gap-4"}>
         {
@@ -99,6 +118,7 @@ export default function Calendar() {
                   month={+month}
                   year={+year}
                   diningHallId={diningHallId}
+                  menuOrEvent={menuOrEvent}
                 />
               </div>
             )
