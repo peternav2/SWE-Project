@@ -10,6 +10,13 @@ export async function loader({params}: any) {
   console.log('Debug Line 10: ', {day, month, year}, ':date',diningHallId);
 // *****QUERY DATABASE FOR DATA RELATED TO EVENTS**************
 
+//  reference - delete when done
+// await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
+//   menuItemsbyDateAndDiningHall = res;
+// })
+
+
+
   return {day, month, year, diningHallId};
 }
 
