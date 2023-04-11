@@ -1,4 +1,5 @@
 import { getUniversity} from "../stores/University";
+import { deleteUser } from "../stores/User";
 import { User } from "../stores/User";
 
 import { useNavigate } from "react-router-dom";
@@ -10,8 +11,10 @@ export default function AdminHub() {
 
   async function sessionRequest(){
     const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-      if(user.universityId != null){
-        await getUniversity(user.universityId).then(x=>{alert(x.name)}).catch(err=> navigateError(err, nav))
+    var id = user.universityId
+      if(id != null){
+        await getUniversity(id).then(x=>{alert(x.name)}).catch(err=> navigateError(err, nav))
+        //await deleteUser(user.username, user.password).then(x=>{alert(x.name)}).catch(err=> navigateError(err, nav))
       }
   }
 
