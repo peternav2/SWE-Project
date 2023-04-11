@@ -55,7 +55,6 @@ export default function StudentMenuForDay() {
     const day = useParams().day;
     const year = useParams().year;
     const navigate = useNavigate();
-    const [user, setUser] = useUser();
 
     return (
         <div>
