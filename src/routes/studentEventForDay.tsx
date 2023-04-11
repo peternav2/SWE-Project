@@ -1,7 +1,8 @@
 import {useLoaderData,  useParams} from "react-router-dom";
 import {useUser} from "../App";
-import { getEventItemsByDate } from "../stores/EventItem";
+import { EventItem, getEventItemsByDate } from "../stores/EventItem";
 import GoBackButton from "../components/GoBackButton";
+import EventForADay from "../components/EventForADay";
 
 // *****WITH LOADER LOAD IN RELEVANT EVENT PARAM DATA FOR THIS ROUTE**************
 export async function loader({params}: any) {
@@ -12,11 +13,11 @@ export async function loader({params}: any) {
   console.log('Debug Line 10: ', {day, month, year}, ':date',diningHallId);
   
 // *****QUERY DATABASE FOR DATA RELATED TO EVENTS**************
-let eventItemsbyDateAndDiningHall = [];
+let eventItemsbyDateAndDiningHall:EventItem[] = [];
 await getEventItemsByDate({day, month, year},params.diningHallId).then((res) => {
   eventItemsbyDateAndDiningHall = res;
 })
-  return {day, month, year, diningHallId};
+  return eventItemsbyDateAndDiningHall;
 }
 
 export default function StudentEventForADay() {
@@ -25,10 +26,11 @@ export default function StudentEventForADay() {
     const month = useParams().month;
     const day = useParams().day;
     const year = useParams().year;
+    const event = useLoaderData() as EventItem[];
 
     return (
         <div>
-          <h1>Student Event For A Day</h1>
+          <EventForADay month={month} day={day} year={year} diningHallId={diningHallId} event={event}/>
           <GoBackButton/>
         </div>
     )

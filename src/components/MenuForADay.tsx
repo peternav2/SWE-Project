@@ -1,16 +1,7 @@
-//TODO: This will be a component that will be used to display the menu for a day
-//  it will list out a list of MenuItems from the database and display them
-//  in a flexbox grid that will be responsive to the screen size and will 
-//  display 'x' items per row (breakfast, lunch, dinner etc on a desktop and 1 item per 
-//  row on a mobile device... this will sit inside the studentMenuItemForAday.tsx component
-//  and will have data fed in from the params->props and from the database on where the route is coming
-//  from... ie date,month,year,dish.. there will be an option on each box to submit a review.
-
 import { getMenuItemsBasedByDate, MenuItem } from "../stores/MenuItem";
 import MenuItemCard from "../components/MenuItemCard";
 import { useUser } from "../App";
 import { useState } from "react";
-import BareMenuItem from "./BareMenuItem";
 
 
 export default function MenuForADay(props: any) {
@@ -49,9 +40,6 @@ export default function MenuForADay(props: any) {
 
   console.log(props.diningHallId, props.menuItems);
 
-  //TODO: write function/CSS that simulates the instagram experince, so when you click on a menu item
-  //      on the screen it brings up a modal with the image and the description of the menu item
-  //      and all of the reviews plus options to add/modi/change reviews like comments.
   return (
     <>
       {/* ****************DROP DOWN MENU***********************************/}
