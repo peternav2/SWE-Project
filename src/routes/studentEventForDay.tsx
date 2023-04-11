@@ -1,5 +1,6 @@
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
 import {useUser} from "../App";
+import { getEventItemsByDate } from "../stores/EventItem";
 
 // *****WITH LOADER LOAD IN RELEVANT EVENT PARAM DATA FOR THIS ROUTE**************
 export async function loader({params}: any) {
@@ -8,12 +9,12 @@ export async function loader({params}: any) {
   let day = +params.day;
   let diningHallId = params.diningHallId;
   console.log('Debug Line 10: ', {day, month, year}, ':date',diningHallId);
+  
 // *****QUERY DATABASE FOR DATA RELATED TO EVENTS**************
-
-//  reference - delete when done
-// await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
-//   menuItemsbyDateAndDiningHall = res;
-// })
+let eventItemsbyDateAndDiningHall = [];
+await getEventItemsByDate({day, month, year},params.diningHallId).then((res) => {
+  eventItemsbyDateAndDiningHall = res;
+})
 
 
 
