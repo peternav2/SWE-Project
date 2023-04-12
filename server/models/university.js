@@ -30,6 +30,16 @@ const addUniversity = async(request) => {
     return result;
 }
 
+const updateUniversity = async(request) => {
+    validateRequest(request);
+    const university = request.body;
+    const db = await collection();
+    const id = new ObjectId(university._id);
+    delete university._id;
+    const result = await db.updateOne({_id: new ObjectId(id)}, {$set: university});
+    return result;
+}
+
 const deleteUniversity = async(request) => {
     validateRequest(request);
     const universityId = request.params.universityId;
@@ -38,4 +48,4 @@ const deleteUniversity = async(request) => {
     return result;
 }
 
-module.exports = { getAllUniversities, addUniversity, deleteUniversity, getUniversity }
+module.exports = { getAllUniversities, addUniversity, deleteUniversity, getUniversity, updateUniversity }

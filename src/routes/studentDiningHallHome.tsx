@@ -1,40 +1,41 @@
-import {Link, useLoaderData, useNavigate, useParams} from "react-router-dom";
- import {getMenuItemsBasedByDiningHall, MenuItem} from "../stores/MenuItem";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Link, useLoaderData, useNavigate, useParams, Outlet } from "react-router-dom";
+import { getMenuItemsBasedByDiningHall } from "../stores/MenuItem";
+import { ChangeEvent, useEffect, useState } from "react";
+import Calendar from "../components/Calendar";
+import { useUser } from "../App";
+import { DiningHall, getDiningHall } from "../stores/DiningHall";
+import { CalendarDate } from "../stores/CalendarDate";
 
-export async function loader({params}: any) {
-    const menuItems: MenuItem[] = await getMenuItemsBasedByDiningHall(params.diningHallId);
-    return menuItems;
+export async function loader({ params }: any) {
+  return await getDiningHall(params.universityId, params.diningHallId);
 }
+
 export default function StudentDiningHallHome() {
-    const data = useLoaderData() as MenuItem[];
-    const diningHallName = useParams().diningHallName;
-    const navigate = useNavigate();
-    return (
-        <div>
-            <h1> Welcome to {diningHallName} /</h1>
-            <div>
-                {/*someone replace this with instead of mapping menuItems, create a dayButton component,
-                which will, on click send the user to the menu of that day*/}
-                {/*eg*/}
-                <Link to={`/student/day/menu/${useParams().diningHallId}/1/1/2023`}> click here to daypage </Link>
-                {data.map((menuItem) => {
-                    return (
-                        <div>
-                            <h1> {menuItem.dish.name} </h1>
-                        </div>
-                    )
-                })
-                }
-            </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => {
-              navigate(-1); // this is how we will tell a user to go back a page. because we are using custom
-              // routing, we can't just send to some router link. we have to use navigate(-1) to go back a page since we dont know w
-            }}
-          >
-            go Back
+  //this is probably some of the most disgusting code ive ever written but it works so im not gonna touch it
+  // it works by create new date object to get the current date and then on each change of the month or year
+  // it will create a new array of days based on the new month and year with the Date object
+  const dining = useLoaderData() as DiningHall;
+  const [user, setUser] = useUser();
+  const today = new Date();
+  const calDate = {} as CalendarDate;
+  calDate.day = today.getDate();
+  calDate.month = today.getMonth() + 1;
+  calDate.year = today.getFullYear();
+
+  return (
+    <div className={"container w-max h-max mx-auto"}>
+      <h1> Welcome to {dining.name} </h1>
+      <div className="div">
+        <Calendar />
+      </div>
+
+      {!user?.isStudent &&
+        <Link to={`/admin/university/${user?.universityId}/dininghall/${dining?._id}/createmenu/${calDate.month}/${calDate.day}/${calDate.year}`}>
+          <button className="my-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Create Menu
           </button>
-        </div>
-    )
+        </Link>}
+    </div>
+  )
 }

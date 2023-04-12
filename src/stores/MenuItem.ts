@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import myFetch from "../services/myFetch";
 import { CalendarDate } from "./CalendarDate";
 import { Dish } from "./Dish";
+import {Review} from "./Review";
 
 export interface MenuItem {
     mealType: string; // breakfast, lunch, dinner
@@ -21,11 +22,20 @@ export async function addMenuItem(menuItem: MenuItem): Promise<MenuItem> {
 
 /**
  * 
+ * @returns Promise<MenuItem[]> : promise that resolves to an array of all menu items available in the database
+ */
+export async function getAllMenuItems(): Promise<MenuItem[]> { 
+    return await myFetch<MenuItem[]>("menuItem")
+}
+
+/**
+ * 
  * @param date : CalendarDate: {year: number, month: number, day: number}
  * @param diningHallId : ObjectId
  * @returns Promise<MenuItem[]> : a promise that resolves to an array of menu items that have the date you are requesting
  */
-export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?: ObjectId): Promise<MenuItem[]> { 
+export async function getMenuItemsBasedByDate(date: CalendarDate, diningHallId?: string): Promise<MenuItem[]> { 
+
     return await myFetch<MenuItem[]>(`menuitem/${date.year}/${date.month}/${date.day}/${diningHallId}`)
 }
 

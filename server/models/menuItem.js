@@ -8,10 +8,18 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
+const getAllMenuItems = async(request) => { // returns all menuItem in the database
+    validateRequest(request);
+    const db = await collection();
+    const result = await db.find().toArray();
+    return result;
+}
+
 const addMenuItem = async (request) => {
     validateRequest(request);
-    const menuItem = request.body
     const db = await collection();
+    menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
+
     const result = await db.insertOne(menuItem); // insert the menuItem object into the database
     menuItem._id = result.insertedId; // give the menuItem object an _id property
     return menuItem; // what will be returned in the Promise
@@ -30,7 +38,8 @@ const getMenuItemsByDate = async(request) => {
     const day = request.params.day;
     const diningHallId = request.params.diningHallId;
     const db = await collection();
-    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": diningHallId }).toArray();
+    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": new ObjectId(diningHallId) }).toArray();
+
     return result; // what will be returned in the Promise
 }
 
@@ -38,7 +47,7 @@ const getMenuItemsByDiningHall = async(request) => {
     validateRequest(request);
     const diningHallId = request.params.diningHallId;
     const db = await collection();
-    const result = await db.find({"dish.diningHallId": diningHallId}).toArray();
+    const result = await db.find({"dish.diningHallId": new ObjectId(diningHallId)}).toArray();
     return result; // what will be returned in the Promise
 }
 
@@ -50,7 +59,7 @@ const getMenuItemsByMealTypeByDate = async(request) => {
     const mealType = request.params.mealType;
     const diningHallId = request.params.diningHallId;
     const db = await collection();
-    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": diningHallId}).toArray();
+    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": new ObjectId(diningHallId)}).toArray();
     return result; // what will be returned in the Promise
 }
 
@@ -61,4 +70,4 @@ const deleteMenuItem = async (request) => {
     const result = await db.deleteOne({ _id: new ObjectId(menuItemId) });
     return result; // what will be returned in the Promise (the result of the delete operation
 }
-module.exports = { addMenuItem, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }
+module.exports = { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }

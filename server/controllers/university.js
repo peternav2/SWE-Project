@@ -1,5 +1,6 @@
 const express = require('express');
 const { getAllUniversities, addUniversity, deleteUniversity, getUniversity } = require('../models/university.js');
+const {updateUniversity} = require("../models/university");
 const app = express.Router();
 const {getErrorTuple} = require('../functions/session.js')
 
@@ -21,6 +22,11 @@ app
     .then(x => res.status(200).send(x))
     .catch(err => {const error = getErrorTuple(err.message)
         res.status(error[0]).send(error[1])});
+})
+.patch('/:universityId', (req, res) => {
+    updateUniversity(req.body)
+    .then(x => res.status(200).send(x))
+    .catch(err => res.status(404).send(err));
 })
 .delete('/:universityId', (req, res) => {
     deleteUniversity(req)
