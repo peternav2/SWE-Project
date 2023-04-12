@@ -1,7 +1,6 @@
 import {useLoaderData,  useParams} from "react-router-dom";
 import {useUser} from "../App";
 import { EventItem, getEventItemsByDate } from "../stores/EventItem";
-import GoBackButton from "../components/GoBackButton";
 import EventForADay from "../components/EventForADay";
 
 // *****WITH LOADER LOAD IN RELEVANT EVENT PARAM DATA FOR THIS ROUTE**************
@@ -31,7 +30,7 @@ export default function StudentEventForADay() {
     return (
         <div>
           <EventForADay month={month} day={day} year={year} diningHallId={diningHallId} event={event}/>
-          <GoBackButton/>
+          // go back button here
         </div>
     )
 }
