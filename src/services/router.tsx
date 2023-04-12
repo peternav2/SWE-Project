@@ -30,12 +30,12 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
-                //insert loader here for uni data
+                loader: StudentUniversityHomeLoader,
             },
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
                 element: <StudentDiningHallHome />,
-                // loader: diningHallHomeLoader,
+                loader: diningHomeLoader,
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
