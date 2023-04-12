@@ -11,9 +11,10 @@ app
         res.status(error[0]).send(error[1])}); // send the new menu item back to the client
 })
 .get('/', (req, res) => { // this will GET all menu items from the database
-    getAllMenuItems() // see sever/models/menuItem.js
+    getAllMenuItems(req) // see sever/models/menuItem.js
     .then(x => res.status(200).send(x)) // send the Menu Items back to the client
-    .catch(err => res.status(404).send(err)); // if there is an error, send it back to the client
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])}); // if there is an error, send it back to the client
 })
 .get('/:menuItemId', (req, res) => {
     getMenuItemById(req)

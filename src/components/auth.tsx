@@ -1,10 +1,10 @@
-import { NavigateFunction } from "react-router-dom";
+import {router} from "../services/router";
 import { User } from '../stores/User';
 import { getUniversity } from "../stores/University";
 
-export function navigateError(err: Error, nav: NavigateFunction){
+export function navigateError(err: Error){
     wipeLocalSession()
-    nav('/', {state: {error : err.toString()}})
+    router.navigate('/', {state: {error : err.toString()}})
 }
 
 function wipeLocalSession(){
@@ -12,7 +12,7 @@ function wipeLocalSession(){
     localStorage.removeItem('session');
 }
 
-export function getUserBar(nav:NavigateFunction){
+export function getUserBar(){
     const session = localStorage.getItem('session') ? JSON.parse(localStorage.getItem('session') as string) : null;
     const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
 
@@ -20,18 +20,18 @@ export function getUserBar(nav:NavigateFunction){
         const bar = (
         <ul className = 'flex bg-blue-50 border border-blue-100'>
             <span className = "bg-blue-100 text-center block border rounded py-2 px-4 text-blue-500">User logged in: <span className = "font-semibold">{user.username}</span></span>
-            {logoutButton(nav)}
+            {logoutButton()}
         </ul>)
         return bar
     }
     return(<></>)
 }
 
-export async function validateCurrentAuthLogin(nav: NavigateFunction){
+export async function validateCurrentAuthLogin(){
     const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
     const result = await validateCurrentAuthFunction()
     if(result == true){
-        nav(getDestination(user))
+        router.navigate(getDestination(user))
     }
 }
 
@@ -45,11 +45,11 @@ export function getDestination(user:User){
     }
   }
 
-export async function validateCurrentAuth(nav: NavigateFunction){
+export async function validateCurrentAuth(){
     const result = await validateCurrentAuthFunction()
     if(result == false){
         wipeLocalSession()
-        nav('/', {state: {error : "Expired session - Please log in again."}})
+        router.navigate('/', {state: {error : "Expired session - Please log in again."}})
     }
 }
 
@@ -65,13 +65,13 @@ async function validateCurrentAuthFunction(){
     return validated
 }
 
-function logoutButton(nav:NavigateFunction){
+function logoutButton(){
     return (
         <div>
           <button
             type="button"
             className="mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            onClick={() => {wipeLocalSession(); nav('/')}}
+            onClick={() => {wipeLocalSession(); router.navigate('/')}}
             id="logout">
             Log Out
           </button>

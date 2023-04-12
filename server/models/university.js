@@ -18,8 +18,19 @@ const getUniversity = async(request) => {
     validateRequest(request);
     const universityId = request.params.universityId;
     const db = await collection();
-    const result = await db.findOne({_id: new ObjectId(universityId)});
+    var result = await db.findOne({_id: new ObjectId(universityId)});
+    result.diningHalls = formatDininghalls(result.diningHalls)
     return result;
+}
+
+function formatDininghalls(diningHalls){
+    if(Array.isArray(diningHalls) == false){
+        const array = [diningHalls];
+        return array
+    }
+    else{
+        return diningHalls
+    }
 }
 
 const addUniversity = async(request) => {

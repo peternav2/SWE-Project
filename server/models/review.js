@@ -21,22 +21,11 @@ async function addReviewToMenuItem(request) {
     return result;
 }
 
-async function updateReview(review, menuItemId) {
-    const db = await collection();
-
-    const result = await db.updateOne(
-        { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
-        { $set: {"dish.reviews": review}},
-    )
-    return result;
-}
-
-async function updateReview(review, menuItemId) {
+async function updateReview(request) {
     validateRequest(request);
     const menuItemId = request.params.menuItemId;
     const review = request.body;
     const db = await collection();
-
     const result = await db.updateOne(
         { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
         { $set: {"dish.reviews": review}},

@@ -1,9 +1,10 @@
-import {getAllMenuItems, getMenuItemsBasedByDate, getMenuItemsBasedByDiningHall, MenuItem} from "../stores/MenuItem";
+import {getAllMenuItems, getMenuItemsBasedByDate, getMenuItemsBasedByDiningHall, MenuItem} from "../../stores/MenuItem";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import MenuForADay from "../components/MenuForADay";
-import {useUser} from "../App";
-import { University, getAllUniversities } from "../stores/University";
+import MenuForADay from "../../components/MenuForADay";
+import {useUser} from "../../App";
+import { University, getAllUniversities } from "../../stores/University";
 import { ObjectId } from "mongodb";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 export async function loader({params}: any) {
     let year = +params.year;
@@ -36,14 +37,14 @@ export async function loader({params}: any) {
       // console.log(unis);
       menuItemsAll = res;
       console.log(menuItemsAll);
-    })
+    }).catch(error =>{navigateError(error)});
     //TODO: Same thing- will need to feed in from higher level rotus
     console.log({day, month, year}, ':date');
     console.log(params.diningHallId);
     await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
       menuItemsbyDateAndDiningHall = res;
       console.log(menuItemsbyDateAndDiningHall);
-    })
+    }).catch(error =>{navigateError(error)});
     
     return menuItemsbyDateAndDiningHall;
 }
@@ -56,6 +57,7 @@ export default function StudentMenuForDay() {
     const year = useParams().year;
     const navigate = useNavigate();
     const [user, setUser] = useUser();
+    validateCurrentAuth()
 
     return (
         <div>

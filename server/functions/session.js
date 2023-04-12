@@ -38,7 +38,20 @@ function getUserType(isStudent){
 }
 
 function getErrorTuple(code){
-    return(errors[parseInt(code)])
+    try{
+        let error = errors[parseInt(code)]
+        if(Array.isArray(error)){
+            return(error)
+        }
+        else{
+            throw new Error("Bad request.")
+        }
+        
+    }   
+    catch{
+        return([400, "Bad request."])
+    }
+
 }
 
 //Validate session.
@@ -72,6 +85,8 @@ function validateRequest(request){
     var url = request.baseUrl;
     var scopes = getScopes(getUserType(stored_session.permission), type)
     if(contains(scopes, url) == false){
+        console.log(scopes)
+        console.log(url)
         throw new Error(3)
     }
     return true
@@ -88,6 +103,7 @@ function getScopes(scopes, type){
 }
 
 function contains(list, key){
+    key = key.toLowerCase()
     for(var i=0; i<list.length;i++){
         if(list[i] == key){
             return true

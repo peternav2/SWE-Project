@@ -20,7 +20,7 @@ import {
   Review,
   updateReview
 } from '../stores/Review';
-import DiningHallHome from "../routes/studentDiningHallHome";
+import DiningHallHome from "../routes/student/studentDiningHallHome";
 import {
   addEventItem, deleteEventItem,
   EventItem,

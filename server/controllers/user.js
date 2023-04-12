@@ -10,12 +10,11 @@ app
     .catch(err => {const error = getErrorTuple(err.message)
         res.status(error[0]).send(error[1])});
 })
-.post('/validated', (req, res) => {
+.post('/tokenized', (req, res) => {
     addUserTokenized(req)
     .then(x => {res.status(200).send(x)})
-    .catch(err => {const error = getErrorTuple(err.message)
-        res.status(error[0]).send(error[1])});
-})
+    .catch(err => {res.status(400).send(err.message);
+})})
 .get('/:username/:password', (req, res) => {
     getUserByUsernamePassword(req)
     .then(x => {res.status(200).send(x)})

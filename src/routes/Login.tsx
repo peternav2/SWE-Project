@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
-import { getDestination, validateCurrentAuthLogin } from '../components/auth';
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
+import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 
 function Login(){
   //Constants and properties
@@ -25,7 +25,7 @@ function Login(){
   //Upon page load, check if a user is logged in, navigate if they have a valid session.
   //Loading back into login wont let the user leave, need a way to detect back button press
   useEffect(() => {
-    validateCurrentAuthLogin(navigate);
+    validateCurrentAuthLogin();
   })
   window.history.replaceState({}, document.title)
 

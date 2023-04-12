@@ -27,7 +27,9 @@ app
 })
 .patch('/:menuItemId', (req, res) => {
     updateReview(req.body, req.params.menuItemId)
-    .then(x => res.status(200).send(x));
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 
 module.exports = app
