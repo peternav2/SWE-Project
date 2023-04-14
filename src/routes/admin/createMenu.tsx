@@ -18,10 +18,10 @@ export async function action({ request, params }: any) {
     const updates = Object.fromEntries(formData);
 
     if (updates.newAlergen == undefined) {
-        
+
         const newSubmitItem = {
             mealType: params.mealType,
-            
+
             dish: {
                 name: updates.dishName,
                 cal: updates.calories as number,
@@ -49,6 +49,7 @@ export async function action({ request, params }: any) {
 }
 
 export async function loader({ params }: any) {
+
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
@@ -57,13 +58,15 @@ export async function loader({ params }: any) {
     return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId);
 }
 
+
 export default function CreateMenu() {
 
     const navigate = useNavigate();
     const menuItems = useLoaderData() as MenuItem[];
+    const [filteredMenus, setFilteredMenus] = useState(menuItems);
+
     const [startDate, setStartDate] = useState(new Date());
     const [mealType, setMealType] = useState("All Day");
-    const [filteredMenus, setFilteredMenus] = useState([] as MenuItem[]);
     const [addingNewMenuItem, setaddingNewMenuItem] = useState(false);
 
     const universityId = useParams().universityId;
@@ -71,14 +74,6 @@ export default function CreateMenu() {
     const day = useParams().day;
     const month = useParams().month;
     const year = useParams().year;
-
-    useEffect(() => {
-        if (mealType == "All Day") {
-            setFilteredMenus(menuItems);
-        } else {
-            setFilteredMenus(menuItems.filter((item) => { return item.mealType === mealType; }));
-        }
-    }, [mealType]);
 
     return (
         <div>
@@ -89,6 +84,7 @@ export default function CreateMenu() {
                     setStartDate(date as Date);
                     const dateIn = date as Date;
                     navigate(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth() + 1}/${dateIn.getDate()}/${dateIn.getFullYear()}`);
+                    
                 }} />
 
             <ul className="flex">
@@ -134,19 +130,17 @@ export default function CreateMenu() {
                 </li>
             </ul>
 
-            {
-                (mealType != "All Day") &&
-                (<Link
-                    to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
-                    className={gactiveButton}
-                    onClick={() => setaddingNewMenuItem(!addingNewMenuItem)}>
-                    Add New Menu Item
-                </Link>)
-            }
+            <Link
+                to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
+                className={gactiveButton}
+                onClick={() => setaddingNewMenuItem(!addingNewMenuItem)}>
+                Add New Menu Item
+            </Link>
 
-            <Outlet/>
 
-            {filteredMenus.slice(0).map((menuItem) => (
+            <Outlet />
+
+            {menuItems.filter((item) => {return item.mealType == mealType }).map((menuItem) => (
                 <div className="mx-2 my-2" key={menuItem._id?.toString()}>
                     <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>
