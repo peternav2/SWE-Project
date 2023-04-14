@@ -84,13 +84,11 @@ export default function CreateMenu() {
                     setStartDate(date as Date);
                     const dateIn = date as Date;
                     navigate(`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${dateIn.getMonth() + 1}/${dateIn.getDate()}/${dateIn.getFullYear()}`);
-                    
                 }} />
 
             <ul className="flex">
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Breakfast" ? activeButton : navButton}
                         onClick={() => setMealType("Breakfast")}>
                         Breakfast
@@ -98,7 +96,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Lunch" ? activeButton : navButton}
                         onClick={() => setMealType("Lunch")}>
                         Lunch
@@ -106,7 +103,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Dinner" ? activeButton : navButton}
                         onClick={() => setMealType("Dinner")}>
                         Dinner
@@ -114,7 +110,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Late Night" ? activeButton : navButton}
                         onClick={() => setMealType("Late Night")}>
                         Late Night
@@ -122,7 +117,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "All Day" ? activeButton : navButton}
                         onClick={() => setMealType("All Day")}>
                         All Day
