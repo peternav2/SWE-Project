@@ -1,16 +1,18 @@
 const { connect } = require('./mongo.js');
 const { ObjectId } = require('mongodb');
 const COLLECTIONNAME = 'MenuItem';
+const {validateRequest} = require('../functions/session.js')
 
 async function collection() { // returns collection we will be CRUDing from
     const client = await connect();
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
-
-async function addReviewToMenuItem(review, menuItemId) {
+async function addReviewToMenuItem(request) {
+    validateRequest(request);
+    const menuItemId = request.params.menuItemId;
+    const review = request.body;
     const db = await collection();
-    console.log(menuItemId)
     review.user_Id = new ObjectId(review.user_Id);
     const result = await db.updateOne(
          {_id: new ObjectId(menuItemId)},
@@ -19,9 +21,11 @@ async function addReviewToMenuItem(review, menuItemId) {
     return result;
 }
 
-async function updateReview(review, menuItemId) {
+async function updateReview(request) {
+    validateRequest(request);
+    const menuItemId = request.params.menuItemId;
+    const review = request.body;
     const db = await collection();
-
     const result = await db.updateOne(
         { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
         { $set: {"dish.reviews": review}},
@@ -29,7 +33,10 @@ async function updateReview(review, menuItemId) {
     return result;
 }
 
-async function deleteReview(review, menuItemId) {
+async function deleteReview(request) {
+    validateRequest(request);
+    const menuItemId = request.params.menuItemId;
+    const review = request.body;
     const db = await collection();
     const result = await db.updateOne(
         {_id: new ObjectId(menuItemId)},
@@ -38,14 +45,12 @@ async function deleteReview(review, menuItemId) {
     return result;
 }
 
-
-async function getReviewsByMenuItem(menuItemId) {
+async function getReviewsByMenuItem(request) {
+    validateRequest(request);
+    const menuItemId = request.params.menuItemId;
     const db = await collection();
     const result = await db.findOne({_id: new ObjectId(menuItemId)})
     return result.dish.reviews;
 }
-
-
-
 
 module.exports = { addReviewToMenuItem, deleteReview, getReviewsByMenuItem, updateReview }

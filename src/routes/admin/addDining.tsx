@@ -1,6 +1,7 @@
 import { useLoaderData, Form, redirect, useNavigate } from 'react-router-dom';
 import { addDiningHallToUniversity, type DiningHall } from '../../stores/DiningHall';
 import { ObjectId } from "mongodb";
+import { navigateError, validateCurrentAuth} from '../../components/Auth';
 
 export async function loader({ params }: any) {
     return params.universityId;
@@ -11,13 +12,14 @@ export async function action({ request, params }: any) {
     const diningHall: DiningHall = { name: formData.get('diningName') }
     const universityId = params.universityId as ObjectId;
 
-    await addDiningHallToUniversity(diningHall, universityId);
+    await addDiningHallToUniversity(diningHall, universityId).catch(error =>{navigateError(error)});
     return redirect(`/admin/university/${params.universityId}`);
 }
 
 export default function AddDining() {
     const universityId = useLoaderData() as string;
     const navigate = useNavigate();
+    validateCurrentAuth()
 
     return (
         <div className={div1style}>

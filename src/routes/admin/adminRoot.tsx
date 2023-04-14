@@ -1,26 +1,27 @@
 import { getUniversity, University } from '../../stores/University';
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom';
 import { useUser } from '../../App';
+import { navigateError, getUserBar, validateCurrentAuth} from '../../components/Auth';
 
 export async function loader({ params }: any) {
-  return await getUniversity(params.universityId);
+  return await getUniversity(params.universityId).catch(error =>{navigateError(error)});
 }
 
 export default function AdminHome() {
-
+  validateCurrentAuth()
   const university = useLoaderData() as University;
 
   return (
     <>
+      {getUserBar()}
       <div className="mx-2">
         <h1 className={universityTitleStyle}>
           {university.name}
         </h1>
 
         <ul>
-          {university.diningHalls.map((hall?) => (
+          {university.diningHalls.map((hall) => (
             <li key={hall._id?.toString()}>
-
                 <Link to={`/admin/university/${university?._id}/dininghall/${hall._id}`}>
                   <div className={diningButtonsStyle}>
                     {hall.name}

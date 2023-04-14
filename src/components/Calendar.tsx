@@ -1,11 +1,11 @@
-import DayButton from './dayButton'
+import DayButton from './DayButton'
 import {useUser} from '../App'
 import {ObjectId} from "mongodb";
 import {useEffect, useState} from "react";
 import {User} from "../stores/User";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
 import {useParams} from "react-router-dom";
-import Back from "./back";
+import Back from "./Back";
 
 export default function Calendar() {
   function getDaysInMonth(month: number,year: number) {
@@ -21,9 +21,6 @@ export default function Calendar() {
   const [year, setYear] = useState(new Date().getFullYear().toString());
   // console.log(new Date(+year-1,+month-1).toLocaleString('default', {month: 'long'}));
   const [days, setDays] = useState(Array.from(Array(getDaysInMonth(+month,+year)), (_, index) => index + 1));
-
-
-
 
   const handleMonthChange = (event: SelectChangeEvent) => {
     setMonth(event.target.value)

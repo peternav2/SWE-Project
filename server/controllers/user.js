@@ -1,41 +1,48 @@
 const express = require('express');
-const { addUser, getUserByUsernamePassword, getUserById, deleteUser, getUserByUsername} = require('../models/user.js');
-
+const { addUser, addUserTokenized, getUserByUsernamePassword, getUserByUsernamePasswordTokenized, getUserById, deleteUser, getUserByUsername} = require('../models/user.js');
 const app = express.Router();
+const {getErrorTuple} = require('../functions/session.js')
 
 app
 .post('/', (req, res) => {
-    addUser(req.body)
-    .then(x => {
-        if(x == null){
-            res.status(400).send(x)
-        }
-        else{
-            res.status(200).send(x)
-        }
-        });
+    addUser(req)
+    .then(x => {res.status(200).send(x)})
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
+.post('/tokenized', (req, res) => {
+    addUserTokenized(req)
+    .then(x => {res.status(200).send(x)})
+    .catch(err => {res.status(400).send(err.message);
+})})
 .get('/:username/:password', (req, res) => {
-    getUserByUsernamePassword(req.params.username, req.params.password)
-    .then(x => {
-        if(x == null){
-            res.status(400).send(x)
-        }
-        else{
-            res.status(200).send(x)
-        }
-    });
+    getUserByUsernamePassword(req)
+    .then(x => {res.status(200).send(x)})
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
+})
+.get('/:username/:password/tokenized', (req, res) => {
+    getUserByUsernamePasswordTokenized(req)
+    .then(x => {res.status(200).send(x)})
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 .get('/:username', (req, res) => {
-    getUserByUsername(req.params.username)
-    .then(x => res.status(200).send(x));
+    getUserByUsername(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 .get('/:userId', (req, res) => {
-    getUserById(req.params.userId)
-    .then(x => res.status(200).send(x));
+    getUserById(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 .delete('/:username/:password', (req, res) => {
-    deleteUser(req.params.username, req.params.password)
-    .then(x => res.status(200).send(x));
+    deleteUser(req)
+    .then(x => res.status(200).send(x))
+    .catch(err => {const error = getErrorTuple(err.message)
+        res.status(error[0]).send(error[1])});
 })
 module.exports = app
