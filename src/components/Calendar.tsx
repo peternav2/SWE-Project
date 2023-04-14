@@ -22,9 +22,6 @@ export default function Calendar() {
   // console.log(new Date(+year-1,+month-1).toLocaleString('default', {month: 'long'}));
   const [days, setDays] = useState(Array.from(Array(getDaysInMonth(+month,+year)), (_, index) => index + 1));
 
-
-
-
   const handleMonthChange = (event: SelectChangeEvent) => {
     setMonth(event.target.value)
     console.log("time waster sasdfsafassdsasdfsasadfsf")
@@ -108,8 +105,5 @@ export default function Calendar() {
       </div>
       <Back />
     </div>
-
-
-
   )
 }
