@@ -16,10 +16,11 @@ export default function BareMenuItem(props: any) {
     let submittedReview:Review = {
       comment: review,
       rating: stars,
-      username: "testStudentMenuFormUsername",
+      // get from token or database
+      username: "TEST_00",
     };
-    console.log(props.menuItem._id);
-    await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
+
+    await addReviewToMenuItem(submittedReview,props.menuItem._id).then((res) => {
       console.log(res);
     })
   };
@@ -33,11 +34,12 @@ export default function BareMenuItem(props: any) {
     event.stopPropagation();
   };
 
-
   const toggleVisibilityYourReview = (event: any) => {
     event.stopPropagation();
     setyourReviewsVisible(!yourReviewsVisible);
   };
+  
+  console.log(props.menuItem.dish.reviews);
 
   return (
     <div className="bare" onClick={stopPropagation}>
@@ -60,17 +62,16 @@ export default function BareMenuItem(props: any) {
       <p>Dining Hall ID: {props.menuItem.dish.diningHallId}</p>
       <div>
         <button className="toggle-reviews" onClick={toggleVisibility}>SEE REVIEWS</button>
-        {visible && <div>
-          {/* maybe change this to an array of objects with these fields on dish so dish can have multiple reviews */}
-          <p>---------------------------------------------</p>
-          <p>user: {props.menuItem.dish.reviews.username}</p>
-          <p>review:{props.menuItem.dish.reviews.comment}</p>
-          <p>stars: {props.menuItem.dish.reviews.rating}</p>
-          <p>debug: {props.menuItem.dish.reviews.user_Id}</p>
-          <p>---------------------------------------------</p>
-
-        </div>}
-      </div>
+        {visible && 
+  props.menuItem.dish.reviews.map((review: Review, index:number) => (
+    <div key={index}>
+      <p>---------------------------------------------</p>
+      <p>user:   {review.username}</p>
+      <p>review: {review.comment}</p>
+      <p>stars:  {review.rating}</p>
+    </div>
+  ))
+}
 
       <div>
         <button className="toggle-reviews" onClick={toggleVisibilityYourReview}>ADD/EDIT YOUR REVIEW</button>
@@ -126,6 +127,7 @@ export default function BareMenuItem(props: any) {
         }
         `}
       </style>
+    </div>
     </div>
   )
 }

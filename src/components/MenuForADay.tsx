@@ -5,18 +5,9 @@ import { useState } from "react";
 
 
 export default function MenuForADay(props: any) {
-  //TODO:add functionality to get menu items from database based on params and user data
-  // and or localstorage
-
-  const [user, setUser] = useUser();
   const MealTimes: string[] = ["Breakfast", "Lunch", "Dinner", "Late Night", "All Day", "View All"];
   const [selectedMealTime, setSelectedMealTime] = useState("View All");
   const [modalVisible, setModalVisible] = useState(false);
-
-  //  diningHallIds for reference - not hooked up to calender yet
-  // '64095e3482173f9ad243956b';
-  // '6420a4e4b759dfa90b360fcb';
-
 
   // a function that converts a day,month,year to a string
   function formatDateString(day: number, month: number, year: number): string {
@@ -67,14 +58,13 @@ export default function MenuForADay(props: any) {
         {
           props.menuItems.map((menuItem: any, index: number) => (
             // regex to remove all white space + triple ternary a ? b : (c ? d : e)
-            (menuItem.mealType === selectedMealTime.replace(/ /g, '')) 
+            (menuItem.mealType.toUpperCase() === selectedMealTime.replace(/ /g, '').toUpperCase()) 
             ?
               <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> :
             (selectedMealTime === "View All" ? <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> : null)
           ))
         }
       </div>
-        {/* <BareMenuItem menuItem={props.menuItems[0]}/> */}
 
       <style scoped>
         {`
@@ -141,7 +131,7 @@ export default function MenuForADay(props: any) {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            max-width: 400px;
+            max-width: 600px;
             max-height: 80%;
             overflow: auto;
           }

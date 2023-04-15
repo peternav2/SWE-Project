@@ -4,6 +4,7 @@ import MenuForADay from "../components/MenuForADay";
 import {useUser} from "../App";
 import { University, getAllUniversities } from "../stores/University";
 import { ObjectId } from "mongodb";
+import { useEffect } from "react";
 
 export async function loader({params}: any) {
     let year = +params.year;
@@ -18,12 +19,6 @@ export async function loader({params}: any) {
     // '64095e3482173f9ad243956b';
     // '6420a4e4b759dfa90b360fcb';
 
-    // not sure why I can't convert string to ObjectId:
-    // const objectIdDiningHallFromParams = new ObjectId(str);
-    // console.log(objectIdDiningHallFromParams);
-    // const something = new ObjectId(dininghallId);
-    // console.log(something);
-
     let menuItemsAll: MenuItem[] = [];
 
     let menuItemsbyDateAndDiningHall: MenuItem[] = [];
@@ -31,31 +26,27 @@ export async function loader({params}: any) {
     //       here now for testing purposes
     await getAllMenuItems().then((res) => {
       console.log(res)
-      // console.log(res);
-      // console.log("--------------------");
-      // console.log(unis);
       menuItemsAll = res;
       console.log(menuItemsAll);
     })
-    //TODO: Same thing- will need to feed in from higher level rotus
-    console.log({day, month, year}, ':date');
-    console.log(params.diningHallId);
+
     await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
       menuItemsbyDateAndDiningHall = res;
-      console.log(menuItemsbyDateAndDiningHall);
     })
     
     return menuItemsbyDateAndDiningHall;
 }
 
+
 export default function StudentMenuForDay() {
-    const menuItems = useLoaderData() as MenuItem[];
+    let menuItems = useLoaderData() as MenuItem[];
     const diningHallId = useParams().diningHallId;
     const month = useParams().month;
     const day = useParams().day;
     const year = useParams().year;
     const navigate = useNavigate();
 
+    
     return (
         <div>
           <MenuForADay menuItems={menuItems} day={day} month={month} year={year} diningHallId={diningHallId}/>
