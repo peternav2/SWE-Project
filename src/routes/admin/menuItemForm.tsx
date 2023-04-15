@@ -5,6 +5,10 @@ import { FormEvent, useState } from "react";
 
 export default function MenuItemForm({ item = {} as MenuItem}) {
 
+    // Create an array of all the alergens and ingredients
+    // push the new alergen/ingredient to the array
+    // then add the array to the DB
+
     const [addIngredientField, setAddIngredientField] = useState(false);
     const [addAlergenField, setAddAlergenField] = useState(false);
 
@@ -65,10 +69,11 @@ export default function MenuItemForm({ item = {} as MenuItem}) {
                         {addAlergenField && (
                             <div className="flex">
                                 <input type="text" name="newAlergen" placeholder="Add New Alergen"
-                                defaultValue="" onChange={(event) => setNewAlergen(event.target.value)}/>
+                                defaultValue="" onChange={(event) => ingredients.push(event.target.value)}/>
                                 <button type="submit" className="flex" onClick={pushToAlergens}>Add</button>
                             </div>
                         )}
+
                         <button className="block" type="button" onClick={handleClick1}>+</button>
 
                         <label>Ingredients: </label>
@@ -88,7 +93,6 @@ export default function MenuItemForm({ item = {} as MenuItem}) {
                         <button className="block" type="button" onClick={handleClick2}>+</button>
                     </div>
                 }
-
 
                 {item.dish == undefined &&
                     <div className="div flex">

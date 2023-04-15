@@ -63,10 +63,9 @@ export default function CreateMenu() {
 
     const navigate = useNavigate();
     const menuItems = useLoaderData() as MenuItem[];
-    const [filteredMenus, setFilteredMenus] = useState(menuItems);
 
     const [startDate, setStartDate] = useState(new Date());
-    const [mealType, setMealType] = useState("All Day");
+    const [mealType, setMealType] = useState("Breakfast");
     const [addingNewMenuItem, setaddingNewMenuItem] = useState(false);
 
     const universityId = useParams().universityId;
