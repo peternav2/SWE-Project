@@ -68,7 +68,7 @@ export default function BareMenuItem(props: any) {
   console.log(props.menuItem.dish.reviews);
 
   return (
-    <div className="bare" onClick={stopPropagation}>
+    <div onClick={stopPropagation}>
       <h1>{props.menuItem.mealType}</h1>
       <u>
         <h2>DISH</h2>
@@ -87,7 +87,7 @@ export default function BareMenuItem(props: any) {
       />
       <p>Dining Hall ID: {props.menuItem.dish.diningHallId}</p>
       <div>
-        <button className="toggle-reviews" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
+        <button onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
         {submittedReviewFlag ?  
           visible && 
           reviewsById.map((review: Review, index:number) => (
@@ -111,7 +111,7 @@ export default function BareMenuItem(props: any) {
 }
 
       <div>
-        <button className="toggle-reviews" onClick={toggleVisibilityYourReview}>ADD/EDIT YOUR REVIEW</button>
+        <button onClick={toggleVisibilityYourReview}>ADD/EDIT YOUR REVIEW</button>
         {/* TODO: factor out this review form */}
         {
         yourReviewsVisible && <div>
@@ -139,7 +139,7 @@ export default function BareMenuItem(props: any) {
                 onChange={(event) => setStars(parseInt(event.target.value))}
               />
             </div>
-            <button className="submit-button" type="submit" onClick={handleReviewSubmit}>Submit</button>
+            <button type="submit" onClick={handleReviewSubmit}>Submit</button>
           </form>
 
 
@@ -150,19 +150,6 @@ export default function BareMenuItem(props: any) {
       {/* if (admin token) else (don't show) - also - check this path on the server, so user can't inject dishes */}
       <style scoped>
         {`
-        .bare {
-          background-color: #f9f9f9;
-          border: 2px solid #eaeaea;
-          border-radius: 10px;
-          ;
-        }
-        button .toggle-reviews{
-          z-index: 999;
-        }
-
-        .submit-button {
-          background-color: #4CAF50;
-        }
         `}
       </style>
     </div>

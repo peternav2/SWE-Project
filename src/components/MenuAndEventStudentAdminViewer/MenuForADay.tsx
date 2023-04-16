@@ -28,10 +28,10 @@ export default function MenuForADay(props: any) {
   return (
     <>
       {/* ****************DROP DOWN MENU***********************************/}
-      <h1 className="text-center text-2xl"> Menu for {formatDateString(props.day, props.month, props.year)} @  University
+      <h1 > Menu for {formatDateString(props.day, props.month, props.year)} @  University
         ID:{props.diningHallId}
       </h1>
-      <div className="meal-type-selector text-center">
+      <div>
         <label htmlFor="meal-time-select"></label>
         <select id="meal-time-select" onChange={handleMealTimeSelection}>
           <option value="View Day"> Select Meal Time</option>
@@ -47,7 +47,7 @@ export default function MenuForADay(props: any) {
       </div>
 
       {/* ****************MENU ITEMS***********************************/}
-      <div className="grid-container">
+      <div className="grid-menu-item-container">
         {
           props.menuItems.map((menuItem: any, index: number) => (
             // regex to remove all white space + triple ternary a ? b : (c ? d : e)
@@ -62,81 +62,12 @@ export default function MenuForADay(props: any) {
 
       <style scoped>
         {`
-          .grid-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            flex-direction: row;
-          }
-
-          .nested-grid-container {
-            display: flex;
-            flex-wrap: nowrap;
-            flex-direction: column;
-            position:relative;
-          }
-          .grid-item {
-            width: 450px;
-            border: 1px solid black;
-            margin: 5px;
-            display: flex;
-          }
-
-          .submit-review{
-            display: flex;
-            margin-top: auto;
-          }
-          
-          button {
-            width: 100%;
-            background-color:black;
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 14px;
-            font-weight: 700;
-            border: none;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-          }
-
-          button:focus {
-            background-color: darkblue;
-          }
-          
-          button:hover {
-            background-color: darkblue;
-            justify-content: bottom;
-          }
-
-          .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,200,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 250;
-          }
-
-          .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            max-width: 600px;
-            max-height: 80%;
-            overflow: auto;
-          }
-          
-          .modal-trigger {
-            cursor: pointer;
-          }
-
-          img{
-            width:400px;
-          }
+        .grid-menu-item-container {
+          display: flex;
+          flex-wrap: wrap;
+          overflow: auto;
+        }
+        
           `}
       </style>
     </> 

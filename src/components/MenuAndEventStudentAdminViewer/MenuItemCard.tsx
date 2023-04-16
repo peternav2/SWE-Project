@@ -9,9 +9,9 @@ export default function MenuItemCard(props: any) {
   };
 
   return (
-    <div className="grid-item" onClick={handleModalToggle} key={props.index}>
-      <div className="nested-grid-container">
-        <h1 className="text-2xl">{props.menuItem.mealType}</h1>
+    <div  className="grid-item" onClick={handleModalToggle} key={props.index}>
+      <div >
+        <h1 >{props.menuItem.mealType}</h1>
         <u>
           <h2 >DISH</h2>
         </u>
@@ -40,6 +40,17 @@ export default function MenuItemCard(props: any) {
           </div>
         </div>
       )}
+      <style scoped>
+        {`
+        .grid-item {
+          width: 80%;
+          padding: 10px;
+          margin: auto;
+
+
+        }
+        `}
+      </style>
     </div>
   );
 }
