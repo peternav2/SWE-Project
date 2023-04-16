@@ -9,34 +9,30 @@ export default function MenuItemCard(props: any) {
   };
 
   return (
-    <div  className="grid-item" onClick={handleModalToggle} key={props.index}>
-      <div >
-        <h1 >{props.menuItem.mealType}</h1>
-        <u>
-          <h2 >DISH</h2>
-        </u>
-        <u>
-          <h3>{props.menuItem.dish.name}</h3>
-        </u>
+    <div className="card card-bordered lg:card-side bg-base-100 shadow-xl grid-item" onClick={handleModalToggle} key={props.index}>
+        <figure>
+          <img
+          src="https://i.imgur.com/8vulzi8.jpeg"
+          className="h-auto max-w-full"
+          alt="..."
+          />
+          </figure>
+      <div className="card-body" >
+        <h1 className="card-title">{props.menuItem.mealType}</h1>
+        <h2  className="card-title">{props.menuItem.dish.name}</h2>
         <p>{props.menuItem.dish.description}</p>
         <p>
           {props.menuItem.date.month}/{props.menuItem.date.day}/{props.menuItem.date.year}
         </p>
-        <img
-          src="https://tinyurl.com/3bh459kj"
-          className="h-auto max-w-full"
-          alt="..."
-        />
-        <p>Dining Hall ID: {props.menuItem.dish.diningHallId}</p>
-        <pre>                                                   </pre>
-        <button className="submit-review">See Dish Reviews</button>
-      </div>
-
+        </div>
+        <div className="card-actions justify-end">
+           <button className="btn grow">See Dish Reviews</button>
+        </div>
       {modalVisible && (
-        <div className="modal">
-          <div className="modal-content">
+        <div >
+          <div>
             <BareMenuItem diningHallId={props.diningHallId}  day={props.day} month={props.month} year={props.year} menuItem={props.menuItem} />
-            <button onClick={handleModalToggle}>Close Modal</button>
+            <button  className="btn btn-error" onClick={handleModalToggle}>Close Modal</button>
           </div>
         </div>
       )}

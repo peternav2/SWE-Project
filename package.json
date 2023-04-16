@@ -11,6 +11,8 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.14",
+    "@tailwindcss/typography": "^0.5.9",
+    "daisyui": "^2.51.5",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.11",
     "express": "^4.18.2",
