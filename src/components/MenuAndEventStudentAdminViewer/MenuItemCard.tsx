@@ -42,13 +42,7 @@ export default function MenuItemCard(props: any) {
       )}
       <style scoped>
         {`
-        .grid-item {
-          width: 80%;
-          padding: 10px;
-          margin: auto;
 
-
-        }
         `}
       </style>
     </div>
