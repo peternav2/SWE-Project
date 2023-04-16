@@ -69,7 +69,7 @@ export default function MenuItemForm({ item = {} as MenuItem}) {
                         {addAlergenField && (
                             <div className="flex">
                                 <input type="text" name="newAlergen" placeholder="Add New Alergen"
-                                defaultValue="" onChange={(event) => ingredients.push(event.target.value)}/>
+                                defaultValue="" onChange={(event) => {ingredients.push(event.target.value)}}/>
                                 <button type="submit" className="flex" onClick={pushToAlergens}>Add</button>
                             </div>
                         )}
@@ -114,7 +114,6 @@ export default function MenuItemForm({ item = {} as MenuItem}) {
         </Form>
     );
 }
-
 
 const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
