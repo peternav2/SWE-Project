@@ -22,7 +22,7 @@ export const addReviewToMenuItem = async (review: Review, menuItemId: ObjectId )
  * @param menuItemId : ObjectId
  * @returns promise that resolves to an array of reviews for the menu item
  */
-export const getReviewsByMenuItem = async (menuItemId?: ObjectId) => {
+export const getReviewsByMenuItem = async (menuItemId: ObjectId) => {
     return await myFetch<Review[]>(`review/${menuItemId}`)
 }
 

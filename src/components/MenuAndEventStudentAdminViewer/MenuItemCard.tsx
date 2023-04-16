@@ -35,7 +35,7 @@ export default function MenuItemCard(props: any) {
       {modalVisible && (
         <div className="modal">
           <div className="modal-content">
-            <BareMenuItem menuItem={props.menuItem} />
+            <BareMenuItem diningHallId={props.diningHallId}  day={props.day} month={props.month} year={props.year} menuItem={props.menuItem} />
             <button onClick={handleModalToggle}>Close Modal</button>
           </div>
         </div>

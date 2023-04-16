@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Review, addReviewToMenuItem } from "../stores/Review";
+import { Review, addReviewToMenuItem } from "../../stores/Review";
+import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
+import { ObjectId } from "mongodb";
 
 /// Added "component" because of name conflict
 export default function BareMenuItem(props: any) {
@@ -7,11 +9,18 @@ export default function BareMenuItem(props: any) {
   const [yourReviewsVisible, setyourReviewsVisible] = useState(true);
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
+  const [submittedReviewFlag, setSubmittedReviewFlag] = useState(false);
+  const [UpdatedMenuItems, withReviewUpdatedMenuItems] = useState<MenuItem[]>([]);
 
-   async function handleSubmit(event: any) {
+   async function handleReviewSubmit(event: any) {
     event.preventDefault();
     console.log('Review:', review);
     console.log('Stars:', stars);
+    let daysNum:number = parseInt(props.day);
+    let daysMonth:number = parseInt(props.month);
+    let daysYear:number = parseInt(props.year);
+
+    setSubmittedReviewFlag(true);
 
     let submittedReview:Review = {
       comment: review,
@@ -21,17 +30,18 @@ export default function BareMenuItem(props: any) {
     };
 
     await addReviewToMenuItem(submittedReview,props.menuItem._id).then((res) => {
-      console.log(res);
+      console.log(res,31);
+    })
+
+    await getMenuItemsBasedByDate({day:daysNum, month:daysMonth, year:daysYear},props.diningHallId).then((res) => {
+      console.log(res,36);
+      withReviewUpdatedMenuItems(res);
     })
   };
 
-  const toggleVisibility = (event: any) => {
+  const toggleOthersReviewsVisibility = (event: any) => {
     event.stopPropagation();
     setVisible(!visible);
-  };
-
-  const stopPropagation = (event: any) => {
-    event.stopPropagation();
   };
 
   const toggleVisibilityYourReview = (event: any) => {
@@ -39,6 +49,22 @@ export default function BareMenuItem(props: any) {
     setyourReviewsVisible(!yourReviewsVisible);
   };
   
+  // to stop the modal from closing when clicking on the modal
+  // layered CSS
+  const stopPropagation = (event: any) => {
+    event.stopPropagation();
+  };
+
+  const getReviewsById = (array:MenuItem[], id:ObjectId) => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i]._id === id) {
+        return array[i].dish.reviews;
+      }
+    }
+    return [];
+  }
+  const reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
+
   console.log(props.menuItem.dish.reviews);
 
   return (
@@ -61,8 +87,19 @@ export default function BareMenuItem(props: any) {
       />
       <p>Dining Hall ID: {props.menuItem.dish.diningHallId}</p>
       <div>
-        <button className="toggle-reviews" onClick={toggleVisibility}>SEE REVIEWS</button>
-        {visible && 
+        <button className="toggle-reviews" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
+        {submittedReviewFlag ?  
+          visible && 
+          reviewsById.map((review: Review, index:number) => (
+          <div key={index}>
+          <p>---------------------------------------------</p>
+          <p>user:   {review.username}</p>
+          <p>review: {review.comment}</p>
+          <p>stars:  {review.rating}</p>
+          </div>
+          ))
+        : 
+        visible && 
   props.menuItem.dish.reviews.map((review: Review, index:number) => (
     <div key={index}>
       <p>---------------------------------------------</p>
@@ -76,10 +113,11 @@ export default function BareMenuItem(props: any) {
       <div>
         <button className="toggle-reviews" onClick={toggleVisibilityYourReview}>ADD/EDIT YOUR REVIEW</button>
         {/* TODO: factor out this review form */}
-        {yourReviewsVisible && <div>
+        {
+        yourReviewsVisible && <div>
           {/* maybe change this to an array of objects with these fields on dish so dish can have multiple reviews */}
           {/* Users token value */}
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleReviewSubmit} >
             <div>
               <label htmlFor="review">Your review:</label>
               <textarea
@@ -101,7 +139,7 @@ export default function BareMenuItem(props: any) {
                 onChange={(event) => setStars(parseInt(event.target.value))}
               />
             </div>
-            <button className="submit-button" type="submit" onClick={handleSubmit}>Submit</button>
+            <button className="submit-button" type="submit" onClick={handleReviewSubmit}>Submit</button>
           </form>
 
 

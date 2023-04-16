@@ -1,6 +1,5 @@
-import { getMenuItemsBasedByDate, MenuItem } from "../stores/MenuItem";
-import MenuItemCard from "../components/MenuItemCard";
-import { useUser } from "../App";
+import { getMenuItemsBasedByDate, MenuItem } from "../../stores/MenuItem";
+import MenuItemCard from "./MenuItemCard";
 import { useState } from "react";
 
 
@@ -15,12 +14,7 @@ export default function MenuForADay(props: any) {
     return date.toLocaleString();
   }
 
-  // modal to simulate instagram UI behavior
-  const handleModalToggle = () => {
-    setModalVisible(!modalVisible);
-  }
-
-  function handleSelection(e: any) {
+  function handleMealTimeSelection(e: any) {
     const value = e.target.value;
     if (MealTimes.includes(value)) {
       setSelectedMealTime(value);
@@ -37,11 +31,9 @@ export default function MenuForADay(props: any) {
       <h1 className="text-center text-2xl"> Menu for {formatDateString(props.day, props.month, props.year)} @  University
         ID:{props.diningHallId}
       </h1>
-      {/* username prop TODO */}
-      {/* <h1> Welcome! {user.username}</h1> */}
       <div className="meal-type-selector text-center">
         <label htmlFor="meal-time-select"></label>
-        <select id="meal-time-select" onChange={handleSelection}>
+        <select id="meal-time-select" onChange={handleMealTimeSelection}>
           <option value="View Day"> Select Meal Time</option>
           {MealTimes.map((mealTime) => (
             <option key={mealTime} value={mealTime}>
@@ -53,15 +45,17 @@ export default function MenuForADay(props: any) {
           selectedMealTime && <p> You a now viewing the {selectedMealTime} menu!</p>
         }
       </div>
+
       {/* ****************MENU ITEMS***********************************/}
       <div className="grid-container">
         {
           props.menuItems.map((menuItem: any, index: number) => (
             // regex to remove all white space + triple ternary a ? b : (c ? d : e)
-            (menuItem.mealType.toUpperCase() === selectedMealTime.replace(/ /g, '').toUpperCase()) 
+            (menuItem.mealType.toUpperCase().replace(/ /g, '') === selectedMealTime.replace(/ /g, '').toUpperCase()) 
             ?
-              <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> :
-            (selectedMealTime === "View All" ? <MenuItemCard index={index} menuItem={menuItem} key={menuItem._id.toString()} /> : null)
+              <MenuItemCard diningHallId={props.diningHallId} day={props.day} month={props.month} year={props.year} index={index} menuItem={menuItem} key={menuItem._id.toString()} /> :
+            (selectedMealTime.replace(/ /g, '').toUpperCase() === "View All".replace(/ /g, '').toUpperCase() ? 
+            <MenuItemCard  diningHallId={props.diningHallId}  day={props.day} month={props.month} year={props.year} index={index} menuItem={menuItem} key={menuItem._id.toString()} /> : null)
           ))
         }
       </div>

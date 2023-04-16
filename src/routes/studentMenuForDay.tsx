@@ -1,67 +1,47 @@
 import {getAllMenuItems, getMenuItemsBasedByDate, getMenuItemsBasedByDiningHall, MenuItem} from "../stores/MenuItem";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import MenuForADay from "../components/MenuForADay";
+import MenuForADay from "../components/MenuAndEventStudentAdminViewer/MenuForADay";
 import {useUser} from "../App";
-import { University, getAllUniversities } from "../stores/University";
 import { ObjectId } from "mongodb";
 import { useEffect } from "react";
+import { createContext, useContext, useState } from 'react';
+import { Review,getReviewsByMenuItem } from "../stores/Review";
 
 export async function loader({params}: any) {
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
-    let diningHallId = params.diningHallId;
     // the above is a hacky way to convert the string to a number because
     // the params are of type any and I don't know how to convert them to a number
     // // in the method parameters
 
-
     // '64095e3482173f9ad243956b';
     // '6420a4e4b759dfa90b360fcb';
-
-    let menuItemsAll: MenuItem[] = [];
-
+    
     let menuItemsbyDateAndDiningHall: MenuItem[] = [];
-    //TODO: change this when/if menuItem database gets to big (1K+ items)
-    //       here now for testing purposes
-    await getAllMenuItems().then((res) => {
-      console.log(res)
-      menuItemsAll = res;
-      console.log(menuItemsAll);
-    })
-
+    
     await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
       menuItemsbyDateAndDiningHall = res;
     })
     
     return menuItemsbyDateAndDiningHall;
-}
-
-
-export default function StudentMenuForDay() {
-    let menuItems = useLoaderData() as MenuItem[];
+  }
+  
+  export default function StudentMenuForDay() {
+    // initial params data
     const diningHallId = useParams().diningHallId;
-    const month = useParams().month;
-    const day = useParams().day;
-    const year = useParams().year;
+    let day =  parseInt(useParams().day || "12");
+    let month =  parseInt(useParams().month || "31");
+    let year = parseInt(useParams().year || "1999");
+    let initialMenuItems:MenuItem[] = useLoaderData() as MenuItem[];
     const navigate = useNavigate();
-
+  
     
     return (
         <div>
-          <MenuForADay menuItems={menuItems} day={day} month={month} year={year} diningHallId={diningHallId}/>
-            {/* <h1> Menu for {month} {day} {year} </h1>
-            <h1>{user.username}</h1>
-            <h1> INSERT USER DATA HERE</h1>
-            {
-              menuItems.map((menuItem) => {
-                return (
-                  <div>
-                  <h1> {menuItem.dish.name} </h1>
-                  </div>
-                  )
-                })
-              } */}
+
+            <MenuForADay menuItems={initialMenuItems} day={day} month={month} year={year} diningHallId={diningHallId} />
+
           <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -77,3 +57,4 @@ export default function StudentMenuForDay() {
         </div>
     )
 }
+

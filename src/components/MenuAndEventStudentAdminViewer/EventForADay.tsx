@@ -1,4 +1,4 @@
-import { EventItem } from "../stores/EventItem";
+import { EventItem } from "../../stores/EventItem";
 
 export default function EventForADay(props:any) {
   console.log('l4',event);  

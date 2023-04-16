@@ -1,7 +1,7 @@
 import {useLoaderData,  useParams} from "react-router-dom";
 import {useUser} from "../App";
 import { EventItem, getEventItemsByDate } from "../stores/EventItem";
-import EventForADay from "../components/EventForADay";
+import EventForADay from "../components/MenuAndEventStudentAdminViewer/EventForADay";
 
 // *****WITH LOADER LOAD IN RELEVANT EVENT PARAM DATA FOR THIS ROUTE**************
 export async function loader({params}: any) {
