@@ -1,11 +1,6 @@
-import {getAllMenuItems, getMenuItemsBasedByDate, getMenuItemsBasedByDiningHall, MenuItem} from "../stores/MenuItem";
+import { getMenuItemsBasedByDate, MenuItem} from "../stores/MenuItem";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import MenuForADay from "../components/MenuAndEventStudentAdminViewer/MenuForADay";
-import {useUser} from "../App";
-import { ObjectId } from "mongodb";
-import { useEffect } from "react";
-import { createContext, useContext, useState } from 'react';
-import { Review,getReviewsByMenuItem } from "../stores/Review";
+import SomethingForADay from "../components/MenuAndEventStudentAdminViewer/SomethingForADay";
 
 export async function loader({params}: any) {
     let year = +params.year;
@@ -17,9 +12,7 @@ export async function loader({params}: any) {
 
     // '64095e3482173f9ad243956b';
     // '6420a4e4b759dfa90b360fcb';
-    
     let menuItemsbyDateAndDiningHall: MenuItem[] = [];
-    
     await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
       menuItemsbyDateAndDiningHall = res;
     })
@@ -28,6 +21,18 @@ export async function loader({params}: any) {
   }
   
   export default function StudentMenuForDay() {
+    // USER ROLES
+    const UserRole = {
+      ADMIN: "ADMIN",
+      STUDENT: "STUDENT",
+    };
+
+    // WHAT FOR A DAY?
+    const WhatForADay = {
+      MENU: "MENU",
+      EVENT: "EVENT",
+    };
+
     // initial params data
     const diningHallId = useParams().diningHallId;
     let day =  parseInt(useParams().day || "12");
@@ -35,13 +40,19 @@ export async function loader({params}: any) {
     let year = parseInt(useParams().year || "1999");
     let initialMenuItems:MenuItem[] = useLoaderData() as MenuItem[];
     const navigate = useNavigate();
-  
     
     return (
         <div>
-
-            <MenuForADay menuItems={initialMenuItems} day={day} month={month} year={year} diningHallId={diningHallId} />
-
+            <SomethingForADay 
+              menuItems={initialMenuItems} 
+              day={day} 
+              month={month} 
+              year={year} 
+              diningHallId={diningHallId} 
+              whatForADay={WhatForADay.MENU}
+              UserRole={UserRole.STUDENT}
+            />
+          
           <div>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

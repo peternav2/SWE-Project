@@ -4,7 +4,7 @@ import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
 
 /// Added "component" because of name conflict
-export default function BareMenuItem(props: any) {
+export default function BareItem(props: any) {
   const [visible, setVisible] = useState(true);
   const [yourReviewsVisible, setyourReviewsVisible] = useState(true);
   const [review, setReview] = useState('');
@@ -35,7 +35,7 @@ export default function BareMenuItem(props: any) {
     return avatarUrls[randomIndex];
   }
     
-
+  
   async function handleReviewSubmit(event: any) {
     event.preventDefault();
     console.log('Review:', review);
@@ -43,9 +43,9 @@ export default function BareMenuItem(props: any) {
     let daysNum: number = parseInt(props.day);
     let daysMonth: number = parseInt(props.month);
     let daysYear: number = parseInt(props.year);
-
+    
     setSubmittedReviewFlag(true);
-
+    
     let submittedReview: Review = {
       comment: review,
       rating: stars,
@@ -56,7 +56,7 @@ export default function BareMenuItem(props: any) {
     await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
       console.log(res, 31);
     })
-
+    
     await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
       console.log(res, 36);
       withReviewUpdatedMenuItems(res);
@@ -87,30 +87,18 @@ export default function BareMenuItem(props: any) {
     }
     return [];
   }
-  const reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
+    const reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
 
   console.log(props.menuItem.dish.reviews);
-
+if(props.whatForADay === "EVENT"){
+  return(            visible &&
+    <div>
+    </div>
+  )
+} else{
   return (
     <div onClick={stopPropagation}>
-      {/* <h1>{props.menuItem.mealType}</h1>
-      <u>
-        <h2>DISH</h2>
-      </u>
-      <u>
-        <h3>{props.menuItem.dish.name}</h3>
-      </u>
-      <p>{props.menuItem.dish.description}</p>
-      <p>
-        {props.menuItem.date.month}/{props.menuItem.date.day}/{props.menuItem.date.year}
-      </p>
-      <img
-        src="https://tinyurl.com/3bh459kj"
-        className="h-auto max-w-full"
-        alt="..."
-      /> */}
-
-  <div className="card card-compact w-96 bg-base-100 shadow-xl">
+      <div className="card card-compact w-96 bg-base-100 shadow-xl">
           <button className="btn" onClick={toggleVisibilityYourReview}>ADD YOUR REVIEW</button>
           {/* TODO: factor out this review form */}
           {
@@ -188,5 +176,5 @@ export default function BareMenuItem(props: any) {
         `}
         </style>
       </div>
-  )
+  )}
 }
