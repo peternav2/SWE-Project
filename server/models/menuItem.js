@@ -50,4 +50,11 @@ const deleteMenuItem = async (menuItemId) => {
     const result = await db.deleteOne({ _id: new ObjectId(menuItemId) });
     return result; // what will be returned in the Promise (the result of the delete operation
 }
-module.exports = { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById }
+
+const updateMenuItem = async (menuItem) => {
+    const db = await collection();
+    const result = await db.updateOne({ _id: new ObjectId(menuItem._id) }, { $set: menuItem });
+    return result; // what will be returned in the Promise (the result of the update operation)
+}
+
+module.exports = { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById, updateMenuItem }

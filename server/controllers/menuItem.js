@@ -1,5 +1,5 @@
 const express = require('express');
-const { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } = require('../models/menuItem.js');
+const { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById, updateMenuItem } = require('../models/menuItem.js');
 const app = express.Router();
 
 app
@@ -30,6 +30,10 @@ app
 })
 .delete('/:menuItemId', (req, res) => {
     deleteMenuItem(req.params.menuItemId)
+    .then(x => res.status(200).send(x));
+})
+.patch('/:menuItemId', (req, res) => {
+    updateMenuItem(req.body)
     .then(x => res.status(200).send(x));
 })
 
