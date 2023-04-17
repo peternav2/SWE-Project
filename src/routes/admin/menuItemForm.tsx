@@ -25,14 +25,14 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
     // else, the array for these two will be set empty to be filled by the user
     const [allergens, setAllergens] = useState<string[]>(item?.dish?.allergens || []);
     const [ingredients, setIngredients] = useState<string[]>(item?.dish?.ingredients || []);
-    const [dishName, setDishName] = useState("");
-    const [calories, setCalories] = useState(0);
-    const [description, setDescription] = useState("");
+    const [dishName, setDishName] = useState(item?.dish?.name || "");
+    const [calories, setCalories] = useState(item?.dish?.cal || 0);
+    const [description, setDescription] = useState(item?.dish?.description || "");
 
     function handleSubmit() {
 
         if (newItem) {
-            console.log("New item");
+
             const newMenuItem = {
                 mealType: params.mealType,
                 dish: {
@@ -50,26 +50,26 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     day: parseInt(params.day as string),
                 } as CalendarDate
             } as MenuItem;
+
             addMenuItem(newMenuItem);
+            setValueChanged(false);
+
         } else {
+            item.dish.name = dishName;
+            item.dish.cal = calories;
+            item.dish.description = description;
             item.dish.allergens = allergens;
             item.dish.ingredients = ingredients;
             updateMenuItem(item);
+            setValueChanged(false);
         }
-
-        handleClick();
-    }
-
-    function handleClick() {
-        redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`);
     }
 
     return (
         <Form className={div1style} method="post" id="menuItem-form">
-            <div className={div2style}>
+            <div className="mx-2 my-2">
                 <p>
-                    <label>Dish name: </label>
-                    <input type="text" name="dishName" defaultValue={item?.dish?.name}
+                    <input className={dishNames} type="text" name="dishName" defaultValue={item?.dish?.name}
                         onChange={(event) => {
                             setValueChanged(true)
                             setDishName(event.target.value)
@@ -78,9 +78,9 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </p>
 
                 <p>
-                    <label>Calories: </label>
+                    <label>Cal </label>
                     <input type="number" name="calories" defaultValue={item?.dish?.cal}
-                        onChange={(event) => {
+                        className={inputsMargin} onChange={(event) => {
                             setValueChanged(true)
                             setCalories(+event.target.value)
                         }} />
@@ -89,7 +89,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 <p>
                     <label>Description: </label>
                     <input type="text" name="description" defaultValue={item?.dish?.description}
-                        onChange={(event) => {
+                        className={inputsMargin} onChange={(event) => {
                             setValueChanged(true)
                             setDescription(event.target.value)
                         }} />
@@ -101,7 +101,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                         <div className="flex">
                             <span>❏</span>
                             <input
-                                className="block"
+                                className={inputsMargin}
                                 placeholder="Add new alergen"
                                 type="text"
                                 name="alergen"
@@ -121,7 +121,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
 
                     <button className="flex" type="button" onClick={
                         () => { setAllergens(currentAllergens => [...currentAllergens, ""]) }}>
-                        <strong>+ Add</strong>
+                        <strong>+</strong>
                     </button>
 
                 </div>
@@ -151,52 +151,42 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>+ Add</strong>
+                        <strong>+</strong>
                     </button>
                 </div>
 
                 <div className="flex">
                     {newItem &&
-                        <Link className={activeButton} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}>
+                        <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                            className={activeButton} >
                             Cancel
                         </Link>
                     }
 
                     {valueChanged &&
                         <div className="div flex">
-                            <button className={activeButton} type="button"
-                                onClick={handleSubmit}>Save</button>
+                            <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                                className={activeButton} onClick={handleSubmit}>
+                                Save
+                            </Link>
                         </div>
                     }
                 </div>
 
                 {item.dish != undefined &&
-                    <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id), handleClick)}>Delete</button>
+                    <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id))}>Delete</button>
                 }
             </div>
         </Form>
     );
 }
 
+const inputsMargin = "my-1"
+const dishNames = "text-2xl font-bold dark:text-white"
 const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
-const div1style = "max-w-sm w-full lg:max-w-full lg:flex"
-const div2style = "my-2 border-t border-r border-b border-l border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
-
-
-
-
-{/* <label>Ingredients: </label>
-                    <ul>
-                        {ingredients.map((ingredient) => (
-                            <input
-                                placeholder="Add new ingredient"
-                                className="block"
-                                type="text"
-                                name="ingredient"
-                                value={"▶︎ " + ingredient}
-                                key={ingredient as string}
-                                onChange={() => setValueChanged(true)} />
-                        ))}
-                    </ul>
-                 */}
+const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
+const fireIcoN = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+</svg>
