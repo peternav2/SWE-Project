@@ -53,8 +53,9 @@ const deleteMenuItem = async (menuItemId) => {
 
 const updateMenuItem = async (menuItem) => {
     const db = await collection();
-
     const id = new ObjectId(menuItem._id);
+    
+    delete menuItem._id;
     menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
    
     const result = await db.updateOne({ _id: new ObjectId(id)}, { $set: menuItem });

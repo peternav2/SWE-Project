@@ -1,18 +1,22 @@
-import { Form, redirect, useParams } from "react-router-dom";
+import { Form, redirect, useParams, Link } from "react-router-dom";
 import type { MenuItem } from "../../stores/MenuItem";
 import { deleteMenuItem } from "../../stores/MenuItem";
 import { useState } from "react";
 import { addMenuItem, updateMenuItem } from "../../stores/MenuItem";
+import { CalendarDate } from "../../stores/CalendarDate";
+import { Dish } from "../../stores/Dish";
+import { Review } from "../../stores/Review";
 
 
 export async function action({ params }: any) {
     console.log("Hey Im on the menu item form page");
 }
 
-export default function MenuItemForm({ item = {} as MenuItem, mealType = "" as string | undefined }) {
+export default function MenuItemForm({ item = {} as MenuItem }) {
 
     // If menu item is undefined this will be true
-    const newItem = mealType == undefined;
+    const newItem = item.dish == undefined;
+    const params = useParams();
 
     // This tracks if theres any change on the form, to enable the save button. 
     const [valueChanged, setValueChanged] = useState(false);
@@ -27,21 +31,37 @@ export default function MenuItemForm({ item = {} as MenuItem, mealType = "" as s
 
     function handleSubmit() {
 
-        item.dish.allergens = allergens;
-        item.dish.ingredients = ingredients;
-
         if (newItem) {
-            //const newSubmitItem as MenuItem;
-            console.log("I entered here...");
-            //addMenuItem(item);
+            console.log("New item");
+            const newMenuItem = {
+                mealType: params.mealType,
+                dish: {
+                    name: dishName,
+                    cal: calories,
+                    allergens: allergens,
+                    ingredients: ingredients,
+                    reviews: [] as Review[],
+                    description: description,
+                    diningHallId: params.diningHallId
+                } as Dish,
+                date: {
+                    year: parseInt(params.year as string),
+                    month: parseInt(params.month as string),
+                    day: parseInt(params.day as string),
+                } as CalendarDate
+            } as MenuItem;
+            addMenuItem(newMenuItem);
         } else {
+            item.dish.allergens = allergens;
+            item.dish.ingredients = ingredients;
             updateMenuItem(item);
         }
+
         handleClick();
     }
 
     function handleClick() {
-        //redirect(`/admin/university/${useParams().universityId}/dininghall/${useParams().diningHallId}/createmenu/${useParams().month}/${useParams().day}/${useParams().year}/`);
+        redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`);
     }
 
     return (
@@ -50,21 +70,29 @@ export default function MenuItemForm({ item = {} as MenuItem, mealType = "" as s
                 <p>
                     <label>Dish name: </label>
                     <input type="text" name="dishName" defaultValue={item?.dish?.name}
-                        // onChange={(event) => {
-                        //     setValueChanged(true)
-                        //     setDishName(event.target.value)
-                        // }}
+                        onChange={(event) => {
+                            setValueChanged(true)
+                            setDishName(event.target.value)
+                        }}
                     />
                 </p>
 
                 <p>
                     <label>Calories: </label>
-                    <input type="number" name="calories" defaultValue={item?.dish?.cal} onChange={() => setValueChanged(true)} />
+                    <input type="number" name="calories" defaultValue={item?.dish?.cal}
+                        onChange={(event) => {
+                            setValueChanged(true)
+                            setCalories(+event.target.value)
+                        }} />
                 </p>
 
                 <p>
                     <label>Description: </label>
-                    <input type="text" name="description" defaultValue={item?.dish?.description} onChange={() => setValueChanged(true)} />
+                    <input type="text" name="description" defaultValue={item?.dish?.description}
+                        onChange={(event) => {
+                            setValueChanged(true)
+                            setDescription(event.target.value)
+                        }} />
                 </p>
 
                 <div >
@@ -126,6 +154,12 @@ export default function MenuItemForm({ item = {} as MenuItem, mealType = "" as s
                         <strong>+ Add</strong>
                     </button>
                 </div>
+
+                {newItem &&
+                    <Link className={activeButton} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}>
+                        Cancel
+                    </Link>
+                }
 
                 {valueChanged &&
                     <div className="div flex">
