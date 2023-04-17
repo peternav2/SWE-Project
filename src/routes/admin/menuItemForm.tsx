@@ -65,6 +65,18 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
         }
     }
 
+    function handleAlergenDelete(index: number) {
+        allergens.splice(index, 1);
+        setAllergens([...allergens]);
+        setValueChanged(true);
+    }
+    
+    function handleIngredientDelete(index: number) {
+        ingredients.splice(index, 1);
+        setIngredients([...ingredients]);
+        setValueChanged(true);
+    }  
+
     return (
         <Form className={div1style} method="post" id="menuItem-form">
             <div className="mx-2 my-2">
@@ -96,10 +108,10 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </p>
 
                 <div >
-                    <label>Alergens: </label>
-                    {allergens.map((allergen) =>
+                    <strong>Alergens: </strong>
+                    {allergens.map((allergen, index) =>
                         <div className="flex">
-                            <span>❏</span>
+                            <span>{bullet}</span>
                             <input
                                 className={inputsMargin}
                                 placeholder="Add new alergen"
@@ -116,21 +128,22 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                                     );
                                 }}
                             />
+                            <button type="button" onClick={() => handleAlergenDelete(index)}>{trashIcon}</button>
                         </div>
                     )}
 
                     <button className="flex" type="button" onClick={
                         () => { setAllergens(currentAllergens => [...currentAllergens, ""]) }}>
-                        <strong>+</strong>
+                        <strong>{addIcon}</strong>
                     </button>
 
                 </div>
 
                 <div >
-                    <label>Ingredients: </label>
-                    {ingredients.map((ingredient) =>
+                    <strong>Ingredients: </strong>
+                    {ingredients.map((ingredient, index) =>
                         <div className="flex">
-                            <span>❏</span>
+                            <span>{bullet}</span>
                             <input
                                 className="block"
                                 placeholder="Add new ingredient"
@@ -147,11 +160,12 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                                     );
                                 }}
                             />
+                           <button type="button" onClick={() => handleIngredientDelete(index)}>{trashIcon}</button>
                         </div>
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>+</strong>
+                        <strong>{addIcon}</strong>
                     </button>
                 </div>
 
@@ -186,7 +200,16 @@ const dishNames = "text-2xl font-bold dark:text-white"
 const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
 const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
-const fireIcoN = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+const trashIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+<path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
+const addIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+const bullet = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+<path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
+</svg>
+const calorieIcon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+<path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
+</svg>
+
