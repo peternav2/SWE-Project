@@ -219,7 +219,7 @@ function Login(){
             <button type="submit" className={formatSubmit()}>
               Sign In
             </button>
-            <Link className = "mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account.</Link>
+            <Link className = "mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account</Link>
           </div>
           <GetErrors/>
         </form>
