@@ -88,3 +88,8 @@ export async function getMenuItemsByDishName(dishName: string, diningHallId?: Ob
 export async function deleteMenuItem(menuItemId?: ObjectId): Promise<any> { 
     return await myFetch<any>(`menuitem/${menuItemId}`, null, "DELETE");
 }
+
+// Added by Rodolfo
+export async function updateMenuItem(menuItem: MenuItem): Promise<MenuItem> {
+    return await myFetch<MenuItem>(`menuitem/${menuItem._id}`, menuItem, "PATCH")
+}

@@ -1,5 +1,5 @@
 const express = require('express');
-const { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById } = require('../models/menuItem.js');
+const { addMenuItem, getAllMenuItems, getMenuItemsByDate, getMenuItemsByDiningHall, getMenuItemsByMealTypeByDate, deleteMenuItem, getMenuItemById, updateMenuItem } = require('../models/menuItem.js');
 const app = express.Router();
 const {getErrorTuple} = require('../functions/session.js')
 
@@ -45,6 +45,10 @@ app
     .then(x => res.status(200).send(x))
     .catch(err => {const error = getErrorTuple(err.message)
         res.status(error[0]).send(error[1])});
+})
+.patch('/:menuItemId', (req, res) => {
+    updateMenuItem(req.body)
+    .then(x => res.status(200).send(x));
 })
 
 
