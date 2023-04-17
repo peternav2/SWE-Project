@@ -165,7 +165,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>{addIcon}</strong>
+                        <strong>{addIcon}+</strong>
                     </button>
                 </div>
 
