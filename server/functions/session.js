@@ -23,17 +23,17 @@ function generateSession(user, isStudent){
     const session = {'id':randomUUID(),
                      'token':randomUUID(),
                      'user':user,
-                     'permission':getScopes(isStudent)}
+                     'permission':getUserType(isStudent)}
     sessions.set(session.id, session);
     return({'id':session.id, 'token':session.token})
 }
 
 function getUserType(isStudent){
     if(isStudent){
-        return(userScopes.get('student'))
+        return('student')
     }
     else{
-        return(userScopes.get('admin'))
+        return('admin')
     }
 }
 
@@ -83,10 +83,10 @@ function validateRequest(request){
        
     var type = request.method.toLowerCase();
     var url = request.baseUrl;
-    var scopes = getScopes(getUserType(stored_session.permission), type)
+
+    var scopes = getScopes(userScopes.get(stored_session.permission), type)
+
     if(contains(scopes, url) == false){
-        console.log(scopes)
-        console.log(url)
         throw new Error(3)
     }
     return true

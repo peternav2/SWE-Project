@@ -37,10 +37,10 @@ function formatDininghalls(diningHalls){
 // input a university name and a dining hall object and it will add the dining hall to the list of dining halls for that university
 const addDiningHallToUniversity = async (request) => {
     validateRequest(request);
-    const uniId = request.params.universityId
-    const diningHall = request.body
+    const uniId = request.params.universityId;
+    const diningHall = request.body;
     const db = await collection();
-    diningHall._id= new ObjectId(); // give the dining hall an _id property
+    diningHall._id = new ObjectId(); // give the dining hall an _id property
     const result = await db.updateOne(  { _id: new  ObjectId(uniId) },
                                         { $push: { diningHalls: diningHall }})
     return diningHall;      

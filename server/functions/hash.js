@@ -9,7 +9,7 @@ function salt(password){
 }
 
 function encrypt(password){
-    return(hash(salt(password))).toString
+    return(hash(salt(password))).toString()
 }
 
 module.exports = {encrypt}

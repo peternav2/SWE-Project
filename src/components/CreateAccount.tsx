@@ -333,7 +333,7 @@ const CreateAccount = () => {
 
           <div className="mt-5 items-center justify-between">
             <button type="submit" className={formatSubmit()}>
-              Create your account.
+              Create your account
             </button>
             <div className = "my-4">
             <GetErrors/>
