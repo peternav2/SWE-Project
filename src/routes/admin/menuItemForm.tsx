@@ -155,18 +155,20 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     </button>
                 </div>
 
-                {newItem &&
-                    <Link className={activeButton} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}>
-                        Cancel
-                    </Link>
-                }
+                <div className="flex">
+                    {newItem &&
+                        <Link className={activeButton} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}>
+                            Cancel
+                        </Link>
+                    }
 
-                {valueChanged &&
-                    <div className="div flex">
-                        <button className={activeButton} type="button"
-                            onClick={handleSubmit}>Save</button>
-                    </div>
-                }
+                    {valueChanged &&
+                        <div className="div flex">
+                            <button className={activeButton} type="button"
+                                onClick={handleSubmit}>Save</button>
+                        </div>
+                    }
+                </div>
 
                 {item.dish != undefined &&
                     <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id), handleClick)}>Delete</button>
