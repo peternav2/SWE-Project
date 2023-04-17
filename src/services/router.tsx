@@ -11,7 +11,9 @@ import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../r
 import StudentEventForDay from "../routes/studentEventForDay";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
-import CreateMenu, {loader as createMenuLoader, action as createMenuAction} from '../routes/admin/createMenu'
+import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
+import { action as menuItemFormAction } from '../routes/admin/menuItemForm'
+
 import MenuItemForm from '../routes/admin/menuItemForm'
 
 export const router = createBrowserRouter([
@@ -73,12 +75,10 @@ export const router = createBrowserRouter([
                 path: "/admin/university/:universityId/dininghall/:diningHallId/createmenu/:month/:day/:year/",
                 element: <CreateMenu />,
                 loader: createMenuLoader,
-                action: createMenuAction,
                 children: 
                 [{
                     path: 'new/:mealType',
                     element: <MenuItemForm />,
-                    action: createMenuAction,
                 }]
             }
        ]

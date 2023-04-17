@@ -91,5 +91,5 @@ export async function deleteMenuItem(menuItemId?: ObjectId): Promise<any> {
 
 // Added by Rodolfo
 export async function updateMenuItem(menuItem: MenuItem): Promise<MenuItem> {
-    return await myFetch<MenuItem>(`menuitem/${menuItem._id}`, menuItem, "PUT")
+    return await myFetch<MenuItem>(`menuitem/${menuItem._id}`, menuItem, "PATCH")
 }

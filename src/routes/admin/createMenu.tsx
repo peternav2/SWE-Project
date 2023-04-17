@@ -1,4 +1,4 @@
-import { Form, Link, Outlet, redirect, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { Form, Link, Outlet, redirect, useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,42 +11,42 @@ import { Review } from "../../stores/Review";
 import Back from "../../components/back";
 
 
-export async function action({ request, params }: any) {
+// export async function action({ request, params }: any) {
 
-    // Update function to be placed here... 
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
+//     // Update function to be placed here... 
+//     const formData = await request.formData();
+//     const updates = Object.fromEntries(formData);
 
-    if (updates.newAlergen == undefined) {
+//     // Creates a new menu item
+//     if (updates.newAlergen == undefined) {
+//         const newSubmitItem = {
+//             mealType: params.mealType,
 
-        const newSubmitItem = {
-            mealType: params.mealType,
+//             dish: {
+//                 name: updates.dishName,
+//                 cal: updates.calories as number,
+//                 allergens: [] as string[],
+//                 ingredients: [] as string[],
+//                 reviews: [] as Review[],
+//                 description: updates.description,
+//                 diningHallId: params.diningHallId
+//             } as Dish,
 
-            dish: {
-                name: updates.dishName,
-                cal: updates.calories as number,
-                allergens: [] as string[],
-                ingredients: [] as string[],
-                reviews: [] as Review[],
-                description: updates.description,
-                diningHallId: params.diningHallId
-            } as Dish,
+//             date: {
+//                 year: +params.year,
+//                 month: +params.month,
+//                 day: +params.day,
+//             } as CalendarDate
+//         } as MenuItem;
 
-            date: {
-                year: +params.year,
-                month: +params.month,
-                day: +params.day,
-            } as CalendarDate
-        } as MenuItem;
+//         await addMenuItem(newSubmitItem);
 
-        await addMenuItem(newSubmitItem);
+//     } else {
+//         // Edit existing menu item
+//     }
 
-    } else {
-        // Edit existing menu item
-    }
-
-    return redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`);
-}
+//     return redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`);
+// }
 
 export async function loader({ params }: any) {
 
@@ -58,7 +58,6 @@ export async function loader({ params }: any) {
     return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId);
 }
 
-
 export default function CreateMenu() {
 
     const navigate = useNavigate();
@@ -66,7 +65,6 @@ export default function CreateMenu() {
 
     const [startDate, setStartDate] = useState(new Date());
     const [mealType, setMealType] = useState("Breakfast");
-    const [addingNewMenuItem, setaddingNewMenuItem] = useState(false);
 
     const universityId = useParams().universityId;
     const diningHallId = useParams().diningHallId;
@@ -125,17 +123,17 @@ export default function CreateMenu() {
 
             <Link
                 to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
-                className={gactiveButton}
-                onClick={() => setaddingNewMenuItem(!addingNewMenuItem)}>
+                className={gactiveButton}>
                 Add New Menu Item
             </Link>
 
+            <div className="mx-2 my-2">
+                <Outlet />
+            </div>
 
-            <Outlet />
-
-            {menuItems.filter((item) => {return item.mealType == mealType }).map((menuItem) => (
+            {menuItems.filter((item) => { return item.mealType == mealType }).map((menuItem) => (
                 <div className="mx-2 my-2" key={menuItem._id?.toString()}>
-                    <MenuItemForm item={menuItem}></MenuItemForm>
+                    <MenuItemForm item={menuItem} mealType={mealType}></MenuItemForm>
                 </div>
             ))}
 

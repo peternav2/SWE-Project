@@ -53,7 +53,11 @@ const deleteMenuItem = async (menuItemId) => {
 
 const updateMenuItem = async (menuItem) => {
     const db = await collection();
-    const result = await db.updateOne({ _id: new ObjectId(menuItem._id) }, { $set: menuItem });
+
+    const id = new ObjectId(menuItem._id);
+    menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
+   
+    const result = await db.updateOne({ _id: new ObjectId(id)}, { $set: menuItem });
     return result; // what will be returned in the Promise (the result of the update operation)
 }
 
