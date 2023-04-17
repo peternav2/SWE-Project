@@ -1,6 +1,6 @@
 const { connect } = require('./mongo.js');
 const { ObjectId } = require('mongodb');
-const COLLECTIONNAME = 'MenuItems';
+const COLLECTIONNAME = 'MenuItem';
 const {validateRequest} = require('../functions/session.js')
 
 async function collection() { // returns collection we will be CRUDing from 
@@ -32,14 +32,15 @@ const getMenuItemById = async (request) => {
     return result;
 }
 const getMenuItemsByDate = async(request) => {
-    validateRequest(request);
+    //validateRequest(request);
+    console.log(request.params);
     const year = request.params.year;
     const month = request.params.month;
     const day = request.params.day;
     const diningHallId = request.params.diningHallId;
     const db = await collection();
-    const result = await db.find({date: {year: year, month: month, day: day}, "dish.diningHallId": new ObjectId(diningHallId) }).toArray();
-
+    const result = await db.find({date: {year: +year, month: +month, day: +day}, "dish.diningHallId": new ObjectId(diningHallId) }).toArray();
+    console.log(result);
     return result; // what will be returned in the Promise
 }
 
@@ -59,7 +60,7 @@ const getMenuItemsByMealTypeByDate = async(request) => {
     const mealType = request.params.mealType;
     const diningHallId = request.params.diningHallId;
     const db = await collection();
-    const result = await db.find({ date: {year: year, month: month, day: day}, mealType: mealType, "dish.diningHallId": new ObjectId(diningHallId)}).toArray();
+    const result = await db.find({ date: {year: +year, month: +month, day: +day}, mealType: mealType, "dish.diningHallId": new ObjectId(diningHallId)}).toArray();
     return result; // what will be returned in the Promise
 }
 
