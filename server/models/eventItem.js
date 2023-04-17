@@ -23,7 +23,7 @@ const getEventItemsByDate = async (request) => {
     const day = request.params.day
     const month = request.params.month
     const db = await collection();
-    const result = await db.find({diningHallId: new ObjectId(diningHallId), date: {year: year, month: month, day: day}}).toArray();
+    const result = await db.find({diningHallId: new ObjectId(diningHallId), date: {year: +year, month: +month, day: +day}}).toArray();
     return result;
 }
 
