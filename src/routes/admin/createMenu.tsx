@@ -8,7 +8,8 @@ import type { CalendarDate } from "../../stores/CalendarDate";
 import MenuItemForm from "./menuItemForm";
 import { Dish } from "../../stores/Dish";
 import { Review } from "../../stores/Review";
-import Back from "../../components/back";
+import Back from "../../components/Back";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 
 // export async function action({ request, params }: any) {
@@ -53,9 +54,7 @@ export async function loader({ params }: any) {
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
-
-    console.log(await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId));
-    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId);
+    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId).catch(error =>{navigateError(error)});;
 }
 
 export default function CreateMenu() {
@@ -71,6 +70,16 @@ export default function CreateMenu() {
     const day = useParams().day;
     const month = useParams().month;
     const year = useParams().year;
+
+    validateCurrentAuth()
+
+    useEffect(() => {
+        if (mealType == "All Day") {
+            setFilteredMenus(menuItems);
+        } else {
+            setFilteredMenus(menuItems.filter((item) => { return item.mealType === mealType; }));
+        }
+    }, [mealType]);
 
     return (
         <div>

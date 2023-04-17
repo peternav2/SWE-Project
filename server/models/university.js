@@ -1,6 +1,7 @@
 const { connect } = require('./mongo.js');
 const {ObjectId} = require("mongodb");
 const COLLECTIONNAME = 'University';
+const {validateRequest} = require('../functions/session.js')
 
 async function collection() { // returns collection we will be CRUDing from 
     const client = await connect();
@@ -13,19 +14,36 @@ const getAllUniversities = async () => {
     return result;
 }
 
-const getUniversity = async(universityId) => {
+const getUniversity = async(request) => {
+    validateRequest(request);
+    const universityId = request.params.universityId;
     const db = await collection();
-    const result = await db.findOne({_id: new ObjectId(universityId)});
+    var result = await db.findOne({_id: new ObjectId(universityId)});
+    result.diningHalls = formatDininghalls(result.diningHalls)
     return result;
 }
 
-const addUniversity = async(university) => {
+function formatDininghalls(diningHalls){
+    if(Array.isArray(diningHalls) == false){
+        const array = [diningHalls];
+        return array
+    }
+    else{
+        return diningHalls
+    }
+}
+
+const addUniversity = async(request) => {
+    validateRequest(request);
+    const university = request.body;
     const db = await collection();
     const result = await db.insertOne(university);
     return result;
 }
 
-const updateUniversity = async(university) => {
+const updateUniversity = async(request) => {
+    validateRequest(request);
+    const university = request.body;
     const db = await collection();
     const id = new ObjectId(university._id);
     delete university._id;
@@ -33,7 +51,9 @@ const updateUniversity = async(university) => {
     return result;
 }
 
-const deleteUniversity = async(universityId) => {
+const deleteUniversity = async(request) => {
+    validateRequest(request);
+    const universityId = request.params.universityId;
     const db = await collection();
     const result = await db.deleteOne({_id: new ObjectId(universityId)});
     return result;

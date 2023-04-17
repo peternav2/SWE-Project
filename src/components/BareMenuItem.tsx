@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { navigateError } from "./Auth";
 import { Review, addReviewToMenuItem } from "../stores/Review";
 
 /// Added "component" because of name conflict
@@ -20,8 +21,8 @@ export default function BareMenuItem(props: any) {
     };
     console.log(props.menuItem._id);
     await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
-      console.log(res);
-    })
+      console.log(res)
+    }).catch(error =>{navigateError(error)});
   };
 
   const toggleVisibility = (event: any) => {

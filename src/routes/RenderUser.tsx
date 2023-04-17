@@ -31,9 +31,7 @@ export default function RenderUser() {
   useEffect(() => {
     async function fetchData() { // create an async function to handle the promise and await the result
       try {
-        await getUniversity(user?.universityId).then((res) => {
-          setUniversity(res);
-        })
+        await getUniversity(user?.universityId).then((res) => setUniversity(res)).catch((err) => {})
         setIsLoading(false);
       } catch (error) {
         setError(error);

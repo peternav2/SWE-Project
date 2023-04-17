@@ -20,7 +20,7 @@ import {
   Review,
   updateReview
 } from '../stores/Review';
-import DiningHallHome from "../routes/studentDiningHallHome";
+import DiningHallHome from "../routes/student/studentDiningHallHome";
 import {
   addEventItem, deleteEventItem,
   EventItem,
@@ -160,7 +160,7 @@ export default function TestFetch() {
     //
     // console.log(testDining);
     //
-    await addReviewToMenuItem(review, testMenuItem._id).then((res) => {
+    await addReviewToMenuItem(review, testMenuItem?._id).then((res) => {
       console.log("REVIEW IS ADDED BELOW");
       console.log(res);
     });

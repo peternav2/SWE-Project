@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {getUserByUsernamePassword} from "../stores/User";
+import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList} from "../components/popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
+import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 
 function Login(){
+  //Constants and properties
   const [isLoading, setIsLoading] = React.useState(false);
   const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
 
@@ -12,12 +14,20 @@ function Login(){
     username: '',
     password: ''
   });
+
   const [validity, setValidity] = React.useState({
     user_error_code: 0,
     password_error_code: 0
   });
 
   const navigate = useNavigate();
+
+  //Upon page load, check if a user is logged in, navigate if they have a valid session.
+  //Loading back into login wont let the user leave, need a way to detect back button press
+  useEffect(() => {
+    validateCurrentAuthLogin();
+  })
+  window.history.replaceState({}, document.title)
 
   let user_errors = ["", 
                      "Please enter your username.", 
@@ -28,6 +38,36 @@ function Login(){
   let credentialsChecked = false
   let credentialsValid = true
 
+  //Check load messages. 
+  type State = { message: string, error: string}
+
+  function isStateValid(state: any, type: string): state is State {
+    if (!state) return false;
+    if (typeof state !== "object") return false;
+    if (type == "message"){
+      if (typeof state.message !== "string") return false;
+    }
+    if(type == "error"){
+      if (typeof state.error !== "string") return false;
+    }
+    
+  return true;
+}
+
+  function GetPageLoadMessage(){  
+      const location = useLocation()
+      if(isStateValid(location.state, 'message')){
+        return(getSuccessBox(location.state.message))
+      }
+      else if(isStateValid(location.state, 'error')){
+        return(getErrorBox(location.state.error))
+      }
+      else{
+        return(<></>)
+      }
+    }
+
+  //Checks form validity
   function checkUser(username:string){
     if(username == ""){
       setValidity({...validity, ['user_error_code']:1})
@@ -49,6 +89,7 @@ function Login(){
     }
   }
 
+  //Load respective error messages
   function GetErrors(){
     let error_messages = []
     if(validity.user_error_code != 0){error_messages.push(user_errors[validity.user_error_code])}
@@ -59,6 +100,7 @@ function Login(){
     return(<></>)
   }
 
+  //Submit button formatting
   function formatSubmit(){
     if(validity.password_error_code != 0 || validity.user_error_code != 0){
       return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
@@ -68,6 +110,7 @@ function Login(){
     }
   }
 
+  //Change hook
   const handleChange = (event : any) => {
     setForm({
       ...form,
@@ -90,46 +133,32 @@ function Login(){
        }
        return false;
   }
-
-  type State = { message: string }
-
-  function isStateValid(state: any): state is State {
-    if (!state) return false;
-    if (typeof state !== "object") return false;
-    if (typeof state.message !== "string") return false;
-  return true;
-}
-
-  function GetPageLoadMessage(){  
-      const location = useLocation()
-      if(isStateValid(location.state)){
-        return(getSuccessBox(location.state.message))
-      }
-      else{
-        return(<></>)
-      }
-    }
   
   const handleSubmit = (event : any) => {
-    event.preventDefault();
     if(checkSubmit()){
-        submitWrapper()
+      submitWrapper()      
     }
     else{
       checkUser(form.username)
       checkPassword(form.password)
     }
+    event.preventDefault();
   };
 
   async function submitWrapper(){
     credentialsChecked = false
     setIsLoading(true);
-    await getUserByUsernamePassword(form.username, form.password).then((res) => {
-      if(validateResponse(res)){
-        setUser(res);
+    await getUserByUsernamePasswordTokenized(form.username, form.password).then((res) => {
+      if(res != null){
+        
+        localStorage.setItem('session',JSON.stringify(res.session));
         localStorage.setItem('user', JSON.stringify(res));
-        var destination = getDestination(res);
-        navigate(destination)
+
+        setUser(res);
+        navigate(getDestination(res));
+      }
+      else{
+        throw new Error("Bad credentials.")
       }
     }).catch((err) => {
       credentialsChecked = true
@@ -137,23 +166,6 @@ function Login(){
     })
     setIsLoading(false)
     checkUser(form.username)
-  }
-
-  function getDestination(response:any){
-    var uid = response.universityId
-    if(response.isStudent == true){
-      return('/student/university/'+String(uid)+'/')
-    }
-    else{
-      return('/admin/university/'+String(uid)+'/')
-    }
-  }
-
-  function validateResponse(response:any){
-    if (response != null){
-      return true
-    }
-    return false
   }
 
   if (isLoading) {

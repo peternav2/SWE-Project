@@ -11,8 +11,6 @@ export default function DayButton({userType, day, month, year, diningHallId}:
       navigate(`/student/day/menu/${diningHallId}/${month}/${day}/${year}`)
     }
 
-
-
     return (
         <div>
             <button onClick={toDay} className="bg-blue-600 hover:bg-blue-800 text-white font-bold text-2xl py-6 px-5 rounded ">

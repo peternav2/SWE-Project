@@ -3,7 +3,6 @@ import {User} from "./stores/User";
 
 import {Outlet, Route, Routes, useNavigate, useOutletContext} from "react-router-dom";
 
-
 function App() {
   const [user, setUserContext] = useState<User | null>(null);
   const navigate = useNavigate();
