@@ -5,14 +5,14 @@ import { ObjectId } from "mongodb";
 
 /// Added "component" because of name conflict
 export default function BareItem(props: any) {
-  const [visible, setVisible] = useState(true);
   const [yourReviewsVisible, setyourReviewsVisible] = useState(true);
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
+  const [visible, setVisible] = useState(true);
   const [submittedReviewFlag, setSubmittedReviewFlag] = useState(false);
   const [UpdatedMenuItems, withReviewUpdatedMenuItems] = useState<MenuItem[]>([]);
-
-  function getRandomAvatarUrl(food:boolean) {
+  
+    function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
       'https://i.imgur.com/bMsxxnV.jpeg',
       'https://i.imgur.com/smZjCop.jpeg',
@@ -23,7 +23,10 @@ export default function BareItem(props: any) {
 
     const foodUrls = [
       'https://i.imgur.com/CUG0Aof.jpeg',
-      'https://i.imgur.com/8vulzi8.jpeg'
+      'https://i.imgur.com/8vulzi8.jpeg',
+      'https://i.imgur.com/8vulzi8.jpeg',
+      'https://i.imgur.com/DIUVYRm.jpeg',
+      'https://i.imgur.com/D6UHYNV.jpeg'
     ]
   
     const randomIndex = Math.floor(Math.random() * avatarUrls.length);
@@ -89,6 +92,7 @@ export default function BareItem(props: any) {
   }
     const reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
 
+
   console.log(props.menuItem.dish.reviews);
 if(props.whatForADay === "EVENT"){
   return(            visible &&
@@ -98,7 +102,8 @@ if(props.whatForADay === "EVENT"){
 } else{
   return (
     <div onClick={stopPropagation}>
-      <div className="card card-compact w-96 bg-base-100 shadow-xl">
+      <div className="flex-modal-container">
+      <div className="card card-compact bg-base-100 shadow-xl grid-item">
           <button className="btn" onClick={toggleVisibilityYourReview}>ADD YOUR REVIEW</button>
           {/* TODO: factor out this review form */}
           {
@@ -111,7 +116,7 @@ if(props.whatForADay === "EVENT"){
                     id="review"
                     name="review"
                     placeholder="Enter your review here"
-                    className="textarea textarea-bordered textarea-lg w-full max-w-xs"
+                    className="textarea textarea-bordered textarea-lg w-full"
                     value={review}
                     onChange={(event) => setReview(event.target.value)}
                   />
@@ -134,11 +139,11 @@ if(props.whatForADay === "EVENT"){
 
       
         <button className="btn" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
+        <div className="flex-chat-avatars-container">
           {submittedReviewFlag ?
             visible &&
             reviewsById.map((review: Review, index: number) => (
-              <div key={index}>
-                <div className="chat chat-start">
+                <div key={index} className="chat chat-start">
                   <div className="chat-image avatar">
                     <div className="w-16 ring rounded-full">
                         <img src={getRandomAvatarUrl(false)} />
@@ -148,13 +153,11 @@ if(props.whatForADay === "EVENT"){
                   {review.comment}
                 </div>
               </div>
-            </div>
             ))
             :
             visible &&
             props.menuItem.dish.reviews.map((review: Review, index: number) => (
-              <div key={index}>
-                <div className="chat chat-start">
+                <div key={index} className="chat chat-start">
                   <div className="chat-image avatar">
                     <div className="w-16 ring rounded-full">
                     <img src={getRandomAvatarUrl(false)} />
@@ -164,17 +167,44 @@ if(props.whatForADay === "EVENT"){
                   {review.comment.toUpperCase()}
                 </div>
               </div>
-            </div>
             ))
           }
+          </div>
 
 
         {/* edit dish review: Only allow this to show as "protected component?" if admin token is present*/}
         {/* if (admin token) else (don't show) - also - check this path on the server, so user can't inject dishes */}
         <style scoped>
           {`
+                      .flex-modal-container {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        overflow: auto;
+                        flex-direction: column;
+                        align-content: center;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+                      }
+          
+                      .grid-item {
+                        width: 100%;
+                        margin-top: 5px;
+                      }
+
+                      .flex-chat-avatars-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        overflow: auto;
+                        flex-direction: row;
+                        align-content: flex-end;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+                      }
         `}
         </style>
+        </div>
       </div>
   )}
 }

@@ -7,14 +7,41 @@ export default function SomethingItemCard(props: any) {
   const handleModalToggle = () => {
     setModalVisible(!modalVisible);
   };
+
+    function getRandomAvatarUrl(food:boolean) {
+    const avatarUrls = [
+      'https://i.imgur.com/bMsxxnV.jpeg',
+      // 'https://i.imgur.com/smZjCop.jpeg',
+      // 'https://i.imgur.com/tKzR6WR.jpeg',
+      // 'https://i.imgur.com/ZH6FOyN.jpeg',
+      // 'https://i.imgur.com/tKzR6WR.jpeg',
+    ];
+  
+    const foodUrls = [
+      // 'https://i.imgur.com/CUG0Aof.jpeg'
+      // 'https://i.imgur.com/8vulzi8.jpeg',
+      // 'https://i.imgur.com/8vulzi8.jpeg',
+      // 'https://i.imgur.com/DIUVYRm.jpeg',
+      'https://i.imgur.com/D6UHYNV.jpeg'
+    ]
+  
+    const randomIndex = Math.floor(Math.random() * avatarUrls.length);
+  
+    if(food){
+      return foodUrls[randomIndex];
+  
+    }
+    return avatarUrls[randomIndex];
+  }
+  
+
 console.log(props, 12);
   return (
     <div className="card card-bordered lg:card-side bg-base-100 shadow-xl grid-item" onClick={handleModalToggle} key={props.index}>
         <figure>
           <img
-          src="https://i.imgur.com/8vulzi8.jpeg"
+          src={getRandomAvatarUrl(true)}
           className="h-auto max-w-full"
-          alt="..."
           />
           </figure>
       <div className="card-body" >
@@ -37,7 +64,7 @@ console.log(props, 12);
             whatForADay={props.whatForADay}
             UserRole={props.UserRole} 
             diningHallId={props.diningHallId}  day={props.day} month={props.month} year={props.year} menuItem={props.menuItem} />
-            <button  className="btn btn-error" onClick={handleModalToggle}>Close Modal</button>
+            <button  className="btn btn-error" onClick={handleModalToggle}>Close Reviews</button>
           </div>
         </div>
       )}
