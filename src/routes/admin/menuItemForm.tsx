@@ -165,7 +165,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>{addIcon}+</strong>
+                        <strong>{addIcon}</strong>
                     </button>
                 </div>
 
@@ -188,7 +188,8 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </div>
 
                 {item.dish != undefined &&
-                    <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id))}>Delete</button>
+                    <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                    className={activeRedButton} onClick={() => deleteMenuItem(item._id)}>Delete</Link>
                 }
             </div>
         </Form>
