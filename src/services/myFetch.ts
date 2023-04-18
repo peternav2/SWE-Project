@@ -1,5 +1,4 @@
-const API_ROOT = 'http://localhost:3000/api/v1/';
-
+const API_ROOT = import.meta.env.VITE_API_ROOT;
 export default function myFetch<T>(url: string, data?: any, method?: string ): Promise<T> {
     if (method == 'DELETE'){
         const option: RequestInit = {
