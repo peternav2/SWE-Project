@@ -131,7 +131,7 @@ export default function CreateMenu() {
             </div>
 
             {menuItems.filter((item) => { return item.mealType == mealType }).reverse().map((menuItem) => (
-                <div className="flex mx-2 my-2" key={menuItem._id?.toString()}>
+                <div className="mx-2 my-2" key={menuItem._id?.toString()}>
                     <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>
             ))}
