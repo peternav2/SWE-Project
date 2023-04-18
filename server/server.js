@@ -27,7 +27,7 @@ app.get('/error', (req, res) => {
 .use('/api/v1/review', reviewController)
 .use('/api/v1/eventitem', eventItemController)
 app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: '../dist' });
+    res.sendFile('index.html',  { root: '../' });
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
