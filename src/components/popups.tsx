@@ -19,7 +19,7 @@ export function getInfoList(messages: string[]){
         <span className="font-medium">Notice:</span>
           <ul className="mt-1.5 ml-4 list-disc list-inside">
             {
-                messages.map((message)=>{return <li className="list-group-item list-group-item-info">{message}</li>})
+                messages.map((message)=>{return <li key={message.toString()} className="list-group-item list-group-item-info">{message}</li>})
             }
         </ul>
       </div>
@@ -36,7 +36,7 @@ export function getErrorList(messages: string[]){
         <span className="justify-center items-center font-medium">Issues:</span>
         <ul className="mt-1.5 ml-4 list-disc list-inside">
             {
-                messages.map((message)=>{return <li className="justify-center items-center list-group-item list-group-item-info">{message}</li>})
+                messages.map((message)=>{return <li key={message.toString()} className="justify-center items-center list-group-item list-group-item-info">{message}</li>})
             }
         </ul>
       </div>
