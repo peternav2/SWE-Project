@@ -165,7 +165,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>{addIcon}</strong>
+                        <strong>{addIcon}+</strong>
                     </button>
                 </div>
 
@@ -196,7 +196,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
 }
 
 const inputsMargin = "my-1"
-const dishNames = "text-2xl font-bold dark:text-white"
+const dishNames = "text-2xl font-bold"
 const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
 const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
