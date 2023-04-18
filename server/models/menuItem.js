@@ -18,8 +18,9 @@ const getAllMenuItems = async(request) => { // returns all menuItem in the datab
 const addMenuItem = async (request) => {
     validateRequest(request);
     const db = await collection();
+    let menuItem = request.body;
     menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
-
+    console.log("in add menu item");
     const result = await db.insertOne(menuItem); // insert the menuItem object into the database
     menuItem._id = result.insertedId; // give the menuItem object an _id property
     return menuItem; // what will be returned in the Promise
