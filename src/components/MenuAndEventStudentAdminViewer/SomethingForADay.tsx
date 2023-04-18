@@ -23,7 +23,7 @@ export default function SomethingForADay(props: any) {
 
   function menuMealTimeSelection(){
     return (
-      <article className="prose text-center">
+      <article className="prose grid-item">
       <h1 > Menu Items for {formatDateString(props.day, props.month, props.year)} </h1>
       <div>
         <label htmlFor="meal-time-select"></label>
@@ -45,7 +45,7 @@ export default function SomethingForADay(props: any) {
 
   function eventMealTimeSelection(){
     return (
-      <article className="prose text-center">
+      <article className="prose grid-item">
       <h1> Event Items for {formatDateString(props.day, props.month, props.year)} </h1>
       <div>
         <label htmlFor="meal-time-select"></label>

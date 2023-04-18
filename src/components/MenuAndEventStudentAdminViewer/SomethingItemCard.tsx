@@ -37,7 +37,7 @@ export default function SomethingItemCard(props: any) {
 
 console.log(props, 12);
   return (
-    <div className="card card-bordered lg:card-side bg-base-100 shadow-xl grid-item" onClick={handleModalToggle} key={props.index}>
+    <div className="card lg:card-side  grid-item" onClick={handleModalToggle} key={props.index}>
         <figure>
           <img
           src={getRandomAvatarUrl(true)}

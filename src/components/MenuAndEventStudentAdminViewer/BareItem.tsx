@@ -15,18 +15,18 @@ export default function BareItem(props: any) {
     function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
       'https://i.imgur.com/bMsxxnV.jpeg',
-      'https://i.imgur.com/smZjCop.jpeg',
-      'https://i.imgur.com/tKzR6WR.jpeg',
-      'https://i.imgur.com/ZH6FOyN.jpeg',
-      'https://i.imgur.com/tKzR6WR.jpeg',
+      // 'https://i.imgur.com/smZjCop.jpeg',
+      // 'https://i.imgur.com/tKzR6WR.jpeg',
+      // 'https://i.imgur.com/ZH6FOyN.jpeg',
+      // 'https://i.imgur.com/tKzR6WR.jpeg',
     ];
 
     const foodUrls = [
       'https://i.imgur.com/CUG0Aof.jpeg',
-      'https://i.imgur.com/8vulzi8.jpeg',
-      'https://i.imgur.com/8vulzi8.jpeg',
-      'https://i.imgur.com/DIUVYRm.jpeg',
-      'https://i.imgur.com/D6UHYNV.jpeg'
+      // 'https://i.imgur.com/8vulzi8.jpeg',
+      // 'https://i.imgur.com/8vulzi8.jpeg',
+      // 'https://i.imgur.com/DIUVYRm.jpeg',
+      // 'https://i.imgur.com/D6UHYNV.jpeg'
     ]
   
     const randomIndex = Math.floor(Math.random() * avatarUrls.length);
@@ -103,8 +103,8 @@ if(props.whatForADay === "EVENT"){
   return (
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
-      <div className="card card-compact bg-base-100 shadow-xl grid-item">
-          <button className="btn" onClick={toggleVisibilityYourReview}>ADD YOUR REVIEW</button>
+      <div className="card card-compact grid-item">
+          <button className="btn grid-item" onClick={toggleVisibilityYourReview}>ADD YOUR REVIEW</button>
           {/* TODO: factor out this review form */}
           {
             yourReviewsVisible && <div>
@@ -130,6 +130,7 @@ if(props.whatForADay === "EVENT"){
                     <input type="radio" name="stars-3" value={4} className="mask mask-heart bg-lime-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
                     <input type="radio" name="stars-3" value={5} className="mask mask-heart bg-green-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
                   </div>
+                  
                 </div>
                 <button className="btn" type="submit" onClick={handleReviewSubmit}>Submit</button>
               </form>
@@ -138,7 +139,7 @@ if(props.whatForADay === "EVENT"){
         </div>
 
       
-        <button className="btn" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
+        <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
         <div className="flex-chat-avatars-container">
           {submittedReviewFlag ?
             visible &&
@@ -148,6 +149,10 @@ if(props.whatForADay === "EVENT"){
                     <div className="w-16 ring rounded-full">
                         <img src={getRandomAvatarUrl(false)} />
                     </div>
+                  </div>
+                  <div className="chat-header">
+                   Some User
+                <time className="text-xs opacity-50">12:46</time>
                   </div>
                 <div className="chat-bubble">
                   {review.comment}
@@ -162,6 +167,9 @@ if(props.whatForADay === "EVENT"){
                     <div className="w-16 ring rounded-full">
                     <img src={getRandomAvatarUrl(false)} />
                     </div>
+                  </div>
+                  <div className="chat-header">
+                    Student
                   </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
@@ -188,8 +196,7 @@ if(props.whatForADay === "EVENT"){
                       }
           
                       .grid-item {
-                        width: 100%;
-                        margin-top: 5px;
+                        grow: 1;
                       }
 
                       .flex-chat-avatars-container {
