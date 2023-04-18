@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 const hostname = '127.0.0.1';
 const menuitemController = require('./controllers/menuItem.js');
 const diningHallController = require('./controllers/diningHall.js');
@@ -32,5 +32,5 @@ app.get('*', (req, res) => {
     res.sendFile('index.html',  { root: '../dist' });
 });
 
-app.listen(port,hostname, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port,hostname, () => console.log(`server running at http://${hostname}:${port}/`));
 
