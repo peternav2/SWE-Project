@@ -173,7 +173,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     }
 
                     {valueChanged &&
-                        <div className="div flex">
+                        <div className="flex">
                             <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
                                 className={activeButton} onClick={handleSubmit}>
                                 Save
