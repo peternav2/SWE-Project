@@ -183,7 +183,11 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </div>
 
                 {item.dish != undefined &&
-                    <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id))}>Delete</button>
+                    <button className={activeRedButton}
+                    type="button" 
+                    onClick={() => (deleteMenuItem(item._id))}>
+                        Delete
+                    </button>
                 }
             </div>
         </Form>
