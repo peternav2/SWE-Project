@@ -71,16 +71,6 @@ export default function CreateMenu() {
     const month = useParams().month;
     const year = useParams().year;
 
-    validateCurrentAuth()
-
-    useEffect(() => {
-        if (mealType == "All Day") {
-            setFilteredMenus(menuItems);
-        } else {
-            setFilteredMenus(menuItems.filter((item) => { return item.mealType === mealType; }));
-        }
-    }, [mealType]);
-
     return (
         <div>
             <h1 className={title}>Create a New Menu</h1>
