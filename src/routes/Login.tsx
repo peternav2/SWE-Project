@@ -27,7 +27,7 @@ function Login(){
   useEffect(() => {
     validateCurrentAuthLogin();
   })
-  window.history.replaceState({}, document.title)
+  //window.history.replaceState({}, document.title)
 
   let user_errors = ["", 
                      "Please enter your username.", 
