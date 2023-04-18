@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 })
 app.use(express.json());
 
-app.use('/', express.static('../dist'));
+app.use('/', express.static('./dist'));
 
 app.get('/error', (req, res) => {
     res.status(404).send('Error 404')
@@ -29,7 +29,7 @@ app.get('/error', (req, res) => {
 .use('/api/v1/review', reviewController)
 .use('/api/v1/eventitem', eventItemController)
 app.get('*', (req, res) => {
-    res.sendFile('index.html',  { root: '../dist' });
+    res.sendFile('index.html',  { root: './dist' });
 });
 
 app.listen(port,hostname, () => console.log(`server running at http://${hostname}:${port}/`));
