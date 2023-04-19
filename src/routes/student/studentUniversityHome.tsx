@@ -4,7 +4,7 @@ import StudentDiningHallButton from "../../components/StudentDiningHallButton";
 import {ObjectId} from "mongodb";
 import {useUser} from "../../App";
 import {useEffect} from "react";
-import { navigateError, getUserBar, validateCurrentAuth} from "../../components/Auth";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 export async function loader({params}: any) {
   return await getUniversity(params.universityId).catch(error =>{navigateError(error)});
@@ -15,7 +15,6 @@ export default function StudentUniversityHome() {
   validateCurrentAuth()
 
   return (<>
-  {getUserBar()}
     <div className={"justify-center items-center "}>
       <h1> Welcome to {uni.name} Dining Hall Home Page</h1>
       {uni.diningHalls.map((diningHall) => {

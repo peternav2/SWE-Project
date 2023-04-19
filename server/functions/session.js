@@ -68,7 +68,6 @@ function validateRequest(request){
     if(id == null || id == undefined || token == null || token == undefined){
         throw new Error(2)
     }
-
     var stored_session = sessions.get(id)
     try{
         var stored_token = stored_session.token
@@ -80,7 +79,7 @@ function validateRequest(request){
     if(stored_token != token){
         throw new Error(2)
     }
-       
+    
     var type = request.method.toLowerCase();
     var url = request.baseUrl;
 
