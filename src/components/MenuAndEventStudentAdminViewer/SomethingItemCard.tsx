@@ -11,17 +11,17 @@ export default function SomethingItemCard(props: any) {
     function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
       'https://i.imgur.com/bMsxxnV.jpeg',
-      // 'https://i.imgur.com/smZjCop.jpeg',
-      // 'https://i.imgur.com/tKzR6WR.jpeg',
-      // 'https://i.imgur.com/ZH6FOyN.jpeg',
-      // 'https://i.imgur.com/tKzR6WR.jpeg',
+      'https://i.imgur.com/smZjCop.jpeg',
+      'https://i.imgur.com/tKzR6WR.jpeg',
+      'https://i.imgur.com/ZH6FOyN.jpeg',
+      'https://i.imgur.com/tKzR6WR.jpeg',
     ];
   
     const foodUrls = [
-      // 'https://i.imgur.com/CUG0Aof.jpeg'
-      // 'https://i.imgur.com/8vulzi8.jpeg',
-      // 'https://i.imgur.com/8vulzi8.jpeg',
-      // 'https://i.imgur.com/DIUVYRm.jpeg',
+      'https://i.imgur.com/CUG0Aof.jpeg',
+      'https://i.imgur.com/8vulzi8.jpeg',
+      'https://i.imgur.com/8vulzi8.jpeg',
+      'https://i.imgur.com/DIUVYRm.jpeg',
       'https://i.imgur.com/D6UHYNV.jpeg'
     ]
   
@@ -41,7 +41,7 @@ console.log(props, 12);
         <figure>
           <img
           src={getRandomAvatarUrl(true)}
-          className="h-auto max-w-full"
+          className="h-auto w-[800px] object-cover"
           />
           </figure>
       <div className="card-body" >
@@ -70,6 +70,9 @@ console.log(props, 12);
       )}
       <style scoped>
         {`
+        img{
+          border-radius: 15px;
+        }
 
         `}
       </style>
