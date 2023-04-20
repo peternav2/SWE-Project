@@ -34,7 +34,7 @@ if (confirmDeleteAllFlag) {
     const viewAllM = async () => {
         const db = await collection1();
         const result = await db.find().toArray();
-        console.log("ALL MENU ITEMS**********************************************************************************************************************************************:\:\n",result);
+        console.log("ALL MENU ITEMS**********************************************************************************************************************************************:\:\n",JSON.stringify(result,null,4));
         return result;
     }
 
@@ -48,7 +48,22 @@ if (confirmDeleteAllFlag) {
     const viewAllE = async () => {
         const db = await collection3();
         const result = await db.find().toArray();
-        // const result = await db.updateMany({}, {$set: {"reviews": ["test event review1","test event review2","test event review3"]}});
+        // const result = await db.updateMany({}, {$set: {"reviews": [
+        //     {
+        //         "comment": "REVIEW EVENT TEST 99",
+        //         "rating": 5,
+        //         "username": "TEST_00",
+        //         "user_Id": "643ee58f18f1191cef562a18"
+        //     },
+        //     {
+        //         "comment": "REVIEW EVENT TEST 44",
+        //         "rating": 5,
+        //         "username": "TEST_00",
+        //         "user_Id": "643ee59218f1191cef562a19"
+        //     },
+
+
+        // ]}});
         // const result = await db.updateMany({},{"$unset":{"dish":1}})
         console.log("ALL EVENTS**********************************************************************************************************************************************:\n",JSON.stringify(result,null,4));
         return result;
@@ -64,6 +79,6 @@ if (confirmDeleteAllFlag) {
     // viewAllUni();
     // viewAllUser();
     viewAllE();
-    // viewAllM();
+    viewAllM();
 }
 

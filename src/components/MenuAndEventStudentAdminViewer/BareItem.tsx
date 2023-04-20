@@ -1,17 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Review, addReviewToMenuItem } from "../../stores/Review";
 import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
+import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
 
 /// Added "component" because of name conflict
 export default function BareItem(props: any) {
+  let daysNum: number = parseInt(props.day);
+  let daysMonth: number = parseInt(props.month);
+  let daysYear: number = parseInt(props.year);
   const [yourReviewsVisible, setyourReviewsVisible] = useState(true);
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
   const [visible, setVisible] = useState(true);
-  const [submittedReviewFlag, setSubmittedReviewFlag] = useState(false);
+  const [submittedReviewFlag, setSubmittedReviewFlag] = useState(true);
   const [UpdatedMenuItems, withReviewUpdatedMenuItems] = useState<MenuItem[]>([]);
+  const [UpdatedEventItems, withReviewUpdatedEventItems] = useState<EventItem[]>([]);
   
+  //dry.
     function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
       '',
@@ -38,15 +44,25 @@ export default function BareItem(props: any) {
     }
     return avatarUrls[randomIndex];
   }
-    
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const menuItems = await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId);
+      withReviewUpdatedMenuItems(menuItems);
   
+      const eventItems = await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId);
+      withReviewUpdatedEventItems(eventItems);
+      console.log(eventItems);
+    };
+  
+    fetchData();
+  },[]);
+
+
   async function handleReviewSubmit(event: any) {
     event.preventDefault();
     console.log('Review:', review);
     console.log('Stars:', stars);
-    let daysNum: number = parseInt(props.day);
-    let daysMonth: number = parseInt(props.month);
-    let daysYear: number = parseInt(props.year);
     
     setSubmittedReviewFlag(true);
     
@@ -57,13 +73,19 @@ export default function BareItem(props: any) {
       username: "TEST_00",
     };
 
+
     await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
       console.log(res, 31);
     })
-    
+    // put in useefect and factor out conditional
     await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
       console.log(res, 36);
       withReviewUpdatedMenuItems(res);
+    })
+
+    await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+      console.log(res, 18000004);
+      withReviewUpdatedEventItems(res);
     })
   };
 
@@ -83,24 +105,38 @@ export default function BareItem(props: any) {
     event.stopPropagation();
   };
 
-  const getReviewsById = (array: MenuItem[], id: ObjectId) => {
+  const getReviewsById = (array: MenuItem[] | EventItem[],  id: ObjectId) => {
+    console.log(array);
+    console.log(id);
     for (let i = 0; i < array.length; i++) {
-      if (array[i]._id === id) {
-        return array[i].dish.reviews;
+      if ( array[i]._id === id ) {
+        console.log('hitting here');
+        return array[i].reviews ? array[i].reviews : array[i].dish.reviews;
       }
     }
     return [];
   }
-    const reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
+  
+let reviewsById;
 
+if(props.whatForADay === "MENU"){
+   reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
+}
 
-  console.log(props.menuItem.dish.reviews);
 if(props.whatForADay === "EVENT"){
-  return(            visible &&
-    <div>
-    </div>
-  )
-} else{
+  reviewsById = getReviewsById(UpdatedEventItems, props.initialEvents._id);
+}
+
+console.log(reviewsById,'anything?');
+
+  // console.log(props.menuItem.dish.reviews);
+
+// if(props.whatForADay === "EVENT"){
+//   return(            visible &&
+//     <div>
+//     </div>
+//   )
+// } else{
   return (
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
@@ -170,14 +206,14 @@ if(props.whatForADay === "EVENT"){
                     </div>
                   </div>
                   <div className="chat-header">
-                    Student
+                    A user
                   </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
                 </div>
               </div>
             ))
-          }
+            }
           </div>
 
 
@@ -217,4 +253,4 @@ if(props.whatForADay === "EVENT"){
         </div>
       </div>
   )}
-}
+
