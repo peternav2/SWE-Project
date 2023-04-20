@@ -182,17 +182,24 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     }
                 </div>
 
-                {item.dish != undefined &&
-                    <button className={activeRedButton}
-                    type="button" 
-                    onClick={() => (deleteMenuItem(item._id))}>
+                {!newItem &&
+                    <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                        onClick={() => (deleteMenuItem(item._id))} className={activeRedButton}>
                         Delete
-                    </button>
+                    </Link>
                 }
+
             </div>
         </Form>
     );
 }
+
+
+{/* <button className={activeRedButton}
+type="button" 
+onClick={() => (deleteMenuItem(item._id))}>
+    Delete
+</button> */}
 
 const inputsMargin = "my-1"
 const dishNames = "text-2xl font-bold"

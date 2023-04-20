@@ -33,14 +33,14 @@ const getMenuItemById = async (request) => {
 }
 const getMenuItemsByDate = async(request) => {
     //validateRequest(request);
-    console.log(request.params);
+    //console.log(request.params);
     const year = request.params.year;
     const month = request.params.month;
     const day = request.params.day;
     const diningHallId = request.params.diningHallId;
     const db = await collection();
     const result = await db.find({date: {year: +year, month: +month, day: +day}, "dish.diningHallId": new ObjectId(diningHallId) }).toArray();
-    console.log(result);
+    //console.log(result);
     return result; // what will be returned in the Promise
 }
 
