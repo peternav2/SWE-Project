@@ -201,6 +201,8 @@ if(props.whatForADay === "EVENT"){
 
                       .flex-chat-avatars-container {
                         display: flex;
+                        width:100%;
+                        max-width:810px;
                         flex-wrap: wrap;
                         overflow: auto;
                         flex-direction: row;
