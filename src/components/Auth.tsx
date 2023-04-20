@@ -2,16 +2,6 @@ import { router } from "../services/router";
 import { User } from '../stores/User';
 import { getUniversity } from "../stores/University";
 
-export function wrapUserBar(element : JSX.Element){
-  return (
-    <>{getUserBar()}
-    <div>
-    {element}
-    </div>
-    </>
-  )
-}
-
 export function getUserBar(){
     const session = localStorage.getItem('session') ? JSON.parse(localStorage.getItem('session') as string) : null;
     const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;

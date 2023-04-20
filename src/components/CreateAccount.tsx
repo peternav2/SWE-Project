@@ -1,10 +1,9 @@
 import React from 'react'
 import Search from '../UniversityList'
-import {User, addUser, getUserByUsername, addUserTokenized} from "../stores/User";
+import {User, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
-import {useLoaderData, useNavigate} from "react-router-dom";
-// @ts-ignore
-import {getErrorList} from './Popups'
+import {Link, useLoaderData, useNavigate} from "react-router-dom";
+import {getErrorList} from './popups'
 
 interface University {
   name: string;
@@ -86,15 +85,15 @@ const CreateAccount = () => {
   var usernameExists = false
 
   let user_errors = ["", 
-                     "Please enter a username.", 
-                     "Username must be between 8-16 characters long.", 
-                     "Username contains invalid characters.",
-                     "Username already exists."]
+                     "Enter a username.", 
+                     "Username - 8 ~ 16 characters long.", 
+                     "Username - Contains invalid characters.",
+                     "Username - Already exists."]
 
   let password_errors = ["", 
-                         "Please enter a password.", 
-                         "Password must be between 8-16 characters long.", 
-                         "Password contains invalid characters."]
+                         "Enter a password.", 
+                         "Password - 8 ~ 16 characters long.", 
+                         "Password - Already exists."]
 
   let confirm_errors = ["", "Password does not match."]
 
@@ -180,10 +179,10 @@ const CreateAccount = () => {
 
   function formatSubmit(){
     if(validity.password_error_code != 0 || validity.user_error_code != 0){
-      return("bg-red-500 text-white font-bold py-2 px-4 border border-transparent rounded cursor-not-allowed")
+      return("w-full text-white border-red-1000 bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center relative mb-4 mt-4")
     }
     else{
-      return("bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")
+      return("w-full text-white border-blue-1000  bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center relative mb-4 mt-4")
     }
   }
 
@@ -271,79 +270,72 @@ const CreateAccount = () => {
   }
 
   return (
-    <div className="text-center">
-      <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
-        <h1 className="text-5xl">RateMyDiningHall</h1>
-        <h3 className="text-2xl px-8 pt-4">Create your account.</h3>
-      </div>
-      <div className="flex flex-col justify-center items-center border-b border-blue-500 py-2">
-        <form className="md:w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-3" onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-              <input
-              id="username"
-              type="text"
-              value={form.username}
-              onChange={handleChange}
-              placeholder="Username"
-              className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <p className ="text-red-500 text-xs italic">{user_errors[validity.user_error_code]}</p>
-            </label>
-          </div>
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            <input
-              id="password"
-              type="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="**********"
-              className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <p className ="text-red-500 text-xs italic">{password_errors[validity.password_error_code]}</p>
-            </label>
-          </div>
+    <section>
+       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+          <div className="p-6 sm:p-8">
+            <img className="h-auto max-w-full" src="src/assets/logo.png"></img>
+            <form onSubmit={handleSubmit}>
 
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
-              Confirm Password
-            <input
-              id="confirmPassword"
-              type="password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              placeholder="**********"
-              className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <p className ="text-red-500 text-xs italic">{confirm_errors[validity.confirm_error_code]}</p>
-            </label>
-          </div>
+              <div className="relative mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900">Username</label>  
+                <input
+                  id="username"
+                  type="text"
+                  value={form.username}
+                  onChange={handleChange}
+                  placeholder="Username"
+                  className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                />              
+              </div>
 
-          <div className="block text-gray-700 text-sm font-bold mb-2">
-            <Search details = {uniList} change = {handleUniversitySwitch}/>
-            <p className ="text-red-500 text-xs italic">{university_error[validity.university_error_code]}</p>
-          </div>
+              <div className="relative mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="********"
+                  className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
 
-          <div className="mt-4 items-center justify-between space-x-3">
+              <div className="relative mb-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="********"
+                  className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+
+              <div className="relative mb-2">
+                <Search details = {uniList} change = {handleUniversitySwitch}/>
+              </div>
+
+              <div className="flex justify-center relative mt-4 space-x-3">
               <UserButton title = "Student" isClicked = {form.isStudent}></UserButton>
               <UserButton title = "Administrator" isClicked = {!form.isStudent}></UserButton>
-          </div>
+              </div>
+              
+              <button type="submit" className={formatSubmit()}>
+                  Create your account
+              </button>
 
-          <div className="mt-5 items-center justify-between">
-            <button type="submit" className={formatSubmit()}>
-              Create your account
-            </button>
-            <div className = "my-4">
-            <GetErrors/>
-            </div>
-          </div>
-          
-        </form>
+              <p className="text-sm font-light text-gray-500">
+                Already have an account? <Link className="font-medium text-primary-600 hover:underline"to={`/`}>Sign in</Link>
+              </p>
+                
+              <GetErrors/>
+            </form>
+        </div>
       </div>
     </div>
+  </section>
   );
 };
 

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 
 function Login(){
@@ -170,33 +170,31 @@ function Login(){
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div
-            className="inline-block h-8 w-8 animate-spin rounded-full text-info border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status">
-            <span
-              className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-              >Signing you in...</span>
+        <div className="flex justify-center items-center h-screen">
+          <span className="block mb-2 text-sm font-medium text-gray-900">Signing you in...&nbsp;&nbsp;</span>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full text-info border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]">
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap text-info !border-0 !p-0 ![clip:rect(0,0,0,0)]"></span>
+          </div>
         </div>
-      </div>
     )
   }
   return (
     <section>
+        <div className='air bottom1'></div>
+        <div className='air bottom2'></div>
 
-        <div className='air air1'></div>
-        <div className='air air2'></div>
-        <div className='air air3'></div>
-        <div className='air air4'></div>
+        <div className='air top1'></div>
+        <div className='air top2'></div>
 
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div>
             <GetPageLoadMessage/>
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <img className="h-auto max-w-full" src="src/assets/logo.png"></img>
                   <form  onSubmit={handleSubmit}>
+
                     <div className="relative mb-4">
                       <label className="block mb-2 text-sm font-medium text-gray-900">Username</label>
                       <input
@@ -219,18 +217,6 @@ function Login(){
                         placeholder="********"
                         className = "bg-gray-50 border border-blue-300 text-gray-900 focus:ring-1 focus:outline-none focus:ring-blue-400 sm:text-sm rounded-lg focus:ring-primary-600 block w-full p-2.5"
                       />
-                    </div>
-
-                    <div className="flex items-center justify-between relative mb-4">
-                      <div className="flex items-start">
-                          <div className="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"/>
-                          </div>
-                          <div className="ml-3 text-sm">
-                            <label className="text-gray-500 dark:text-gray-300">Remember me</label>
-                          </div>
-                      </div>
-                      <a className="text-sm font-medium text-primary-600 hover:underline">Forgot password?</a>
                     </div>
 
                     <button type="submit" className={formatSubmit()}>

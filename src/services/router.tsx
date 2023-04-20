@@ -14,7 +14,6 @@ import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
 import { action as menuItemFormAction } from '../routes/admin/menuItemForm'
-import { wrapUserBar } from '../components/Auth'
 import { AboutUs } from '../components/AboutUs'
 
 import MenuItemForm from '../routes/admin/menuItemForm'
@@ -34,22 +33,22 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/student/university/:universityId/',
-                element: wrapUserBar(<StudentUniversityHome />),
+                element: <StudentUniversityHome />,
                 loader: StudentUniversityHomeLoader,
             },
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
-                element: wrapUserBar(<StudentDiningHallHome />),
+                element: <StudentDiningHallHome />,
                 loader: diningHomeLoader,
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
-                element: wrapUserBar(<StudentMenuForDay />),
+                element: <StudentMenuForDay />,
                 loader: menuForDayLoader,
             },
             {
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
-                element: wrapUserBar(<StudentEventForDay />),
+                element: <StudentEventForDay />,
                 //insert loader here for event datad
             },
             {
@@ -59,7 +58,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/admin/university/:universityId/",
-                element: wrapUserBar(<AdminHome />),
+                element: <AdminHome />,
                 loader: universityLoader,
                 children: 
                 [{
@@ -71,7 +70,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/admin/university/:universityId/dininghall/:diningHallId/",
-                element: wrapUserBar(<StudentDiningHallHome />),
+                element: <StudentDiningHallHome />,
                 loader: diningHomeLoader,
             },
             {
@@ -86,7 +85,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "aboutus",
-                element: wrapUserBar(<AboutUs />),
+                element: <AboutUs />,
             }
        ]
     },

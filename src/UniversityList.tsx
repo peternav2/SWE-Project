@@ -6,7 +6,7 @@ const UniversityTab = (props : any) => {
       <div className = 'my-1'>
           <button 
             type="button"
-            className="bg-contain bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+            className="relative w-full flex justify-center bg-contain bg-green-300 hover:bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
             onClick={props.function}
             value = {props.university.name}
             id = 'field'>
@@ -28,7 +28,7 @@ function SearchList(props:any){
 
 const Scroll = (props:any) => {
     return(
-        <div style={{overflowY: 'scroll', height:'10vh'}}>
+        <div className = "bg-gray-10 max-h-28 overflow-y-auto">
             {props.children}
         </div>	
     );
@@ -49,7 +49,7 @@ function Search(props:any) {
 
     function formatSearch(){
       if(searchField.clicked_field != ''){
-        return("bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")
+        return("relative mb-2 w-full flex justify-center bg-contain bg-green-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline")
       }
       else{
         return('')
@@ -73,14 +73,12 @@ function Search(props:any) {
   
     return (
       <div>
-      <div>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
-          <div className= "block text-gray-700 text-sm font-bold mb-2">
-          University
+        <label className="block mb-2 text-sm font-medium text-gray-900">University</label>
+
           <div className = {formatSearch()}>
           {searchField.clicked_field}
           </div>
-          </div>
+
           <input 
             type = "search" 
             placeholder = "Search" 
@@ -89,8 +87,6 @@ function Search(props:any) {
             value = {searchField.field}
             className= "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />
-      </label>
-      </div>
       {searchList(handleClick)}
       </div>
     )
