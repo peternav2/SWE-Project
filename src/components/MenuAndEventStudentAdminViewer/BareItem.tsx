@@ -14,7 +14,8 @@ export default function BareItem(props: any) {
   
     function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
-      'https://i.imgur.com/bMsxxnV.jpeg',
+      '',
+      // 'https://i.imgur.com/bMsxxnV.jpeg',
       // 'https://i.imgur.com/smZjCop.jpeg',
       // 'https://i.imgur.com/tKzR6WR.jpeg',
       // 'https://i.imgur.com/ZH6FOyN.jpeg',
@@ -202,7 +203,7 @@ if(props.whatForADay === "EVENT"){
                       .flex-chat-avatars-container {
                         display: flex;
                         width:100%;
-                        max-width:810px;
+                        max-width:800px;
                         flex-wrap: wrap;
                         overflow: auto;
                         flex-direction: row;

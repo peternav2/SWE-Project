@@ -48,6 +48,8 @@ if (confirmDeleteAllFlag) {
     const viewAllE = async () => {
         const db = await collection3();
         const result = await db.find().toArray();
+        // const result = await db.updateMany({}, {$set: {"reviews": ["test event review1","test event review2","test event review3"]}});
+        // const result = await db.updateMany({},{"$unset":{"dish":1}})
         console.log("ALL EVENTS**********************************************************************************************************************************************:\n",JSON.stringify(result,null,4));
         return result;
     }
@@ -55,7 +57,7 @@ if (confirmDeleteAllFlag) {
     const viewAllUser = async () => {
         const db = await collection4();
         const result = await db.find().toArray();
-        console.log("ALL USERS**********************************************************************************************************************************************:\:\n",result);
+        console.log("ALL USERS**********************************************************************************************************************************************:\:\n",JSON.stringify(result,null,4));
         return result;
     }
 

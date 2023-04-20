@@ -72,6 +72,9 @@ console.log(props, 12);
         {`
         img{
           border-radius: 15px;
+          min-height:450px;
+          max-height:450px;
+
         }
 
         `}
