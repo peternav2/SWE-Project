@@ -17,6 +17,7 @@ const getAllMenuItems = async(request) => { // returns all menuItem in the datab
 
 const addMenuItem = async (request) => {
     validateRequest(request);
+    let menuItem = request.body; // get the menuItem object from the request body
     const db = await collection();
     menuItem.dish.diningHallId = new ObjectId(menuItem.dish.diningHallId);
 
