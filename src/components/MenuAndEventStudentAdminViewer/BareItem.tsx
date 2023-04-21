@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Review, addReviewToEventItem, addReviewToMenuItem } from "../../stores/Review";
 import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
@@ -16,6 +16,8 @@ export default function BareItem(props: any) {
   const [submittedReviewFlag, setSubmittedReviewFlag] = useState(true);
   const [UpdatedMenuItems, withReviewUpdatedMenuItems] = useState<MenuItem[]>([]);
   const [UpdatedEventItems, withReviewUpdatedEventItems] = useState<EventItem[]>([]);
+  const charLimitRef = useRef(null);
+
   
   //dry.
     function getRandomAvatarUrl(food:boolean) {
@@ -126,6 +128,16 @@ if(props.whatForADay === "EVENT"){
   reviewsById = getReviewsById(UpdatedEventItems, props.eventForDay._id);
 }
 
+  const handleYourReviewTextAreaChange = (event:any) => {
+    const inputValue = event.target.value;
+    const remainingChars = 99 - inputValue.length;
+    charLimitRef.current.style.setProperty('--value', remainingChars);
+
+    if (inputValue.length <= 99) {
+      setReview(inputValue);
+    }
+  }
+
   // console.log(props.menuItem.dish.reviews);
 
 // if(props.whatForADay === "EVENT"){
@@ -138,13 +150,17 @@ if(props.whatForADay === "EVENT"){
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
       <div className="card card-compact grid-item">
-          <button className="btn btn-primary grid-item add-your-review-btn" onClick={toggleVisibilityYourReview}>Add Your Review:</button>
+          <button className="btn btn-primary grid-item add-your-review-btn" onClick={toggleVisibilityYourReview}>Add Your Review</button>
           {/* TODO: factor out this review form */}
           {
             yourReviewsVisible && <div>
               {/* maybe change this to an array of objects with these fields on dish so dish can have multiple reviews */}
               {/* Users token value */}
               <form onSubmit={handleReviewSubmit} >
+              <span className="countdown">
+                CHARS LEFT:
+                  <span ref={charLimitRef} > {99-review.length}</span>
+                </span>
                 <div>
                   <textarea
                     id="review"
@@ -152,7 +168,7 @@ if(props.whatForADay === "EVENT"){
                     placeholder="Enter your review here"
                     className="textarea textarea-bordered textarea-lg w-full"
                     value={review}
-                    onChange={(event) => setReview(event.target.value)}
+                    onChange={handleYourReviewTextAreaChange}
                   />
                 </div>
                 <div className="hearts-level">
@@ -173,7 +189,7 @@ if(props.whatForADay === "EVENT"){
         </div>
 
       
-        <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>See others reviews:</button>
+        <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>See others reviews</button>
         <div className="flex-chat-avatars-container">
           {submittedReviewFlag ?
             visible &&
@@ -252,6 +268,10 @@ if(props.whatForADay === "EVENT"){
                       }
 
                       .hearts-level{
+                        text-align:center;
+                      }
+
+                      .countdown{
                         text-align:center;
                       }
 
