@@ -7,6 +7,17 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
+const addReviewToEventItem = async (review, eventItemId) => {
+    const db = await collection();
+    review.user_Id = new ObjectId(review.user_Id);
+    const result = await db.updateOne(
+         {_id: new ObjectId(eventItemId)},
+         { $push: {"reviews": review}}
+        );
+    
+    return result;
+}
+
 const getEventItemsByDiningHall = async (diningHallId) => {
     const db = await collection();
     const result = await db.find({diningHallId: new ObjectId(diningHallId)}).toArray();
@@ -44,4 +55,4 @@ const updateEventItem = async (eventItem) => {
     return result;
 }
 
-module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem }
+module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem, addReviewToEventItem}

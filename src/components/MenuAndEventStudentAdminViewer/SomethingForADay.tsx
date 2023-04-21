@@ -109,7 +109,7 @@ export default function SomethingForADay(props: any) {
           <SomethingItemCard
             whatForADay={props.whatForADay}
             UserRole={props.UserRole} 
-            initialEvents={eventForDay}
+            eventForDay={eventForDay}
             diningHallId={props.diningHallId} 
             day={props.day} 
             month={props.month} 

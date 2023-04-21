@@ -34,14 +34,14 @@ if (confirmDeleteAllFlag) {
     const viewAllM = async () => {
         const db = await collection1();
         const result = await db.find().toArray();
-        console.log("ALL MENU ITEMS**********************************************************************************************************************************************:\:\n",JSON.stringify(result,null,4));
+        console.log("ALL MENUITEM*****************************************:\n",JSON.stringify(result,null,4));
         return result;
     }
 
     const viewAllUni = async () => {
         const db = await collection2();
         const result = await db.find().toArray();
-        console.log("ALL UNI ITEMS**********************************************************************************************************************************************:\:\n",result);        
+        console.log("ALL UNI*****************************************:\n",JSON.stringify(result,null,4));        
         return result;
     }
 
@@ -65,20 +65,20 @@ if (confirmDeleteAllFlag) {
 
         // ]}});
         // const result = await db.updateMany({},{"$unset":{"dish":1}})
-        console.log("ALL EVENTS**********************************************************************************************************************************************:\n",JSON.stringify(result,null,4));
+        console.log("ALL EVENTS*****************************************:\n",JSON.stringify(result,null,4));
         return result;
     }
 
     const viewAllUser = async () => {
         const db = await collection4();
         const result = await db.find().toArray();
-        console.log("ALL USERS**********************************************************************************************************************************************:\:\n",JSON.stringify(result,null,4));
+        console.log("ALL USERS*****************************************:\:\n",JSON.stringify(result,null,4));
         return result;
     }
 
     // viewAllUni();
     // viewAllUser();
     viewAllE();
-    viewAllM();
+    // viewAllM();
 }
 

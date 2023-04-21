@@ -7,10 +7,8 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
-
 async function addReviewToMenuItem(review, menuItemId) {
     const db = await collection();
-    console.log(menuItemId)
     review.user_Id = new ObjectId(review.user_Id);
     const result = await db.updateOne(
          {_id: new ObjectId(menuItemId)},
@@ -23,8 +21,8 @@ async function updateReview(review, menuItemId) {
     const db = await collection();
 
     const result = await db.updateOne(
-        { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
-        { $set: {"dish.reviews": review}},
+        { _id: new ObjectId(menuItemId), "reviews.user_Id": new ObjectId(review.user_Id)},
+        { $set: {"reviews": review}},
     )
     return result;
 }

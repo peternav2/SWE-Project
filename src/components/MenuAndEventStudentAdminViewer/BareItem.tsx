@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Review, addReviewToMenuItem } from "../../stores/Review";
+import { Review, addReviewToEventItem, addReviewToMenuItem } from "../../stores/Review";
 import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
 import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
@@ -20,7 +20,7 @@ export default function BareItem(props: any) {
   //dry.
     function getRandomAvatarUrl(food:boolean) {
     const avatarUrls = [
-      '',
+          'https://i.redd.it/spssvt6pjwuy.jpg',
       // 'https://i.imgur.com/bMsxxnV.jpeg',
       // 'https://i.imgur.com/smZjCop.jpeg',
       // 'https://i.imgur.com/tKzR6WR.jpeg',
@@ -52,7 +52,6 @@ export default function BareItem(props: any) {
   
       const eventItems = await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId);
       withReviewUpdatedEventItems(eventItems);
-      console.log(eventItems);
     };
   
     fetchData();
@@ -61,8 +60,6 @@ export default function BareItem(props: any) {
 
   async function handleReviewSubmit(event: any) {
     event.preventDefault();
-    console.log('Review:', review);
-    console.log('Stars:', stars);
     
     setSubmittedReviewFlag(true);
     
@@ -70,23 +67,28 @@ export default function BareItem(props: any) {
       comment: review,
       rating: stars,
       // get from token or database
-      username: "TEST_00",
+      username: "TEST",
     };
-
-
-    await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
-      console.log(res, 31);
-    })
-    // put in useefect and factor out conditional
-    await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
-      console.log(res, 36);
-      withReviewUpdatedMenuItems(res);
-    })
-
-    await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
-      console.log(res, 18000004);
-      withReviewUpdatedEventItems(res);
-    })
+    // console.log(props.eventForDay._id);
+    
+    
+    if(props.whatForADay === "MENU"){
+      await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
+        console.log(res, 31);
+      })
+      await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+        withReviewUpdatedMenuItems(res);
+      })
+    }
+    else if(props.whatForADay === "EVENT"){
+      await addReviewToEventItem(submittedReview, props.eventForDay._id).then((res) => {
+        console.log(res);
+      })
+      await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+        withReviewUpdatedEventItems(res);
+      })
+      
+  }
   };
 
   const toggleOthersReviewsVisibility = (event: any) => {
@@ -106,11 +108,8 @@ export default function BareItem(props: any) {
   };
 
   const getReviewsById = (array: MenuItem[] | EventItem[],  id: ObjectId) => {
-    console.log(array);
-    console.log(id);
     for (let i = 0; i < array.length; i++) {
       if ( array[i]._id === id ) {
-        console.log('hitting here');
         return array[i].reviews ? array[i].reviews : array[i].dish.reviews;
       }
     }
@@ -124,10 +123,8 @@ if(props.whatForADay === "MENU"){
 }
 
 if(props.whatForADay === "EVENT"){
-  reviewsById = getReviewsById(UpdatedEventItems, props.initialEvents._id);
+  reviewsById = getReviewsById(UpdatedEventItems, props.eventForDay._id);
 }
-
-console.log(reviewsById,'anything?');
 
   // console.log(props.menuItem.dish.reviews);
 
@@ -141,7 +138,7 @@ console.log(reviewsById,'anything?');
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
       <div className="card card-compact grid-item">
-          <button className="btn grid-item" onClick={toggleVisibilityYourReview}>ADD YOUR REVIEW</button>
+          <button className="btn btn-primary grid-item" onClick={toggleVisibilityYourReview}>Your Review:</button>
           {/* TODO: factor out this review form */}
           {
             yourReviewsVisible && <div>
@@ -169,14 +166,14 @@ console.log(reviewsById,'anything?');
                   </div>
                   
                 </div>
-                <button className="btn" type="submit" onClick={handleReviewSubmit}>Submit</button>
+                <button className=" btn btn-primary" type="submit" onClick={handleReviewSubmit}>Submit</button>
               </form>
             </div>
           }
         </div>
 
       
-        <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>SEE REVIEWS</button>
+        <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>See others reviews:</button>
         <div className="flex-chat-avatars-container">
           {submittedReviewFlag ?
             visible &&
@@ -188,8 +185,8 @@ console.log(reviewsById,'anything?');
                     </div>
                   </div>
                   <div className="chat-header">
-                   Some User
-                <time className="text-xs opacity-50">12:46</time>
+                  User
+                <time className="text-xs opacity-50"> Student</time>
                   </div>
                 <div className="chat-bubble">
                   {review.comment}
@@ -206,9 +203,9 @@ console.log(reviewsById,'anything?');
                     </div>
                   </div>
                   <div className="chat-header">
-                    A user
+                    User!
                   </div>
-                <div className="chat-bubble">
+                <div className="chat-bubble	">
                   {review.comment.toUpperCase()}
                 </div>
               </div>

@@ -19,6 +19,18 @@ export const addReviewToMenuItem = async (review: Review, menuItemId: ObjectId )
 
 /**
  * 
+ * @param review 
+ * @param eventItemId 
+ * @returns promise that resolves to the review that was just added to the database
+ */
+export const addReviewToEventItem = async (review: Review, eventItemId: ObjectId ) => { 
+    console.log("HELLO," , review, `review/post/${eventItemId}`);
+    return await myFetch<Review>(`review/post/${eventItemId}`, review)
+}
+
+
+/**
+ * 
  * @param menuItemId : ObjectId
  * @returns promise that resolves to an array of reviews for the menu item
  */
