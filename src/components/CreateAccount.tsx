@@ -93,7 +93,7 @@ const CreateAccount = () => {
   let password_errors = ["", 
                          "Enter a password.", 
                          "Password - 8 ~ 16 characters long.", 
-                         "Password - Already exists."]
+                         "Password - Contains invalid characters"]
 
   let confirm_errors = ["", "Password does not match."]
 
@@ -271,7 +271,8 @@ const CreateAccount = () => {
 
   return (
     <section>
-       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className='circle'></div>
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen"> 
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 sm:p-8">
             <img className="h-auto max-w-full" src="src/assets/logo.png"></img>
@@ -332,11 +333,13 @@ const CreateAccount = () => {
                 
               <GetErrors/>
             </form>
+          </div>
         </div>
+        
       </div>
-    </div>
+      
   </section>
-  );
+);
 };
 
 export default CreateAccount
