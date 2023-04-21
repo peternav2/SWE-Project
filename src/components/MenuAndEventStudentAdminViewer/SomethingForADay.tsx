@@ -47,7 +47,7 @@ export default function SomethingForADay(props: any) {
     return (
       <article className="prose grid-item">
       <h1> Event Items for {formatDateString(props.day, props.month, props.year)} </h1>
-      <div>
+      {/* <div>
         <label htmlFor="meal-time-select"></label>
         <select  id="meal-time-select" className="select select-bordered w-full max-w-xs" onChange={handleMealTimeSelection}>
           <option value="View Day"> Select Event Time</option>
@@ -60,7 +60,7 @@ export default function SomethingForADay(props: any) {
         {
           selectedMealTime && <p> You a now viewing the {selectedMealTime} events!</p>
         }
-      </div>
+      </div> */}
     </article>
     )
   }

@@ -50,9 +50,9 @@ console.log(props, 12);
         <p>{props.menuItem ? props.menuItem.dish.description: props.eventForDay.description}</p>
         </div>
         <div className="card-actions justify-end">
-           <button className="btn btn-primary grow">Add Your Review</button>
+           {/* <button className="btn btn-primary grow">Add Your Review</button> */}
         </div>
-      {modalVisible && (
+      {true && (
         <div >
           <div>
             <BareItem             
@@ -60,7 +60,7 @@ console.log(props, 12);
             eventForDay={props.eventForDay}
             UserRole={props.UserRole} 
             diningHallId={props.diningHallId}  day={props.day} month={props.month} year={props.year} menuItem={props.menuItem} />
-            <button  className="btn btn-primary" onClick={handleModalToggle}>Close Reviews</button>
+            {/* <button  className="btn btn-primary grow" onClick={handleModalToggle}>Close Reviews</button> */}
           </div>
         </div>
       )}

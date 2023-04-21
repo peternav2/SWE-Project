@@ -9,10 +9,10 @@ export default function BareItem(props: any) {
   let daysNum: number = parseInt(props.day);
   let daysMonth: number = parseInt(props.month);
   let daysYear: number = parseInt(props.year);
-  const [yourReviewsVisible, setyourReviewsVisible] = useState(true);
+  const [yourReviewsVisible, setyourReviewsVisible] = useState(false);
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [submittedReviewFlag, setSubmittedReviewFlag] = useState(true);
   const [UpdatedMenuItems, withReviewUpdatedMenuItems] = useState<MenuItem[]>([]);
   const [UpdatedEventItems, withReviewUpdatedEventItems] = useState<EventItem[]>([]);
@@ -138,7 +138,7 @@ if(props.whatForADay === "EVENT"){
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
       <div className="card card-compact grid-item">
-          <button className="btn btn-primary grid-item" onClick={toggleVisibilityYourReview}>Your Review:</button>
+          <button className="btn btn-primary grid-item add-your-review-btn" onClick={toggleVisibilityYourReview}>Add Your Review:</button>
           {/* TODO: factor out this review form */}
           {
             yourReviewsVisible && <div>
@@ -155,9 +155,9 @@ if(props.whatForADay === "EVENT"){
                     onChange={(event) => setReview(event.target.value)}
                   />
                 </div>
-                <div>
+                <div className="hearts-level">
                   <label htmlFor="stars-3"></label>
-                  <div className="rating gap-3">
+                  <div className="rating gap-2">
                     <input type="radio" name="stars-3" value={1} className="mask mask-heart bg-red-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
                     <input type="radio" name="stars-3" value={2} className="mask mask-heart bg-orange-400" onChange={(event) => setStars(parseInt(event.target.value))} />
                     <input type="radio" name="stars-3" value={3} className="mask mask-heart bg-yellow-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
@@ -166,7 +166,7 @@ if(props.whatForADay === "EVENT"){
                   </div>
                   
                 </div>
-                <button className=" btn btn-primary" type="submit" onClick={handleReviewSubmit}>Submit</button>
+                <button className=" btn btn-primary btn-grow submit-btn" type="submit" onClick={handleReviewSubmit}>Submit</button>
               </form>
             </div>
           }
@@ -231,6 +231,11 @@ if(props.whatForADay === "EVENT"){
           
                       .grid-item {
                         grow: 1;
+                        width:800px;
+                      }
+
+                      .rating{
+                        text-align: center;
                       }
 
                       .flex-chat-avatars-container {
@@ -244,6 +249,18 @@ if(props.whatForADay === "EVENT"){
                         justify-content: center;
                         align-items: center;
                         gap: 20px;
+                      }
+
+                      .hearts-level{
+                        text-align:center;
+                      }
+
+                      .add-your-review-btn{
+                        width:100%;
+                      }
+
+                      .submit-btn{
+                        width:100%;
                       }
         `}
         </style>
