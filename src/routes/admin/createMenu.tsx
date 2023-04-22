@@ -9,7 +9,7 @@ import MenuItemForm from "./menuItemForm";
 import { Dish } from "../../stores/Dish";
 import { Review } from "../../stores/Review";
 import Back from "../../components/Back";
-import { navigateError, validateCurrentAuth} from "../../components/Auth";
+import { navigateError, validateCurrentAuth } from "../../components/Auth";
 
 
 // export async function action({ request, params }: any) {
@@ -54,7 +54,7 @@ export async function loader({ params }: any) {
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
-    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId).catch(error =>{navigateError(error)});;
+    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId).catch(error => { navigateError(error) });;
 }
 
 export default function CreateMenu() {
@@ -72,7 +72,7 @@ export default function CreateMenu() {
     const year = useParams().year;
 
     return (
-        <div>
+        <div className="bg-sky-300/10">
             <h1 className={title}>Create a New Menu</h1>
 
             <DatePicker className={dateButton} selected={startDate}
@@ -120,21 +120,27 @@ export default function CreateMenu() {
                 </li>
             </ul>
 
+
             <Link
                 to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
                 className={gactiveButton}>
-                Add New Menu Item
+                <div className="flex items-centered">
+                    Add New Menu Item  {addMenuIcon}
+                </div>
             </Link>
 
             <div className="mx-2 my-2">
                 <Outlet />
             </div>
 
-            {menuItems.filter((item) => { return item.mealType == mealType }).reverse().map((menuItem) => (
-                <div className="mx-2 my-2" key={menuItem._id?.toString()}>
-                    <MenuItemForm item={menuItem}></MenuItemForm>
-                </div>
-            ))}
+            <div className="div grid lg:grid-cols-3">
+                {menuItems.filter((item) => { return item.mealType == mealType }).reverse().map((menuItem) => (
+                    <div className="mx-2 my-2" key={menuItem._id?.toString()}>
+                        <MenuItemForm item={menuItem}></MenuItemForm>
+                    </div>
+                ))}
+            </div>
+
 
             <Back />
 
@@ -149,6 +155,9 @@ const dateButton = " mx-2 my-2 text-center block border border-yellow-500 rounde
 const navButton = "mx-2 my-2 text-center block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4"
 const DisabledButton = "text-center block py-2 px-4 text-gray-400 cursor-not-allowed"
 const title = "mx-2 my-2 inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-black-200"
+const addMenuIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+<path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+</svg>
 
 
 
