@@ -5,9 +5,9 @@ import App from '../App'
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
 import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
-import StudentEventForDay, {loader as eventForDayLoader} from "../routes/student/studentEventForDay";
+import EventForDay, {loader as eventForDayLoader} from "../routes/student/EventForDay";
 import StudentDiningHallHome, {loader as diningHomeLoader} from "../routes/student/studentDiningHallHome";
-import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/student/studentMenuForDay";
+import MenuForDay, {loader as menuForDayLoader} from "../routes/student/MenuForDay";
 import Login from "../routes/Login";
 import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../routes/student/studentUniversityHome";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
@@ -42,12 +42,22 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
-                element: <StudentMenuForDay />,
+                element: <MenuForDay />,
                 loader: menuForDayLoader,
             },
             {
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
-                element: <StudentEventForDay />,
+                element: <EventForDay />,
+                loader:eventForDayLoader,
+            },
+            {
+                path: '/admin/day/menu/:diningHallId/:month/:day/:year',
+                element: <MenuForDay />,
+                loader: menuForDayLoader,
+            },
+            {
+                path: '/admin/day/event/:diningHallId/:month/:day/:year',
+                element: <EventForDay />,
                 loader:eventForDayLoader,
             },
             {

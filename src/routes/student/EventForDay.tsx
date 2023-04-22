@@ -19,7 +19,7 @@ await getEventItemsByDate({day, month, year},params.diningHallId).then((res) => 
   return eventItemsbyDateAndDiningHall;
 }
 
-export default function StudentEventForADay() {
+export default function EventForADay() {
 // USER ROLES
 const UserRole = {
   ADMIN: "ADMIN",

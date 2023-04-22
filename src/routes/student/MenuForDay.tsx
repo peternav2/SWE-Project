@@ -19,7 +19,7 @@ export async function loader({params}: any) {
     return menuItemsbyDateAndDiningHall;
   }
   
-  export default function StudentMenuForDay() {
+  export default function MenuForDay() {
     // USER ROLES
     const UserRole = {
       ADMIN: "ADMIN",
