@@ -71,6 +71,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
         setIngredients([...ingredients]);
         setValueChanged(true);
     }
+    
 
     return (
         <Form className={divstyle1} method="post" id="menuItem-form">
@@ -174,15 +175,15 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
 
                     {valueChanged &&
                         <div className="flex">
-                            <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
-                                className={activeButton} onClick={handleSubmit}>
+                            <Link onClick={handleSubmit} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                                className={activeButton}>
                                 Save
                             </Link>
                         </div>
                     }
 
                     {!newItem &&
-                        <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                        <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`}
                             onClick={() => (deleteMenuItem(item._id))} className={activeRedButton}>
                             Delete
                         </Link>
