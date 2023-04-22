@@ -1,9 +1,10 @@
 import React from 'react'
 import Search from '../UniversityList'
-import {User, addUser, getUserByUsername} from "../stores/User";
+import {User, addUser, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
 import {useLoaderData, useNavigate} from "react-router-dom";
-import {getErrorList} from "./popups"
+// @ts-ignore
+import {getErrorList} from './Popups'
 
 interface University {
   name: string;
@@ -224,7 +225,7 @@ const CreateAccount = () => {
   };
 
   async function submitWrapper(){
-    await addUser(newUser(form))
+    await addUserTokenized(newUser(form)).catch(error =>{alert(error);});
     navigate('/', {state: {message : "Account created."}})
   }
 
@@ -333,7 +334,7 @@ const CreateAccount = () => {
 
           <div className="mt-5 items-center justify-between">
             <button type="submit" className={formatSubmit()}>
-              Create your account.
+              Create your account
             </button>
             <div className = "my-4">
             <GetErrors/>

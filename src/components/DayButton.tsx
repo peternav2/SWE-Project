@@ -8,12 +8,9 @@ export default function DayButton({userType, day, month, year, menuOrEvent, dini
     const navigate = useNavigate();
     let [toggledColor,setToggledColor] = useState("blue");
 
-    // When you add this comment I think that the tailwind compiler tokenizes it even though its a comment
-    // - sometimes the code highlighter will get confused. If you run npm run dev without and with it
-    //  on my end it will make the CSS bug (no class pushed to client) for red styling in tailwind go in '
-    // and out of existence. maybe its feature?
+    // const blueStyle = `bg-blue-600 hover:bg-blue-800 text-white font-bold text-2xl py-6 px-5 rounded`
     // const redStyle = `bg-red-600 hover:bg-red-800 text-white font-bold text-2xl py-6 px-5 rounded`
-
+    
     function toDay() {
         if(menuOrEvent === 'menu'){
             navigate(`/student/day/menu/${diningHallId}/${month}/${day}/${year}`)

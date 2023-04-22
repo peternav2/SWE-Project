@@ -13,7 +13,7 @@ export interface Review {
  * @param menuItemId 
  * @returns promise that resolves to the review that was just added to the database
  */
-export const addReviewToMenuItem = async (review: Review, menuItemId: ObjectId ) => { 
+export const addReviewToMenuItem = async (review: Review, menuItemId?: ObjectId) => {
     return await myFetch<Review>(`review/${menuItemId}`, review)
 }
 
@@ -24,7 +24,7 @@ export const addReviewToMenuItem = async (review: Review, menuItemId: ObjectId )
  * @returns promise that resolves to the review that was just added to the database
  */
 export const addReviewToEventItem = async (review: Review, eventItemId: ObjectId ) => { 
-    console.log("HELLO," , review, `review/post/${eventItemId}`);
+    console.log("Hit?", `review/post/${eventItemId}`);
     return await myFetch<Review>(`review/post/${eventItemId}`, review)
 }
 

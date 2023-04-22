@@ -1,17 +1,20 @@
+
 import React from 'react'
 import {createBrowserRouter, useParams} from 'react-router-dom'
 import App from '../App'
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
 import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
-import StudentDiningHallHome, {loader as diningHomeLoader} from "../routes/studentDiningHallHome";
-import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/studentMenuForDay";
-import StudentEventForDay, {loader as eventForDayLoader} from "../routes/studentEventForDay";
+import StudentEventForDay, {loader as eventForDayLoader} from "../routes/student/studentEventForDay";
+import StudentDiningHallHome, {loader as diningHomeLoader} from "../routes/student/studentDiningHallHome";
+import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/student/studentMenuForDay";
 import Login from "../routes/Login";
-import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../routes/studentUniversityHome";
+import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../routes/student/studentUniversityHome";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
-import CreateMenu, {loader as createMenuLoader, action as createMenuAction} from '../routes/admin/createMenu'
+import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
+import { action as menuItemFormAction } from '../routes/admin/menuItemForm'
+
 import MenuItemForm from '../routes/admin/menuItemForm'
 
 export const router = createBrowserRouter([
@@ -30,12 +33,12 @@ export const router = createBrowserRouter([
             {
                 path: '/student/university/:universityId/',
                 element: <StudentUniversityHome />,
-                //insert loader here for uni data
+                loader: StudentUniversityHomeLoader,
             },
             {
                 path: '/student/dininghall/:diningHallId/:diningHallName',
                 element: <StudentDiningHallHome />,
-                // loader: diningHallHomeLoader,
+                loader: diningHomeLoader,
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
@@ -73,12 +76,10 @@ export const router = createBrowserRouter([
                 path: "/admin/university/:universityId/dininghall/:diningHallId/createmenu/:month/:day/:year/",
                 element: <CreateMenu />,
                 loader: createMenuLoader,
-                action: createMenuAction,
                 children: 
                 [{
                     path: 'new/:mealType',
                     element: <MenuItemForm />,
-                    action: createMenuAction,
                 }]
             }
        ]

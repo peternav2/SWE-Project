@@ -1,17 +1,16 @@
-import { getMenuItemsBasedByDate, MenuItem} from "../stores/MenuItem";
+import SomethingForADay from "../../components/MenuAndEventStudentAdminViewer/SomethingForADay";
+import {getAllMenuItems, getMenuItemsBasedByDate, getMenuItemsBasedByDiningHall, MenuItem} from "../../stores/MenuItem";
 import {useLoaderData, useNavigate, useParams} from "react-router-dom";
-import SomethingForADay from "../components/MenuAndEventStudentAdminViewer/SomethingForADay";
+import {useUser} from "../../App";
+import { University, getAllUniversities } from "../../stores/University";
+import { ObjectId } from "mongodb";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 export async function loader({params}: any) {
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
-    // the above is a hacky way to convert the string to a number because
-    // the params are of type any and I don't know how to convert them to a number
-    // // in the method parameters
 
-    // '64095e3482173f9ad243956b';
-    // '6420a4e4b759dfa90b360fcb';
     let menuItemsbyDateAndDiningHall: MenuItem[] = [];
     await getMenuItemsBasedByDate({day, month, year},params.diningHallId).then((res) => {
       menuItemsbyDateAndDiningHall = res;
@@ -27,7 +26,7 @@ export async function loader({params}: any) {
       STUDENT: "STUDENT",
     };
 
-    // WHAT FOR A DAY?
+    // WHAT FOR A DAY ENUM
     const WhatForADay = {
       MENU: "MENU",
       EVENT: "EVENT",
@@ -40,7 +39,9 @@ export async function loader({params}: any) {
     let year = parseInt(useParams().year || "1999");
     let initialMenuItems:MenuItem[] = useLoaderData() as MenuItem[];
     const navigate = useNavigate();
-    
+    const [user, setUser] = useUser();
+    validateCurrentAuth()
+
     return (
         <div>
             <SomethingForADay 

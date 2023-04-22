@@ -1,14 +1,15 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Link, useLoaderData, useNavigate, useParams, Outlet } from "react-router-dom";
-import { getMenuItemsBasedByDiningHall } from "../stores/MenuItem";
+import { getMenuItemsBasedByDiningHall } from "../../stores/MenuItem";
 import { ChangeEvent, useEffect, useState } from "react";
-import Calendar from "../components/Calendar";
-import { useUser } from "../App";
-import { DiningHall, getDiningHall } from "../stores/DiningHall";
-import { CalendarDate } from "../stores/CalendarDate";
+import Calendar from "../../components/Calendar";
+import { useUser } from "../../App";
+import { DiningHall, getDiningHall } from "../../stores/DiningHall";
+import { CalendarDate } from "../../stores/CalendarDate";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 export async function loader({ params }: any) {
-  return await getDiningHall(params.universityId, params.diningHallId);
+  return await getDiningHall(params.universityId, params.diningHallId).then(response => {return response}).catch(error =>{navigateError(error)});
 }
 
 export default function StudentDiningHallHome() {
@@ -22,6 +23,7 @@ export default function StudentDiningHallHome() {
   calDate.day = today.getDate();
   calDate.month = today.getMonth() + 1;
   calDate.year = today.getFullYear();
+  validateCurrentAuth()
 
   return (
     <div className={"container w-max h-max mx-auto"}>

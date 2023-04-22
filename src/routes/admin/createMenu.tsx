@@ -1,4 +1,4 @@
-import { Form, Link, Outlet, redirect, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { Form, Link, Outlet, redirect, useLoaderData, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,77 +8,68 @@ import type { CalendarDate } from "../../stores/CalendarDate";
 import MenuItemForm from "./menuItemForm";
 import { Dish } from "../../stores/Dish";
 import { Review } from "../../stores/Review";
-import Back from "../../components/back";
+import Back from "../../components/Back";
+import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 
-export async function action({ request, params }: any) {
+// export async function action({ request, params }: any) {
 
-    // Update function to be placed here... 
-    const formData = await request.formData();
-    const updates = Object.fromEntries(formData);
+//     // Update function to be placed here... 
+//     const formData = await request.formData();
+//     const updates = Object.fromEntries(formData);
 
-    if (updates.newAlergen == undefined) {
-        
-        const newSubmitItem = {
-            mealType: params.mealType,
-            
-            dish: {
-                name: updates.dishName,
-                cal: updates.calories as number,
-                allergens: [] as string[],
-                ingredients: [] as string[],
-                reviews: [] as Review[],
-                description: updates.description,
-                diningHallId: params.diningHallId
-            } as Dish,
+//     // Creates a new menu item
+//     if (updates.newAlergen == undefined) {
+//         const newSubmitItem = {
+//             mealType: params.mealType,
 
-            date: {
-                year: +params.year,
-                month: +params.month,
-                day: +params.day,
-            } as CalendarDate
-        } as MenuItem;
+//             dish: {
+//                 name: updates.dishName,
+//                 cal: updates.calories as number,
+//                 allergens: [] as string[],
+//                 ingredients: [] as string[],
+//                 reviews: [] as Review[],
+//                 description: updates.description,
+//                 diningHallId: params.diningHallId
+//             } as Dish,
 
-        await addMenuItem(newSubmitItem);
+//             date: {
+//                 year: +params.year,
+//                 month: +params.month,
+//                 day: +params.day,
+//             } as CalendarDate
+//         } as MenuItem;
 
-    } else {
-        // Edit existing menu item
-    }
+//         await addMenuItem(newSubmitItem);
 
-    return redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`);
-}
+//     } else {
+//         // Edit existing menu item
+//     }
+
+//     return redirect(`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`);
+// }
 
 export async function loader({ params }: any) {
+
     let year = +params.year;
     let month = +params.month;
     let day = +params.day;
-
-    console.log(await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId));
-    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId);
+    return await getMenuItemsBasedByDate({ month, day, year }, params.diningHallId).catch(error =>{navigateError(error)});;
 }
 
 export default function CreateMenu() {
 
     const navigate = useNavigate();
     const menuItems = useLoaderData() as MenuItem[];
+
     const [startDate, setStartDate] = useState(new Date());
-    const [mealType, setMealType] = useState("All Day");
-    const [filteredMenus, setFilteredMenus] = useState([] as MenuItem[]);
-    const [addingNewMenuItem, setaddingNewMenuItem] = useState(false);
+    const [mealType, setMealType] = useState("Breakfast");
 
     const universityId = useParams().universityId;
     const diningHallId = useParams().diningHallId;
     const day = useParams().day;
     const month = useParams().month;
     const year = useParams().year;
-
-    useEffect(() => {
-        if (mealType == "All Day") {
-            setFilteredMenus(menuItems);
-        } else {
-            setFilteredMenus(menuItems.filter((item) => { return item.mealType === mealType; }));
-        }
-    }, [mealType]);
 
     return (
         <div>
@@ -94,7 +85,6 @@ export default function CreateMenu() {
             <ul className="flex">
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Breakfast" ? activeButton : navButton}
                         onClick={() => setMealType("Breakfast")}>
                         Breakfast
@@ -102,7 +92,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Lunch" ? activeButton : navButton}
                         onClick={() => setMealType("Lunch")}>
                         Lunch
@@ -110,7 +99,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Dinner" ? activeButton : navButton}
                         onClick={() => setMealType("Dinner")}>
                         Dinner
@@ -118,7 +106,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "Late Night" ? activeButton : navButton}
                         onClick={() => setMealType("Late Night")}>
                         Late Night
@@ -126,7 +113,6 @@ export default function CreateMenu() {
                 </li>
                 <li className="flex-1 mr-2">
                     <a
-                        //to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/`}
                         className={mealType === "All Day" ? activeButton : navButton}
                         onClick={() => setMealType("All Day")}>
                         All Day
@@ -134,19 +120,17 @@ export default function CreateMenu() {
                 </li>
             </ul>
 
-            {
-                (mealType != "All Day") &&
-                (<Link
-                    to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
-                    className={gactiveButton}
-                    onClick={() => setaddingNewMenuItem(!addingNewMenuItem)}>
-                    Add New Menu Item
-                </Link>)
-            }
+            <Link
+                to={`/admin/university/${universityId}/dininghall/${diningHallId}/createmenu/${month}/${day}/${year}/new/${mealType}`}
+                className={gactiveButton}>
+                Add New Menu Item
+            </Link>
 
-            <Outlet/>
+            <div className="mx-2 my-2">
+                <Outlet />
+            </div>
 
-            {filteredMenus.slice(0).map((menuItem) => (
+            {menuItems.filter((item) => { return item.mealType == mealType }).reverse().map((menuItem) => (
                 <div className="mx-2 my-2" key={menuItem._id?.toString()}>
                     <MenuItemForm item={menuItem}></MenuItemForm>
                 </div>

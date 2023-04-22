@@ -1,13 +1,17 @@
 const { connect } = require('./mongo.js');
 const COLLECTIONNAME = 'EventItem';
 const { ObjectId } = require('mongodb');
+const {validateRequest} = require('../functions/session.js')
 
 async function collection() { // returns collection we will be CRUDing from
     const client = await connect();
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
-const addReviewToEventItem = async (review, eventItemId) => {
+const addReviewToEventItem = async (request) => {
+    validateRequest(request);
+    const eventItemId = request.params.eventItemId;
+    const review = request.body;
     const db = await collection();
     review.user_Id = new ObjectId(review.user_Id);
     const result = await db.updateOne(
@@ -18,19 +22,30 @@ const addReviewToEventItem = async (review, eventItemId) => {
     return result;
 }
 
-const getEventItemsByDiningHall = async (diningHallId) => {
+const getEventItemsByDiningHall = async (request) => {
+    validateRequest(request);
+    const diningHallId = request.params.diningHallId;
     const db = await collection();
     const result = await db.find({diningHallId: new ObjectId(diningHallId)}).toArray();
     return result;
 }
 
-const getEventItemsByDate = async (diningHallId, month, day, year) => {
+const getEventItemsByDate = async (request) => {
+    validateRequest(request);
+    const diningHallId = request.params.diningHallId;
+    const year = request.params.year
+    const day = request.params.day
+    const month = request.params.month
     const db = await collection();
-    const result = await db.find({diningHallId: new ObjectId(diningHallId), date: {year: year, month: month, day: day}}).toArray();
+    console.log(diningHallId,year,day,month);
+    const result = await db.find({diningHallId: new ObjectId(diningHallId), date: {year: +year, month: +month, day: +day}}).toArray();
+    console.log(result);
     return result;
 }
 
-const addEventItem = async (eventItem) => {
+const addEventItem = async (request) => {
+    validateRequest(request);
+    const eventItem = request.body
     const db = await collection();
     eventItem._id = new ObjectId();
     eventItem.diningHallId = new ObjectId(eventItem.diningHallId);
@@ -38,14 +53,17 @@ const addEventItem = async (eventItem) => {
     return eventItem;
 }
 
-const deleteEventItem = async (eventItemId) => {
-    console.log(eventItemId);
+const deleteEventItem = async (request) => {
+    validateRequest(request);
+    const eventItemId = request.params.eventItemId;
     const db = await collection();
     const result = await db.deleteOne({_id: new ObjectId(eventItemId)});
     return result;
 }
 
-const updateEventItem = async (eventItem) => {
+const updateEventItem = async (request) => {
+    validateRequest(request);
+    const eventItem = request.body
     const db = await collection();
     const id = new ObjectId(eventItem._id);
     delete eventItem._id;
