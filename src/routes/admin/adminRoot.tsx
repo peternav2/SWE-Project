@@ -24,7 +24,6 @@ export default function AdminHome() {
         <p>Dining Halls: </p>
 
         <ul className="overflow-auto h-72 w-100 p-8 border-t border-r border-b border-l border-gray-400">
-          
           {university.diningHalls.map((hall) => (
             <li key={hall._id?.toString()}>
               <button className={activeRedButton}
