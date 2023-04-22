@@ -12,7 +12,7 @@ var userScopes = new Map([
                           ],
                           ['admin',[
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //post
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem','/api/v1/review'], //post
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //delete
                           ]
                           ]

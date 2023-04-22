@@ -1,6 +1,6 @@
 import {useParams, useNavigate, useLoaderData} from "react-router-dom";
-import { EventItem, getEventItemsByDate } from "../stores/EventItem";
-import SomethingForADay from "../components/MenuAndEventStudentAdminViewer/SomethingForADay";
+import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
+import SomethingForADay from "../../components/MenuAndEventStudentAdminViewer/SomethingForADay";
 
 // *****WITH LOADER LOAD IN RELEVANT EVENT PARAM DATA FOR THIS ROUTE**************
 export async function loader({params}: any) {
@@ -13,7 +13,8 @@ export async function loader({params}: any) {
 let eventItemsbyDateAndDiningHall:EventItem[] = [];
 await getEventItemsByDate({day, month, year},params.diningHallId).then((res) => {
   eventItemsbyDateAndDiningHall = res;
-  console.log("eventItemsbyDateAndDiningHall", eventItemsbyDateAndDiningHall);
+  console.log("initial events from database on the auth merge branch", res);
+  console.log("eventItemsbyDateAndDiningHall:", eventItemsbyDateAndDiningHall);
 })
   return eventItemsbyDateAndDiningHall;
 }
