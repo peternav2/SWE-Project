@@ -7,11 +7,6 @@ import { CalendarDate } from "../../stores/CalendarDate";
 import { Dish } from "../../stores/Dish";
 import { Review } from "../../stores/Review";
 
-
-export async function action({ params }: any) {
-    console.log("Hey Im on the menu item form page");
-}
-
 export default function MenuItemForm({ item = {} as MenuItem }) {
 
     // If menu item is undefined this will be true
@@ -70,12 +65,12 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
         setAllergens([...allergens]);
         setValueChanged(true);
     }
-    
+
     function handleIngredientDelete(index: number) {
         ingredients.splice(index, 1);
         setIngredients([...ingredients]);
         setValueChanged(true);
-    }  
+    }
 
     return (
         <Form className={div1style} method="post" id="menuItem-form">
@@ -84,7 +79,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     <input className={dishNames} type="text" name="dishName" defaultValue={item?.dish?.name}
                         onChange={(event) => {
                             setValueChanged(true)
-                            setDishName(event.target.value)
+                            setDishName(event.target.value as string)
                         }}
                     />
                 </p>
@@ -103,7 +98,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     <input type="text" name="description" defaultValue={item?.dish?.description}
                         className={inputsMargin} onChange={(event) => {
                             setValueChanged(true)
-                            setDescription(event.target.value)
+                            setDescription(event.target.value as string)
                         }} />
                 </p>
 
@@ -160,12 +155,12 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                                     );
                                 }}
                             />
-                           <button type="button" onClick={() => handleIngredientDelete(index)}>{trashIcon}</button>
+                            <button type="button" onClick={() => handleIngredientDelete(index)}>{trashIcon}</button>
                         </div>
                     )}
                     <button className="flex" type="button" onClick={
                         () => { setIngredients(currentIngredients => [...currentIngredients, ""]) }}>
-                        <strong>{addIcon}+</strong>
+                        <strong>{addIcon}</strong>
                     </button>
                 </div>
 
@@ -178,7 +173,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                     }
 
                     {valueChanged &&
-                        <div className="div flex">
+                        <div className="flex">
                             <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
                                 className={activeButton} onClick={handleSubmit}>
                                 Save
@@ -188,7 +183,11 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </div>
 
                 {item.dish != undefined &&
-                    <button className={activeRedButton} type="button" onClick={() => (deleteMenuItem(item._id))}>Delete</button>
+                    <button className={activeRedButton}
+                    type="button" 
+                    onClick={() => (deleteMenuItem(item._id))}>
+                        Delete
+                    </button>
                 }
             </div>
         </Form>
@@ -201,15 +200,15 @@ const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded 
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
 const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
 const trashIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-<path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
 const addIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
 </svg>
 const bullet = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-<path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
+    <path fillRule="evenodd" d="M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z" clipRule="evenodd" />
 </svg>
 const calorieIcon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-<path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
+    <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
 </svg>
 
