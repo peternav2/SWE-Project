@@ -1,4 +1,4 @@
-const API_ROOT = "http://localhost:3000/api/v1"
+const API_ROOT = "https://ratemydininghall.onrender.com/api/v1"
 
 
 export default function myFetch<T>(url: string, data?: any, method?: string ): Promise<T> {
