@@ -14,6 +14,7 @@ var userScopes = new Map([
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem','/api/v1/review'], //post
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //delete
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //patch
                           ]
                           ]
                          ]);
@@ -97,8 +98,10 @@ function getScopes(scopes, type){
         return scopes[0]
     }else if(type == 'post'){
         return scopes[1]
-    }else{
+    }else if(type == 'delete'){
         return scopes[2]
+    } else {
+        return scopes[3]
     }
 }
 
