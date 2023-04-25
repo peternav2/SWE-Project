@@ -17,8 +17,7 @@ const addReviewToEventItem = async (request) => {
     const result = await db.updateOne(
          {_id: new ObjectId(eventItemId)},
          { $push: {"reviews": review}}
-        );
-    
+        );    
     return result;
 }
 
@@ -62,15 +61,14 @@ const deleteEventItem = async (request) => {
 }
 
 const updateEventItem = async (request) => {
-    validateRequest(request);
-    const eventItem = request.body
+    //don't think I'm adding the patch permissions right.......................
+    // validateRequest(request);
+    const eventItem = request.body;
     const db = await collection();
-    const id = new ObjectId(eventItem._id);
-    delete eventItem._id;
-    const result = await db.replaceOne({_id: new ObjectId(id)}, eventItem);
-    //i ran into bugs when not deleted the _id property from the eventItem object
-    //so i decided to delete it and this will maintain the same _id since it is replacing attributes in database, not _id.
+    eventItem.diningHallId =  new ObjectId(eventItem.diningHallId);
+    eventItem._id =  new ObjectId(eventItem._id);
+    const result = await db.replaceOne({_id: eventItem._id}, eventItem);
     return result;
 }
 
-module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem, addReviewToEventItem}
+module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem, addReviewToEventItem }

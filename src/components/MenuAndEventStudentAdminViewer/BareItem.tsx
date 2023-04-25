@@ -3,6 +3,9 @@ import { Review, addReviewToEventItem, addReviewToMenuItem } from "../../stores/
 import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
 import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
+import { updateEventItem } from "../../stores/EventItem";
+import { updateMenuItem } from "../../stores/MenuItem";
+
 
 /// Added "component" because of name conflict
 export default function BareItem(props: any) {
@@ -18,11 +21,16 @@ export default function BareItem(props: any) {
   const [UpdatedEventItems, withReviewUpdatedEventItems] = useState<EventItem[]>([]);
   const charLimitRef = useRef(null);
 
-  
+  //get token out of local storage
+  const user = localStorage.getItem('user');
+  const parsedUser = JSON.parse(user!);
+  const parsedUserStatus = parsedUser.isStudent;
+  console.log(parsedUser.isStudent);
+
   //dry.
-    function getRandomAvatarUrl(food:boolean) {
+  function getRandomAvatarUrl(food: boolean) {
     const avatarUrls = [
-          'https://i.redd.it/spssvt6pjwuy.jpg',
+      'https://i.redd.it/spssvt6pjwuy.jpg',
       // 'https://i.imgur.com/bMsxxnV.jpeg',
       // 'https://i.imgur.com/smZjCop.jpeg',
       // 'https://i.imgur.com/tKzR6WR.jpeg',
@@ -37,10 +45,10 @@ export default function BareItem(props: any) {
       // 'https://i.imgur.com/DIUVYRm.jpeg',
       // 'https://i.imgur.com/D6UHYNV.jpeg'
     ]
-  
+
     const randomIndex = Math.floor(Math.random() * avatarUrls.length);
 
-    if(food){
+    if (food) {
       return foodUrls[randomIndex];
 
     }
@@ -51,20 +59,21 @@ export default function BareItem(props: any) {
     const fetchData = async () => {
       const menuItems = await getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId);
       withReviewUpdatedMenuItems(menuItems);
-  
+
       const eventItems = await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId);
+      console.log(eventItems);
       withReviewUpdatedEventItems(eventItems);
     };
-  
+
     fetchData();
-  },[]);
+  }, []);
 
 
   async function handleReviewSubmit(event: any) {
     event.preventDefault();
-    
+
     setSubmittedReviewFlag(true);
-    
+
     let submittedReview: Review = {
       comment: review,
       rating: stars,
@@ -72,9 +81,9 @@ export default function BareItem(props: any) {
       username: "TEST",
     };
     // console.log(props.eventForDay._id);
-    
-    
-    if(props.whatForADay === "MENU"){
+
+
+    if (props.whatForADay === "MENU") {
       await addReviewToMenuItem(submittedReview, props.menuItem._id).then((res) => {
         console.log(res, 31);
       })
@@ -82,15 +91,15 @@ export default function BareItem(props: any) {
         withReviewUpdatedMenuItems(res);
       })
     }
-    else if(props.whatForADay === "EVENT"){
+    else if (props.whatForADay === "EVENT") {
       await addReviewToEventItem(submittedReview, props.eventForDay._id).then((res) => {
         console.log(res);
       })
       await getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
         withReviewUpdatedEventItems(res);
       })
-      
-  }
+
+    }
   };
 
   const toggleOthersReviewsVisibility = (event: any) => {
@@ -109,26 +118,26 @@ export default function BareItem(props: any) {
     event.stopPropagation();
   };
 
-  const getReviewsById = (array: MenuItem[] | EventItem[],  id: ObjectId) => {
+  const getReviewsById = (array: MenuItem[] | EventItem[], id: ObjectId) => {
     for (let i = 0; i < array.length; i++) {
-      if ( array[i]._id === id ) {
+      if (array[i]._id === id) {
         return array[i].reviews ? array[i].reviews : array[i].dish.reviews;
       }
     }
     return [];
   }
-  
-let reviewsById;
 
-if(props.whatForADay === "MENU"){
-   reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
-}
+  let reviewsById;
 
-if(props.whatForADay === "EVENT"){
-  reviewsById = getReviewsById(UpdatedEventItems, props.eventForDay._id);
-}
+  if (props.whatForADay === "MENU") {
+    reviewsById = getReviewsById(UpdatedMenuItems, props.menuItem._id);
+  }
 
-  const handleYourReviewTextAreaChange = (event:any) => {
+  if (props.whatForADay === "EVENT") {
+    reviewsById = getReviewsById(UpdatedEventItems, props.eventForDay._id);
+  }
+
+  const handleYourReviewTextAreaChange = (event: any) => {
     const inputValue = event.target.value;
     const remainingChars = 99 - inputValue.length;
     charLimitRef.current.style.setProperty('--value', remainingChars);
@@ -138,18 +147,51 @@ if(props.whatForADay === "EVENT"){
     }
   }
 
+  async function deleteReviewFromMenuItem(commentToDelete:string) {
+    console.log("deleteReviewFromMenuItem accessed");
+    
+    if (props.whatForADay === "MENU") {
+        console.log(props.whatForADay + "delete function accessed");
+        let menuItemClone = props.menuItem;
+        console.log(menuItemClone, 123);
+        
+        const withDeletedComments = menuItemClone.dish.reviews.filter((review:any) => {
+          return review.comment !== commentToDelete;
+        });
+        menuItemClone.dish.reviews = withDeletedComments;
+        
+        updateMenuItem(menuItemClone);
+        getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+          withReviewUpdatedMenuItems(res);
+        })
+      }
+      
+      if (props.whatForADay === "EVENT") {
+          let eventItemWithDeletedComments = props.eventForDay;
+          const withDeletedComments = eventItemWithDeletedComments.reviews.filter((review:any) => {
+            return review.comment !== commentToDelete;
+          });
+          eventItemWithDeletedComments.reviews = withDeletedComments;
+          updateEventItem(eventItemWithDeletedComments);
+          getEventItemsByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+            withReviewUpdatedEventItems(res);
+          })
+    }
+  
+  }
+
   // console.log(props.menuItem.dish.reviews);
 
-// if(props.whatForADay === "EVENT"){
-//   return(            visible &&
-//     <div>
-//     </div>
-//   )
-// } else{
+  // if(props.whatForADay === "EVENT"){
+  //   return(            visible &&
+  //     <div>
+  //     </div>
+  //   )
+  // } else{
   return (
     <div onClick={stopPropagation}>
       <div className="flex-modal-container">
-      <div className="card card-compact grid-item">
+        <div className="card card-compact grid-item">
           <button className="btn btn-primary grid-item add-your-review-btn" onClick={toggleVisibilityYourReview}>Add Your Review</button>
           {/* TODO: factor out this review form */}
           {
@@ -157,9 +199,9 @@ if(props.whatForADay === "EVENT"){
               {/* maybe change this to an array of objects with these fields on dish so dish can have multiple reviews */}
               {/* Users token value */}
               <form onSubmit={handleReviewSubmit} >
-              <span className="countdown">
-                CHARS LEFT:
-                  <span ref={charLimitRef} > {99-review.length}</span>
+                <span className="countdown">
+                  CHARS LEFT:
+                  <span ref={charLimitRef} > {99 - review.length}</span>
                 </span>
                 <div>
                   <textarea
@@ -174,13 +216,13 @@ if(props.whatForADay === "EVENT"){
                 <div className="hearts-level">
                   <label htmlFor="stars-3"></label>
                   <div className="rating gap-2">
-                    <input type="radio" name="stars-3" value={1} className="mask mask-heart bg-red-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
+                    <input type="radio" name="stars-3" value={1} className="mask mask-heart bg-red-400" onChange={(event) => setStars(parseInt(event.target.value))} />
                     <input type="radio" name="stars-3" value={2} className="mask mask-heart bg-orange-400" onChange={(event) => setStars(parseInt(event.target.value))} />
-                    <input type="radio" name="stars-3" value={3} className="mask mask-heart bg-yellow-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
-                    <input type="radio" name="stars-3" value={4} className="mask mask-heart bg-lime-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
-                    <input type="radio" name="stars-3" value={5} className="mask mask-heart bg-green-400" onChange={(event) => setStars(parseInt(event.target.value))}/>
+                    <input type="radio" name="stars-3" value={3} className="mask mask-heart bg-yellow-400" onChange={(event) => setStars(parseInt(event.target.value))} />
+                    <input type="radio" name="stars-3" value={4} className="mask mask-heart bg-lime-400" onChange={(event) => setStars(parseInt(event.target.value))} />
+                    <input type="radio" name="stars-3" value={5} className="mask mask-heart bg-green-400" onChange={(event) => setStars(parseInt(event.target.value))} />
                   </div>
-                  
+
                 </div>
                 <button className=" btn btn-primary btn-grow submit-btn" type="submit" onClick={handleReviewSubmit}>Submit</button>
               </form>
@@ -188,46 +230,58 @@ if(props.whatForADay === "EVENT"){
           }
         </div>
 
-      
+
         <button className="btn grid-item" onClick={toggleOthersReviewsVisibility}>See others reviews</button>
         <div className="flex-chat-avatars-container">
           {submittedReviewFlag ?
             visible &&
             reviewsById.map((review: Review, index: number) => (
-                <div key={index} className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-16 ring rounded-full">
-                        <img src={getRandomAvatarUrl(false)} />
-                    </div>
+              <div key={index} className="chat chat-start">
+                <div className="chat-image avatar">
+                  <div className="w-16 ring rounded-full">
+                    <img src={getRandomAvatarUrl(false)} />
                   </div>
-                  <div className="chat-header">
+                </div>
+                <div className="chat-header">
                   User
-                <time className="text-xs opacity-50"> Student</time>
-                  </div>
+                  <time className="text-xs opacity-50"> Student</time>
+                </div>
                 <div className="chat-bubble">
-                  {review.comment}
+                  {review.comment.toUpperCase()}
+                  { !parsedUserStatus?
+                <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
+                      </path>
+                      </svg>
+                  </div> : null}
                 </div>
               </div>
             ))
             :
             visible &&
             props.menuItem.dish.reviews.map((review: Review, index: number) => (
-                <div key={index} className="chat chat-start">
-                  <div className="chat-image avatar">
-                    <div className="w-16 ring rounded-full">
+              <div key={index} className="chat chat-start">
+                <div className="chat-image avatar">
+                  <div className="w-16 ring rounded-full">
                     <img src={getRandomAvatarUrl(false)} />
-                    </div>
                   </div>
-                  <div className="chat-header">
-                    User!
-                  </div>
+                </div>
+                <div className="chat-header">
+                  User!
+                </div>
                 <div className="chat-bubble	">
                   {review.comment.toUpperCase()}
+                  { !parsedUserStatus?
+                <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
+                      </path>
+                      </svg>
+                  </div> : null}
                 </div>
               </div>
             ))
-            }
-          </div>
+          }
+        </div>
 
 
         {/* edit dish review: Only allow this to show as "protected component?" if admin token is present*/}
@@ -284,7 +338,8 @@ if(props.whatForADay === "EVENT"){
                       }
         `}
         </style>
-        </div>
       </div>
-  )}
+    </div>
+  )
+}
 
