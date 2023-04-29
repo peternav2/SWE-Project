@@ -16,7 +16,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', express.static('./dist'));
+app.use('/', express.static('../dist'));
 
 app.use(express.json());
 
@@ -30,7 +30,7 @@ app.get('/error', (req, res) => {
 .use('/api/v1/review', reviewController)
 .use('/api/v1/eventitem', eventItemController)
 app.get('*', (req, res) => {
-    res.sendFile('index.html',  { root: './dist' });
+    res.sendFile('index.html',  { root: '../dist' });
 });
 
 app.listen(port,hostname, () => console.log(`server running at http://${hostname}:${port}/`));
