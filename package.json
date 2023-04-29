@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "vite": "vite",
     "dev": "nodemon --watch server server/server.js",
     "build": "npm i && tsc --noEmit && vite build",
     "preview": "vite preview",
