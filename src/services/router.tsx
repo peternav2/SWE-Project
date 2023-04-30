@@ -13,7 +13,6 @@ import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../r
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
-import { action as menuItemFormAction } from '../routes/admin/menuItemForm'
 
 import MenuItemForm from '../routes/admin/menuItemForm'
 

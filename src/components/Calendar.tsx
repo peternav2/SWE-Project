@@ -95,7 +95,7 @@ export default function Calendar() {
         </FormControl>
         {/* Modified your code Peter add a switch for event or student routes */}
         <FormControl >
-          <InputLabel id="menuOrEvent">Menu or Event</InputLabel>
+          <InputLabel id="menuOrEvent">Event?</InputLabel>
           <Select
             labelId="simple-select-label-menu-or-event"
             id="getMenuOrEvent"

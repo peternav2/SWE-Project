@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'menu-pattern1': "url('/src/assets/menu.jpg')",
+      }
+    },
   },
   plugins: [require("@tailwindcss/typography"),require("daisyui")],
   daisyui: {

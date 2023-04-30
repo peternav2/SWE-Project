@@ -6,14 +6,14 @@ const errors = [[400,JSON.stringify("No session sent.")], [400,JSON.stringify("S
 var userScopes = new Map([
                           ['student',[
                                 ['/api/v1/university', '/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/review'], //post
+                                ['/api/v1/review','api/v1/review/post'], //post
                                 ['/api/v1/review']  //delete
                             ]
                           ],
                           ['admin',[
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem','/api/v1/review'], //post
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //delete
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review', '/api/v1/review/post'], //post
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //delete
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //patch
                           ]
                           ]

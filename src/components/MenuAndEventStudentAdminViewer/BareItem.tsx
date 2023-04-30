@@ -25,7 +25,7 @@ export default function BareItem(props: any) {
   const user = localStorage.getItem('user');
   const parsedUser = JSON.parse(user!);
   const parsedUserStatus = parsedUser.isStudent;
-  console.log(parsedUser.isStudent);
+  // console.log(parsedUser.isStudent);
 
   
 
@@ -221,6 +221,7 @@ export default function BareItem(props: any) {
                 </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
+                  { '❤️'.repeat( review.rating? review.rating:0) }
                   { !parsedUserStatus?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
@@ -243,7 +244,7 @@ export default function BareItem(props: any) {
                   User!
                 </div>
                 <div className="chat-bubble	">
-                  {review.comment.toUpperCase()}
+                { '❤️'.repeat( review.rating? review.rating:0) }
                   { !parsedUserStatus?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
