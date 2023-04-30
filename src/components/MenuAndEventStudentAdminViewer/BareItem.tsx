@@ -27,33 +27,7 @@ export default function BareItem(props: any) {
   const parsedUserStatus = parsedUser.isStudent;
   console.log(parsedUser.isStudent);
 
-  //dry.
-  function getRandomAvatarUrl(food: boolean) {
-    const avatarUrls = [
-      'https://i.redd.it/spssvt6pjwuy.jpg',
-      // 'https://i.imgur.com/bMsxxnV.jpeg',
-      // 'https://i.imgur.com/smZjCop.jpeg',
-      // 'https://i.imgur.com/tKzR6WR.jpeg',
-      // 'https://i.imgur.com/ZH6FOyN.jpeg',
-      // 'https://i.imgur.com/tKzR6WR.jpeg',
-    ];
-
-    const foodUrls = [
-      'https://i.imgur.com/CUG0Aof.jpeg',
-      // 'https://i.imgur.com/8vulzi8.jpeg',
-      // 'https://i.imgur.com/8vulzi8.jpeg',
-      // 'https://i.imgur.com/DIUVYRm.jpeg',
-      // 'https://i.imgur.com/D6UHYNV.jpeg'
-    ]
-
-    const randomIndex = Math.floor(Math.random() * avatarUrls.length);
-
-    if (food) {
-      return foodUrls[randomIndex];
-
-    }
-    return avatarUrls[randomIndex];
-  }
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -239,12 +213,11 @@ export default function BareItem(props: any) {
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
                   <div className="w-16 ring rounded-full">
-                    <img src={getRandomAvatarUrl(false)} />
+                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
                   </div>
                 </div>
                 <div className="chat-header">
                   User
-                  <time className="text-xs opacity-50"> Student</time>
                 </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
@@ -263,7 +236,7 @@ export default function BareItem(props: any) {
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
                   <div className="w-16 ring rounded-full">
-                    <img src={getRandomAvatarUrl(false)} />
+                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
                   </div>
                 </div>
                 <div className="chat-header">

@@ -8,31 +8,31 @@ export default function SomethingItemCard(props: any) {
     setModalVisible(!modalVisible);
   };
 
-    function getRandomAvatarUrl(food:boolean) {
-    const avatarUrls = [
-      'https://i.imgur.com/bMsxxnV.jpeg',
-      'https://i.imgur.com/smZjCop.jpeg',
-      'https://i.imgur.com/tKzR6WR.jpeg',
-      'https://i.imgur.com/ZH6FOyN.jpeg',
-      'https://i.imgur.com/tKzR6WR.jpeg',
-    ];
+  //   function getRandomAvatarUrl(food:boolean) {
+  //   const avatarUrls = [
+  //     'https://i.imgur.com/bMsxxnV.jpeg',
+  //     'https://i.imgur.com/smZjCop.jpeg',
+  //     'https://i.imgur.com/tKzR6WR.jpeg',
+  //     'https://i.imgur.com/ZH6FOyN.jpeg',
+  //     'https://i.imgur.com/tKzR6WR.jpeg',
+  //   ];
   
-    const foodUrls = [
-      'https://i.imgur.com/CUG0Aof.jpeg',
-      'https://i.imgur.com/8vulzi8.jpeg',
-      'https://i.imgur.com/8vulzi8.jpeg',
-      'https://i.imgur.com/DIUVYRm.jpeg',
-      'https://i.imgur.com/D6UHYNV.jpeg'
-    ]
+  //   const foodUrls = [
+  //     'https://i.imgur.com/CUG0Aof.jpeg',
+  //     'https://i.imgur.com/8vulzi8.jpeg',
+  //     'https://i.imgur.com/8vulzi8.jpeg',
+  //     'https://i.imgur.com/DIUVYRm.jpeg',
+  //     'https://i.imgur.com/D6UHYNV.jpeg'
+  //   ]
   
-    const randomIndex = Math.floor(Math.random() * avatarUrls.length);
+  //   const randomIndex = Math.floor(Math.random() * avatarUrls.length);
   
-    if(food){
-      return foodUrls[randomIndex];
+  //   if(food){
+  //     return foodUrls[randomIndex];
   
-    }
-    return avatarUrls[randomIndex];
-  }
+  //   }
+  //   return avatarUrls[randomIndex];
+  // }
   
 
 console.log(props, 12);
@@ -40,7 +40,7 @@ console.log(props, 12);
     <div className="card lg:card-side grid-item" onClick={handleModalToggle} key={props.index}>
         <figure>
           <img
-          src={getRandomAvatarUrl(true)}
+          src={`https://i.imgur.com/CUG0Aof.jpeg`}
           className="h-auto w-[800px] object-cover food-image-large event-image-large"
           />
           </figure>
@@ -66,13 +66,13 @@ console.log(props, 12);
       )}
       <style scoped>
         {`
-       .food-image-large{
+       .food-image-large {
           border-radius: 15px;
           min-height:450px;
           max-height:450px;
         }
 
-        .event-image-large{
+        .event-image-large {
           border-radius: 15px;
           min-height:450px;
           max-height:450px;
