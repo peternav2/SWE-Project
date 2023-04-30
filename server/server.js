@@ -15,9 +15,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 })
-app.use(express.json());
 
 app.use('/', express.static('./dist'));
+
+app.use(express.json());
 
 app.get('/error', (req, res) => {
     res.status(404).send('Error 404')
@@ -32,5 +33,5 @@ app.get('*', (req, res) => {
     res.sendFile('index.html',  { root: './dist' });
 });
 
-app.listen(port,hostname, () => console.log(`server running at http://${hostname}:${port}/`));
+app.listen(port, () => console.log(`Server running right now at http://${hostname}:${port}/`));
 

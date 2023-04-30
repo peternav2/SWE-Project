@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "vite": "vite",
+    "dev": "node server/server.js",
+    "build": "npm i && tsc --noEmit && vite build",
     "preview": "vite preview",
     "start": "node server/server.js"
   },
