@@ -33,5 +33,5 @@ app.get('*', (req, res) => {
     res.sendFile('index.html',  { root: './dist' });
 });
 
-app.listen(port,hostname, () => console.log(`server running at http://${hostname}:${port}/`));
+app.listen(port, () => console.log(`Server running right now at http://${hostname}:${port}/`));
 
