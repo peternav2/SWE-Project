@@ -46,7 +46,7 @@ export default function AddDining() {
     )
 }
 
-// Styles
+// Styles Tailwind
 const div1style = "max-w-sm w-full lg:max-w-full lg:flex"
 const div2style = "my-2 border-t border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
 const labelStyle = "block text-sm font-medium leading-6 text-gray-900"

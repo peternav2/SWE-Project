@@ -71,9 +71,10 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
         setIngredients([...ingredients]);
         setValueChanged(true);
     }
+    
 
     return (
-        <Form className={div1style} method="post" id="menuItem-form">
+        <Form className={divstyle1} method="post" id="menuItem-form">
             <div className="mx-2 my-2">
                 <p>
                     <input className={dishNames} type="text" name="dishName" defaultValue={item?.dish?.name}
@@ -85,8 +86,8 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 </p>
 
                 <p>
-                    <label>Cal </label>
-                    <input type="number" name="calories" defaultValue={item?.dish?.cal}
+                    <label>Cal <strong className="text-red-600">{calories}</strong> </label>
+                    <input type="range" name="calories" value={calories} max="1000"
                         className={inputsMargin} onChange={(event) => {
                             setValueChanged(true)
                             setCalories(+event.target.value)
@@ -96,7 +97,7 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
                 <p>
                     <label>Description: </label>
                     <input type="text" name="description" defaultValue={item?.dish?.description}
-                        className={inputsMargin} onChange={(event) => {
+                        className={inputsMargin + " text-gray-400"} onChange={(event) => {
                             setValueChanged(true)
                             setDescription(event.target.value as string)
                         }} />
@@ -174,31 +175,41 @@ export default function MenuItemForm({ item = {} as MenuItem }) {
 
                     {valueChanged &&
                         <div className="flex">
-                            <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
-                                className={activeButton} onClick={handleSubmit}>
+                            <Link onClick={handleSubmit} to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}/`}
+                                className={activeButton}>
                                 Save
                             </Link>
                         </div>
                     }
+
+                    {!newItem &&
+                        <Link to={`/admin/university/${params.universityId}/dininghall/${params.diningHallId}/createmenu/${params.month}/${params.day}/${params.year}`}
+                            onClick={() => (deleteMenuItem(item._id))} className={activeRedButton}>
+                            Delete
+                        </Link>
+                    }
                 </div>
 
-                {item.dish != undefined &&
-                    <button className={activeRedButton}
-                    type="button" 
-                    onClick={() => (deleteMenuItem(item._id))}>
-                        Delete
-                    </button>
-                }
+
+
             </div>
         </Form>
     );
 }
 
+
+{/* <button className={activeRedButton}
+type="button" 
+onClick={() => (deleteMenuItem(item._id))}>
+    Delete
+</button> */}
+
 const inputsMargin = "my-1"
 const dishNames = "text-2xl font-bold"
 const activeButton = "mx-2 my-2 text-center flex border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white"
 const activeRedButton = "mx-2 my-2 text-center flex border border-red-500 rounded py-2 px-4 bg-red-500 hover:bg-red-700 text-white"
-const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
+// const div1style = "border-t border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r lg:rounded-l p-4 flex flex-col justify-between leading-normal"
+const divstyle1 = "bg-menu-pattern1 block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
 const trashIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>

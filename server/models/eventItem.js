@@ -18,7 +18,7 @@ const getEventItemsByDiningHall = async (request) => {
 
 const getEventItemsByDate = async (request) => {
     validateRequest(request);
-    const diningHallId = request.params.dingHallId;
+    const diningHallId = request.params.diningHallId;
     const year = request.params.year
     const day = request.params.day
     const month = request.params.month
