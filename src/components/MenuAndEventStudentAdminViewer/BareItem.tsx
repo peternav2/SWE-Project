@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Review, addReviewToEventItem, addReviewToMenuItem } from "../../stores/Review";
-import { MenuItem, getMenuItemsBasedByDate } from "../../stores/MenuItem";
+import { MenuItem, getMenuItemById, getMenuItemsBasedByDate } from "../../stores/MenuItem";
 import { ObjectId } from "mongodb";
 import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
 import { updateEventItem } from "../../stores/EventItem";
@@ -126,7 +126,7 @@ export default function BareItem(props: any) {
     
     if (props.whatForADay === "MENU") {
         console.log(props.whatForADay + "delete function accessed");
-        let menuItemClone = props.menuItem;
+        let menuItemClone = await getMenuItemById(props.menuItem._id);
         console.log(menuItemClone, 123);
         
         const withDeletedComments = menuItemClone.dish.reviews.filter((review:any) => {
@@ -136,11 +136,16 @@ export default function BareItem(props: any) {
         
         updateMenuItem(menuItemClone);
         getMenuItemsBasedByDate({ day: daysNum, month: daysMonth, year: daysYear }, props.diningHallId).then((res) => {
+
           withReviewUpdatedMenuItems(res);
         })
       }
       
       if (props.whatForADay === "EVENT") {
+        // todo: this is bugged kind of because it references the event from props
+        // which is not updated with the new review if you try to asap delete something
+        // so it will delete the wrong reviews - but works after a page refresh
+        // need to add getEventItemById to the backend
           let eventItemWithDeletedComments = props.eventForDay;
           const withDeletedComments = eventItemWithDeletedComments.reviews.filter((review:any) => {
             return review.comment !== commentToDelete;
@@ -243,7 +248,8 @@ export default function BareItem(props: any) {
                 <div className="chat-header">
                   {review.username}
                 </div>
-                <div className="chat-bubbl	">
+                <div className="chat-bubble ">
+                {review.comment.toUpperCase()}
                 { '❤️'.repeat( review.rating? review.rating:0) }
                   { !parsedUserStatus?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
