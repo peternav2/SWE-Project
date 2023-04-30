@@ -27,8 +27,8 @@ async function updateReview(request) {
     const review = request.body;
     const db = await collection();
     const result = await db.updateOne(
-        { _id: new ObjectId(menuItemId), "dish.reviews.user_Id": new ObjectId(review.user_Id)},
-        { $set: {"dish.reviews": review}},
+        { _id: new ObjectId(menuItemId), "reviews.user_Id": new ObjectId(review.user_Id)},
+        { $set: {"reviews": review}},
     )
     return result;
 }
