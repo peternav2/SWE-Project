@@ -248,7 +248,7 @@ export default function BareItem(props: any) {
                 <div className="chat-header">
                   {review.username}
                 </div>
-                <div className="chat-bubble ">
+                <div className="chat-bubble">
                 {review.comment.toUpperCase()}
                 { '❤️'.repeat( review.rating? review.rating:0) }
                   { !parsedUserStatus?
