@@ -8,7 +8,7 @@ import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 function Login(){
   //Constants and properties
   const [isLoading, setIsLoading] = React.useState(false);
-  const[usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
+  // const [usertest, setUser] = useUser(); // context hook from App.tsx react router outlet
 
   const [form, setForm] = React.useState({
     username: '',

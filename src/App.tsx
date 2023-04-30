@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {User} from "./stores/User";
-
 import {Outlet, Route, Routes, useNavigate, useOutletContext} from "react-router-dom";
 
 function App() {
