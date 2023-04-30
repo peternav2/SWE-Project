@@ -52,7 +52,7 @@ export default function BareItem(props: any) {
       comment: review,
       rating: stars,
       // get from token or database
-      username: "TEST",
+      username: parsedUser.username,
     };
     // console.log(props.eventForDay._id);
 
@@ -217,7 +217,7 @@ export default function BareItem(props: any) {
                   </div>
                 </div>
                 <div className="chat-header">
-                  User
+                  {review.username}
                 </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
@@ -241,9 +241,9 @@ export default function BareItem(props: any) {
                   </div>
                 </div>
                 <div className="chat-header">
-                  User!
+                  {review.username}
                 </div>
-                <div className="chat-bubble	">
+                <div className="chat-bubbl	">
                 { '❤️'.repeat( review.rating? review.rating:0) }
                   { !parsedUserStatus?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
