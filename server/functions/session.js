@@ -6,14 +6,15 @@ const errors = [[400,JSON.stringify("No session sent.")], [400,JSON.stringify("S
 var userScopes = new Map([
                           ['student',[
                                 ['/api/v1/university', '/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/review'], //post
+                                ['/api/v1/review','api/v1/review/post'], //post
                                 ['/api/v1/review']  //delete
                             ]
                           ],
                           ['admin',[
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //post
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //delete
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //delete
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //patch
                           ]
                           ]
                          ]);
@@ -68,7 +69,6 @@ function validateRequest(request){
     if(id == null || id == undefined || token == null || token == undefined){
         throw new Error(2)
     }
-
     var stored_session = sessions.get(id)
     try{
         var stored_token = stored_session.token
@@ -80,12 +80,14 @@ function validateRequest(request){
     if(stored_token != token){
         throw new Error(2)
     }
-       
+    
     var type = request.method.toLowerCase();
     var url = request.baseUrl;
 
     var scopes = getScopes(userScopes.get(stored_session.permission), type)
-
+    console.log("Type:" + type)
+    console.log("Scopes:")
+    console.log(scopes);
     if(contains(scopes, url) == false){
         throw new Error(3)
     }
@@ -97,8 +99,10 @@ function getScopes(scopes, type){
         return scopes[0]
     }else if(type == 'post'){
         return scopes[1]
-    }else{
+    }else if(type == 'delete'){
         return scopes[2]
+    } else {
+        return scopes[3]
     }
 }
 

@@ -5,14 +5,15 @@ import App from '../App'
 import '../index.css'
 import RenderUser from '../routes/RenderUser'
 import CreateAccount, {loader as createAccountLoader} from '../components/CreateAccount'
+import EventForDay, {loader as eventForDayLoader} from "../routes/student/EventForDay";
 import StudentDiningHallHome, {loader as diningHomeLoader} from "../routes/student/studentDiningHallHome";
-import StudentMenuForDay, {loader as menuForDayLoader} from "../routes/student/studentMenuForDay";
+import MenuForDay, {loader as menuForDayLoader} from "../routes/student/MenuForDay";
 import Login from "../routes/Login";
 import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../routes/student/studentUniversityHome";
-import StudentEventForDay from "../routes/student/studentEventForDay";
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
+import { AboutUs } from '../components/AboutUs'
 
 import MenuItemForm from '../routes/admin/menuItemForm'
 
@@ -41,13 +42,23 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/student/day/menu/:diningHallId/:month/:day/:year',
-                element: <StudentMenuForDay />,
+                element: <MenuForDay />,
                 loader: menuForDayLoader,
             },
             {
                 path: '/student/day/event/:diningHallId/:month/:day/:year',
-                element: <StudentEventForDay />,
-                //insert loader here for event datad
+                element: <EventForDay />,
+                loader:eventForDayLoader,
+            },
+            {
+                path: '/admin/day/menu/:diningHallId/:month/:day/:year',
+                element: <MenuForDay />,
+                loader: menuForDayLoader,
+            },
+            {
+                path: '/admin/day/event/:diningHallId/:month/:day/:year',
+                element: <EventForDay />,
+                loader:eventForDayLoader,
             },
             {
                 path: "createaccount",
@@ -80,6 +91,10 @@ export const router = createBrowserRouter([
                     path: 'new/:mealType',
                     element: <MenuItemForm />,
                 }]
+            },
+            {
+                path: "aboutus",
+                element: <AboutUs />,
             }
        ]
     },
