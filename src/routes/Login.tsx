@@ -192,7 +192,7 @@ function Login(){
             <GetPageLoadMessage/>
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <img className="h-auto max-w-full" src="src/assets/logo.png"></img>
+          <img className="h-auto max-w-full" src="src/assets/color_logo.png"></img>
                   <form  onSubmit={handleSubmit}>
 
                     <div className="relative mb-4">

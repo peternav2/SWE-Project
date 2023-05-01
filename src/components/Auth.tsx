@@ -21,7 +21,7 @@ export function getUserBar(){
 
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <ul className = 'flex space-x-4'>
-                      <img className="h-full" src="/src/assets/logo2.png"></img>
+                      <img className="h-8 w-8" src="/src/assets/color_small_logo.png"></img>
                       {homeButton(user)}
                       {aboutUs()}
                 </ul>
