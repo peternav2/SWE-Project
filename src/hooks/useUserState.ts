@@ -7,7 +7,7 @@ const useUserState = (): [User | null, (userState: User) => void] => {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUserState(JSON.parse(storedUser));
+      setUserState(JSON.parse(storedUser as string));
     }
   }, []);
 

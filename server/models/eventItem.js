@@ -8,6 +8,19 @@ async function collection() { // returns collection we will be CRUDing from
     return client.db("RateMyDiningHall").collection(COLLECTIONNAME);
 }
 
+const addReviewToEventItem = async (request) => {
+    validateRequest(request);
+    const eventItemId = request.params.eventItemId;
+    const review = request.body;
+    const db = await collection();
+    review.user_Id = new ObjectId(review.user_Id);
+    const result = await db.updateOne(
+         {_id: new ObjectId(eventItemId)},
+         { $push: {"reviews": review}}
+        );    
+    return result;
+}
+
 const getEventItemsByDiningHall = async (request) => {
     validateRequest(request);
     const diningHallId = request.params.diningHallId;
@@ -18,12 +31,14 @@ const getEventItemsByDiningHall = async (request) => {
 
 const getEventItemsByDate = async (request) => {
     validateRequest(request);
-    const diningHallId = request.params.dingHallId;
+    const diningHallId = request.params.diningHallId;
     const year = request.params.year
     const day = request.params.day
     const month = request.params.month
     const db = await collection();
+    // console.log(diningHallId,year,day,month);
     const result = await db.find({diningHallId: new ObjectId(diningHallId), date: {year: +year, month: +month, day: +day}}).toArray();
+    // console.log(result);
     return result;
 }
 
@@ -46,15 +61,14 @@ const deleteEventItem = async (request) => {
 }
 
 const updateEventItem = async (request) => {
-    validateRequest(request);
-    const eventItem = request.body
+    //don't think I'm adding the patch permissions right.......................
+    // validateRequest(request);
+    const eventItem = request.body;
     const db = await collection();
-    const id = new ObjectId(eventItem._id);
-    delete eventItem._id;
-    const result = await db.replaceOne({_id: new ObjectId(id)}, eventItem);
-    //i ran into bugs when not deleted the _id property from the eventItem object
-    //so i decided to delete it and this will maintain the same _id since it is replacing attributes in database, not _id.
+    eventItem.diningHallId =  new ObjectId(eventItem.diningHallId);
+    eventItem._id =  new ObjectId(eventItem._id);
+    const result = await db.replaceOne({_id: eventItem._id}, eventItem);
     return result;
 }
 
-module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem }
+module.exports = { getEventItemsByDiningHall, getEventItemsByDate, addEventItem, deleteEventItem, updateEventItem, addReviewToEventItem }

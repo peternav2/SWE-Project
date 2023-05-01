@@ -5,7 +5,21 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'menu-pattern1': "url('/src/assets/menu.jpg')",
+      }
+    },
   },
-  plugins: [],
+  // plugins: [require("@tailwindcss/typography"),require("daisyui")],
+  daisyui: {
+    styled: true,
+    themes: ["corporate", "dark"],
+    base: true,
+    utils: false,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "dark",
+  },
 }

@@ -6,20 +6,24 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+.env.local
 node_modules
-.env
+src/.env
+server/.env
 dist
 dist-ssr
 *.local
+.env
+
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
-*.suo
+*.suogit 
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+databasePlayground.js

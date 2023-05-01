@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const hostname = '127.0.0.1';
 const menuitemController = require('./controllers/menuItem.js');
 const diningHallController = require('./controllers/diningHall.js');
 const universityController = require('./controllers/university.js');
@@ -16,7 +17,6 @@ app.use((req, res, next) => {
 })
 app.use(express.json());
 
-
 app.get('/error', (req, res) => {
     res.status(404).send('Error 404')
 })
@@ -30,5 +30,5 @@ app.get('*', (req, res) => {
     res.sendFile('index.html', { root: '../dist' });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Server running right now at http://${hostname}:${port}/`));
 
