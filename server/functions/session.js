@@ -12,7 +12,7 @@ var userScopes = new Map([
                           ],
                           ['admin',[
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review', '/api/v1/review/post'], //post
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //post
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //delete
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //patch
                           ]
@@ -85,7 +85,9 @@ function validateRequest(request){
     var url = request.baseUrl;
 
     var scopes = getScopes(userScopes.get(stored_session.permission), type)
-
+    console.log("Type:" + type)
+    console.log("Scopes:")
+    console.log(scopes);
     if(contains(scopes, url) == false){
         throw new Error(3)
     }

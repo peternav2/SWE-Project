@@ -3,7 +3,7 @@ import Search from '../UniversityList'
 import {User, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
 import {Link, useLoaderData, useNavigate} from "react-router-dom";
-import {getErrorList} from './popups'
+import {getErrorList} from './Popups'
 
 interface University {
   name: string;
