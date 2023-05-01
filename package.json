@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "vite": "vite",
-    "dev": "vite",
+    "dev": "node server/server.js",
     "build": "npm i && tsc --noEmit && vite build",
     "preview": "vite preview",
     "start": "node server/server.js"
