@@ -13,6 +13,7 @@ import StudentUniversityHome, {loader as StudentUniversityHomeLoader} from "../r
 import AdminHome, {loader as universityLoader } from '../routes/admin/adminRoot'
 import AddDining, {loader as diningLoader, action as diningAction} from '../routes/admin/addDining'
 import CreateMenu, {loader as createMenuLoader} from '../routes/admin/createMenu'
+import { AboutUs } from '../components/AboutUs'
 
 import MenuItemForm from '../routes/admin/menuItemForm'
 
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
                     path: 'new/:mealType',
                     element: <MenuItemForm />,
                 }]
+            },
+            {
+                path: "aboutus",
+                element: <AboutUs />,
             }
        ]
     },

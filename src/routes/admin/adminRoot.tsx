@@ -2,7 +2,7 @@ import { getUniversity, University } from '../../stores/University';
 import { deleteDiningHallFromUniversity } from '../../stores/DiningHall';
 import { Link, Outlet, useLoaderData, NavLink } from 'react-router-dom';
 import { useUser } from '../../App';
-import { navigateError, getUserBar, validateCurrentAuth } from '../../components/Auth';
+import { navigateError, validateCurrentAuth} from '../../components/Auth';
 
 export async function loader({ params }: any) {
   return await getUniversity(params.universityId).catch(error => { navigateError(error) });
@@ -14,8 +14,7 @@ export default function AdminHome() {
 
   return (
     <>
-      {getUserBar()}
-      <div className="mx-2 p-8">
+      <div className="mx-2">
         <h1 className={universityTitleStyle}>
           <div className="flex">
             {universityIcon}<strong>{university.name}</strong>
