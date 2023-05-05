@@ -19,7 +19,6 @@ export async function action({ request, params }: any) {
 export default function AddDining() {
     const universityId = useLoaderData() as string;
     const navigate = useNavigate();
-    validateCurrentAuth()
 
     return (
         <div className={div1style}>

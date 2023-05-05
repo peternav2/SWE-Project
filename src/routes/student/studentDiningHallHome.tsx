@@ -23,7 +23,6 @@ export default function StudentDiningHallHome() {
   calDate.day = today.getDate();
   calDate.month = today.getMonth() + 1;
   calDate.year = today.getFullYear();
-  validateCurrentAuth()
 
   return (
     <div className={"container w-max h-max mx-auto"}>

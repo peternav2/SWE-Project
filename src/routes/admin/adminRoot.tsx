@@ -9,7 +9,6 @@ export async function loader({ params }: any) {
 }
 
 export default function AdminHome() {
-  validateCurrentAuth()
   const university = useLoaderData() as University;
 
   return (

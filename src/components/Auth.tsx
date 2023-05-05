@@ -1,11 +1,12 @@
 import { router } from "../services/router";
 import { User } from '../stores/User';
 import { getUniversity } from "../stores/University";
+import imgURL from '../assets/color_small_logo.png';
 
 export function getUserBar(){
     const session = localStorage.getItem('session') ? JSON.parse(localStorage.getItem('session') as string) : null;
     const user: User = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-
+    
     if(user != null && user !== undefined && session != null && session !== undefined) {
         const bar = (
         <nav className="bg-blue-100">
@@ -21,7 +22,7 @@ export function getUserBar(){
 
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <ul className = 'flex space-x-4'>
-                      <img className="h-8 w-8" src="/src/assets/color_small_logo.png"></img>
+                      <img className="h-8 w-8" src={imgURL}></img>
                       {homeButton(user)}
                       {aboutUs()}
                 </ul>
@@ -101,6 +102,9 @@ export async function validateCurrentAuthLogin(){
     const result = await validateCurrentAuthFunction()
     if(result == true){
         router.navigate(getDestination(user))
+    }
+    else{
+      wipeLocalSession()
     }
 }
 

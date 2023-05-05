@@ -2,8 +2,9 @@ import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
+import imgURL from '../images/color_Logo.png';
 
 function Login(){
   //Constants and properties
@@ -25,9 +26,9 @@ function Login(){
   //Upon page load, check if a user is logged in, navigate if they have a valid session.
   //Loading back into login wont let the user leave, need a way to detect back button press
   useEffect(() => {
-    validateCurrentAuthLogin();
-  })
-  //window.history.replaceState({}, document.title)
+     validateCurrentAuthLogin();
+  }, [])
+  window.history.replaceState({}, document.title)
 
   let user_errors = ["", 
                      "Please enter your username.", 
@@ -192,7 +193,7 @@ function Login(){
             <GetPageLoadMessage/>
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <img className="h-auto max-w-full" src="src/assets/color_logo.png"></img>
+          <img className="h-auto max-w-full" src={imgURL}></img>
                   <form  onSubmit={handleSubmit}>
 
                     <div className="relative mb-4">

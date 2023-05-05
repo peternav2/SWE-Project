@@ -12,8 +12,7 @@ export async function loader({params}: any) {
 
 export default function StudentUniversityHome() {
   const uni = useLoaderData() as University;
-  validateCurrentAuth()
-
+  
   return (<>
     <div className={"justify-center items-center "}>
       <h1> Welcome to {uni.name} Dining Hall Home Page</h1>

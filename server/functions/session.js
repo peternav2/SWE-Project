@@ -85,9 +85,6 @@ function validateRequest(request){
     var url = request.baseUrl;
 
     var scopes = getScopes(userScopes.get(stored_session.permission), type)
-    console.log("Type:" + type)
-    console.log("Scopes:")
-    console.log(scopes);
     if(contains(scopes, url) == false){
         throw new Error(3)
     }

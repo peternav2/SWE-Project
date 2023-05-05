@@ -4,6 +4,7 @@ import {User, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
 import {Link, useLoaderData, useNavigate} from "react-router-dom";
 import {getErrorList} from './Popups'
+import imgURL from '../assets/color_logo.png';
 
 interface University {
   name: string;
@@ -275,7 +276,7 @@ const CreateAccount = () => {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen"> 
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 sm:p-8">
-            <img className="h-auto max-w-full" src="/src/assets/color_logo.png"></img>
+            <img className="h-auto max-w-full" src={imgURL}></img>
             <form onSubmit={handleSubmit}>
 
               <div className="relative mb-2">
