@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
@@ -11,7 +11,7 @@ module.exports = {
       }
     },
   },
-  plugins: [require("@tailwindcss/typography"),require("daisyui")],
+  plugins: [require("daisyui")],
   daisyui: {
     styled: true,
     themes: ["corporate", "dark"],

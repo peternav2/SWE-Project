@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 
 function Login(){
@@ -103,10 +103,10 @@ function Login(){
   //Submit button formatting
   function formatSubmit(){
     if(validity.password_error_code != 0 || validity.user_error_code != 0){
-      return("bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded")
+      return("w-full text-white border-red-1000 bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center relative mb-4")
     }
     else{
-      return("bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded")
+      return("w-full text-white border-blue-1000  bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center relative mb-4")
     }
   }
 
@@ -170,61 +170,69 @@ function Login(){
 
   if (isLoading) {
     return (
-      // make a centered loading div
-      <div className="flex justify-center items-center h-screen">
-        <h1>Loading...</h1>
-      </div>
+        <div className="flex justify-center items-center h-screen">
+          <span className="block mb-2 text-sm font-medium text-gray-900">Signing you in...&nbsp;&nbsp;</span>
+          <div className="inline-block h-8 w-8 animate-spin rounded-full text-info border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]">
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap text-info !border-0 !p-0 ![clip:rect(0,0,0,0)]"></span>
+          </div>
+        </div>
     )
   }
   return (
-    <div className="text-center">
-      <div className="bg-white shadow-md rounded px-8 pt-8 pb-8 mb-4">
-        <h1 className="text-5xl">RateMyDiningHall</h1>
-        <h3 className="text-2xl px-8 pt-4">Sign into your account.</h3>
-      </div>
-      <div>
-      <GetPageLoadMessage/>
-      </div>
-      <div className="flex flex-col justify-center items-center border-b border-blue-500 py-2">
-        <form className="md:w-1/2 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-3" onSubmit={handleSubmit}>
+    <section>
+        <div className='air bottom1'></div>
+        <div className='air bottom2'></div>
+
+        <div className='air top1'></div>
+        <div className='air top2'></div>
+
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              value={form.username}
-              onChange={handleChange}
-              placeholder="Username"
-              className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <p className ="text-red-500 text-xs italic">{user_errors[validity.user_error_code]}</p>
+            <GetPageLoadMessage/>
           </div>
-          <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="**********"
-              className = "shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            />
-            <p className="text-red-500 text-xs italic">{password_errors[validity.password_error_code]}</p>
-          </div>
-          <div className="mx-8 mt-4 flex items-center justify-between">
-            <button type="submit" className={formatSubmit()}>
-              Sign In
-            </button>
-            <Link className = "mx-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to={`CreateAccount`}> Create an account</Link>
-          </div>
-          <GetErrors/>
-        </form>
-      </div>
-    </div>
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <img className="h-auto max-w-full" src="src/assets/color_logo.png"></img>
+                  <form  onSubmit={handleSubmit}>
+
+                    <div className="relative mb-4">
+                      <label className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                      <input
+                        id="username"
+                        type="text"
+                        value={form.username}
+                        onChange={handleChange}
+                        placeholder="Username"
+                        className = "bg-gray-50 border border-blue-300 text-gray-900 focus:ring-1 focus:outline-none focus:ring-blue-400 sm:text-sm rounded-lg focus:ring-primary-600 block w-full p-2.5"
+                      />
+                    </div>
+
+                    <div className="relative mb-4">
+                    <label className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                      <input
+                        id="password"
+                        type="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        placeholder="********"
+                        className = "bg-gray-50 border border-blue-300 text-gray-900 focus:ring-1 focus:outline-none focus:ring-blue-400 sm:text-sm rounded-lg focus:ring-primary-600 block w-full p-2.5"
+                      />
+                    </div>
+
+                    <button type="submit" className={formatSubmit()}>
+                      Sign In
+                    </button>
+
+                    <p className="text-sm font-light text-gray-500">
+                      Don’t have an account yet? <Link className="font-medium text-primary-600 hover:underline"to={`CreateAccount`}>Sign up</Link>
+                    </p>
+
+                    <GetErrors/>
+                  </form>
+                </div>
+              </div>
+            </div>
+    </section>
   );
 };
 

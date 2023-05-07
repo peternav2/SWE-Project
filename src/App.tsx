@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {User} from "./stores/User";
+import { getUserBar } from './components/Auth';
+
 import {Outlet, Route, Routes, useNavigate, useOutletContext} from "react-router-dom";
 
 function App() {
@@ -10,7 +12,10 @@ function App() {
 
   }, []);
     return (
+      <div>
+      {getUserBar()}
       <Outlet context={[user, setUserContext]}/>
+      </div>
   )
 }
 
