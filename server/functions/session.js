@@ -12,7 +12,8 @@ var userScopes = new Map([
                           ],
                           ['admin',[
                                 ['/api/v1/university','/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem', '/api/v1/review'], //get
-                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //post
+                                // All student accounts error out for me when I try to go the calender 
+                                ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem','/api/v1/review', 'api/v1/review/post'], //post
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'], //delete
                                 ['/api/v1/menuitem', '/api/v1/dininghall', '/api/v1/eventitem'] //patch
                           ]

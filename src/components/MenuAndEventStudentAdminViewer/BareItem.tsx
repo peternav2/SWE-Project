@@ -217,8 +217,8 @@ export default function BareItem(props: any) {
             reviewsById.map((review: Review, index: number) => (
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
-                  <div className="w-16 ring rounded-full">
-                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
+                  <div className="w-16  rounded-full">
+                    <img src="/src/assets/team_icon_2.png" />
                   </div>
                 </div>
                 <div className="chat-header">
@@ -241,8 +241,8 @@ export default function BareItem(props: any) {
             props.menuItem.dish.reviews.map((review: Review, index: number) => (
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
-                  <div className="w-16 ring rounded-full">
-                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
+                  <div className="w-16  rounded-full">
+                    <img src="/src/assets/team_icon_2.png" /> 
                   </div>
                 </div>
                 <div className="chat-header">
