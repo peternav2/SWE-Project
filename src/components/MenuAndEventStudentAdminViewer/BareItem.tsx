@@ -229,6 +229,7 @@ export default function BareItem(props: any) {
                 </div>
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
+                  <hr/>
                   { '❤️'.repeat( review.rating? review.rating:0) }
                   {/* client side plaintext authentication for now just go with it please */}
                   { parsedUserStatus && parsedUserName == review.username ?
@@ -254,6 +255,7 @@ export default function BareItem(props: any) {
                 </div>
                 <div className="chat-bubble">
                 {review.comment.toUpperCase()}
+                <hr/>
                 { '❤️'.repeat( review.rating? review.rating:0) }
                   { parsedUserStatus && parsedUserName == review.username ?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
