@@ -24,7 +24,8 @@ export default function BareItem(props: any) {
   //get token out of local storage
   const user = localStorage.getItem('user');
   const parsedUser = JSON.parse(user!);
-  const parsedUserStatus = parsedUser.isStudent;
+  const parsedUserStatus = parsedUser.isStudent
+  const parsedUserName = parsedUser.username;
   // console.log(parsedUser.isStudent);
 
   
@@ -95,6 +96,7 @@ export default function BareItem(props: any) {
   const getReviewsById = (array: MenuItem[] | EventItem[], id: ObjectId) => {
     for (let i = 0; i < array.length; i++) {
       if (array[i]._id === id) {
+        //@ts-ignore
         return array[i].reviews ? array[i].reviews : array[i].dish.reviews;
       }
     }
@@ -114,6 +116,7 @@ export default function BareItem(props: any) {
   const handleYourReviewTextAreaChange = (event: any) => {
     const inputValue = event.target.value;
     const remainingChars = 99 - inputValue.length;
+    // @ts-ignore
     charLimitRef.current.style.setProperty('--value', remainingChars);
 
     if (inputValue.length <= 99) {
@@ -217,8 +220,8 @@ export default function BareItem(props: any) {
             reviewsById.map((review: Review, index: number) => (
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
-                  <div className="w-16 ring rounded-full">
-                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
+                  <div className="w-16  rounded-full">
+                    <img src="/src/assets/team_icon_2.png" />
                   </div>
                 </div>
                 <div className="chat-header">
@@ -227,7 +230,8 @@ export default function BareItem(props: any) {
                 <div className="chat-bubble">
                   {review.comment.toUpperCase()}
                   { '❤️'.repeat( review.rating? review.rating:0) }
-                  { !parsedUserStatus?
+                  {/* client side plaintext authentication for now just go with it please */}
+                  { parsedUserStatus && parsedUserName == review.username ?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
                       </path>
@@ -241,8 +245,8 @@ export default function BareItem(props: any) {
             props.menuItem.dish.reviews.map((review: Review, index: number) => (
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
-                  <div className="w-16 ring rounded-full">
-                    <img src={`https://i.redd.it/spssvt6pjwuy.jpg`} />
+                  <div className="w-16  rounded-full">
+                    <img src="/src/assets/team_icon_2.png" /> 
                   </div>
                 </div>
                 <div className="chat-header">
@@ -251,7 +255,7 @@ export default function BareItem(props: any) {
                 <div className="chat-bubble">
                 {review.comment.toUpperCase()}
                 { '❤️'.repeat( review.rating? review.rating:0) }
-                  { !parsedUserStatus?
+                  { parsedUserStatus && parsedUserName == review.username ?
                 <div className="badge badge-error gap-2" onClick={()=>deleteReviewFromMenuItem(review.comment)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-4 h-4 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12">
                       </path>
