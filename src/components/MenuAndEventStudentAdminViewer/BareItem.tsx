@@ -96,7 +96,10 @@ export default function BareItem(props: any) {
   const getReviewsById = (array: MenuItem[] | EventItem[], id: ObjectId) => {
     for (let i = 0; i < array.length; i++) {
       if (array[i]._id === id) {
-        //@ts-ignore
+
+        // @ts-ignore
+        //TODO: FIX THIS
+
         return array[i].reviews ? array[i].reviews : array[i].dish.reviews;
       }
     }

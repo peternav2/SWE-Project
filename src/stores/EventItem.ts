@@ -9,7 +9,7 @@ export interface EventItem {
     description: string;
     date: CalendarDate;
     diningHallId?: ObjectId;
-    reviews?: string[];
+    reviews: string[];
 }
 
 
