@@ -6,43 +6,16 @@ export default function SomethingItemCard(props: any) {
 
   const handleModalToggle = () => {
     setModalVisible(!modalVisible);
-  };
-
-  //   function getRandomAvatarUrl(food:boolean) {
-  //   const avatarUrls = [
-  //     'https://i.imgur.com/bMsxxnV.jpeg',
-  //     'https://i.imgur.com/smZjCop.jpeg',
-  //     'https://i.imgur.com/tKzR6WR.jpeg',
-  //     'https://i.imgur.com/ZH6FOyN.jpeg',
-  //     'https://i.imgur.com/tKzR6WR.jpeg',
-  //   ];
-  
-  //   const foodUrls = [
-  //     'https://i.imgur.com/CUG0Aof.jpeg',
-  //     'https://i.imgur.com/8vulzi8.jpeg',
-  //     'https://i.imgur.com/8vulzi8.jpeg',
-  //     'https://i.imgur.com/DIUVYRm.jpeg',
-  //     'https://i.imgur.com/D6UHYNV.jpeg'
-  //   ]
-  
-  //   const randomIndex = Math.floor(Math.random() * avatarUrls.length);
-  
-  //   if(food){
-  //     return foodUrls[randomIndex];
-  
-  //   }
-  //   return avatarUrls[randomIndex];
-  // }
-  
+  };  
 
 console.log(props, 12);
   return (
-    <div className="card lg:card-side grid-item" onClick={handleModalToggle} key={props.index}>
+    <div className="card lg:card-side grid-item shadow-xl" onClick={handleModalToggle} key={props.index}>
         <figure>
-          <img
+          {/* <img
           src={`https://i.imgur.com/CUG0Aof.jpeg`}
           className="h-auto w-[800px] object-cover food-image-large event-image-large"
-          />
+          /> */}
           </figure>
       <div className="card-body" >
         <h1 className="card-title">{props.menuItem ? props.menuItem.mealType: "Today's Event:" + props.eventForDay.description}</h1>
