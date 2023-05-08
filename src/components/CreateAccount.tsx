@@ -4,7 +4,7 @@ import {User, getUserByUsername, addUserTokenized} from "../stores/User";
 import {getAllUniversities} from '../stores/University';
 import {Link, useLoaderData, useNavigate} from "react-router-dom";
 import {getErrorList} from './Popups'
-import colorLogo from '../assets/colorLogo.png';
+import colorLogo from '../assets/color_logo.png';
 
 interface University {
   name: string;
