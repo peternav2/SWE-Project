@@ -4,6 +4,8 @@ import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
 import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
+import colorLogo from '../assets/colorLogo.png';
+
 
 function Login(){
   //Constants and properties
@@ -192,7 +194,7 @@ function Login(){
             <GetPageLoadMessage/>
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <img className="h-auto max-w-full" src="src/assets/color_logo.png"></img>
+          <img className="h-auto max-w-full" src={colorLogo}></img>
                   <form  onSubmit={handleSubmit}>
 
                     <div className="relative mb-4">
