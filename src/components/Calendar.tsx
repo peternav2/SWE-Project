@@ -4,7 +4,7 @@ import {ObjectId} from "mongodb";
 import {useEffect, useState} from "react";
 import {User} from "../stores/User";
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Back from "./Back";
 
 export default function Calendar() {
@@ -16,14 +16,22 @@ export default function Calendar() {
 // return new Date(year, month+1, 0).getDate();
   };
     const [user] = useUser();
-  //const userType = user.isStudent ? 'student' : 'admin'
+  console.log(user)
+  const userType = user?.isStudent ? 'student' : 'admin'
+  console.log(userType)
   const [month, setMonth] = useState((new Date().getMonth() + 1).toString());
   const [year, setYear] = useState(new Date().getFullYear().toString());
   // console.log(new Date(+year-1,+month-1).toLocaleString('default', {month: 'long'}));
   const [days, setDays] = useState(Array.from(Array(getDaysInMonth(+month,+year)), (_, index) => index + 1));
 
   const [menuOrEvent,setMenuOrEvent] = useState("menu");
+  const navigate = useNavigate();
 
+  function toDHalls() {
+
+    console.log("errorrrr");
+    navigate(`/${userType}/university/${user.universityId}/`);
+  }
 
   const handleMonthChange = (event: SelectChangeEvent) => {
     setMonth(event.target.value)
@@ -126,7 +134,9 @@ export default function Calendar() {
           })
         }
       </div>
-      <Back />
+      <button onClick={toDHalls}>
+        Go To Dining Halls
+      </button>
     </div>
   )
 }
