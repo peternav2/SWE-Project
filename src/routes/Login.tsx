@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
-import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
+import {getSuccessBox, getErrorList, getErrorBox} from "../components/popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
 
 function Login(){

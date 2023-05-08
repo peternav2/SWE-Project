@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "vite": "vite",
-    "dev": "node server/server.js",
+    "dev": "vite",
     "build": "npm i && tsc --noEmit && vite build",
     "preview": "vite preview",
     "start": "node server/server.js",
@@ -17,7 +17,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "daisyui": "^2.51.5",
     "dotenv": "^16.0.3",
-    "esbuild": "^0.17.18",
+    "esbuild": "^0.17.11",
     "express": "^4.18.2",
     "mongodb": "^5.1.0",
     "nodemon": "^2.0.22",
