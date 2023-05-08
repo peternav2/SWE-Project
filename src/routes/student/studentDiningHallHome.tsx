@@ -9,7 +9,15 @@ import { CalendarDate } from "../../stores/CalendarDate";
 import { navigateError, validateCurrentAuth} from "../../components/Auth";
 
 export async function loader({ params }: any) {
-  return await getDiningHall(params.universityId, params.diningHallId).then(response => {return response}).catch(error =>{navigateError(error)});
+
+if (params.diningHallId && params.universityId){
+  return await getDiningHall(params.universityId, params.diningHallId).
+  then(response => 
+    {return response}).catch(error =>{navigateError(error)}
+    );
+  } else {
+    return {name: " your dining hall!"}
+  }
 }
 
 export default function StudentDiningHallHome() {
@@ -27,7 +35,7 @@ export default function StudentDiningHallHome() {
 
   return (
     <div className={"container w-max h-max mx-auto"}>
-      <h1> Welcome to {dining.name} </h1>
+      <h1> Welcome to {dining.name ? dining.name: " your dining hall!!!"}</h1>
       <div className="div">
         <Calendar />
       </div>
