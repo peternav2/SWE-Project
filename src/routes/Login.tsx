@@ -4,7 +4,7 @@ import {getUserByUsernamePasswordTokenized} from "../stores/User";
 import {useUser} from "../App";
 import {getSuccessBox, getErrorList, getErrorBox} from "../components/Popups"
 import { getDestination, validateCurrentAuthLogin } from '../components/Auth';
-import colorLogo from '../assets/colorLogo.png';
+import colorLogo from '../assets/color_logo.png';
 
 
 function Login(){
