@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 import { EventItem, getEventItemsByDate } from "../../stores/EventItem";
 import { updateEventItem } from "../../stores/EventItem";
 import { updateMenuItem } from "../../stores/MenuItem";
-
+import team_icon_2 from "../../assets/team_icon_2.png";
 
 /// Added "component" because of name conflict
 export default function BareItem(props: any) {
@@ -221,7 +221,7 @@ export default function BareItem(props: any) {
               <div key={index} className="chat chat-start">
                 <div className="chat-image avatar">
                   <div className="w-16  rounded-full">
-                    <img src="/src/assets/team_icon_2.png" />
+                    <img src={team_icon_2}/>
                   </div>
                 </div>
                 <div className="chat-header">
